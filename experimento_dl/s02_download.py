@@ -96,7 +96,7 @@ class Throttle:
         with self.lock:
             self.n_429 += 1
             now = time.time()
-            pause = float(retry_after) + 30 if retry_after else self.backoff
+            pause = float(retry_after) + 3 if retry_after else self.backoff
             if self.next_t < now + pause * 0.5:  # otro hilo aún no inició la pausa
                 self.next_t = now + pause
                 self.total_pause += pause
@@ -162,6 +162,7 @@ def fetch(uid: str, n: int, keep: bool):
                 STOP.set()
                 raise SystemExit(f"Acceso denegado ({msg[:120]}). ¿Reglas aceptadas / token válido?")
             other_errors += 1
+            _local.__dict__.pop("api", None)  # p. ej. conexión caída tras una pausa larga: nueva sesión
             if other_errors >= 5:
                 raise RuntimeError(f"{uid}/{n}: {msg[:150]}")
             time.sleep(5 * other_errors)
@@ -210,7 +211,7 @@ def process(uid: str, counts: dict):
                     seconds=round(time.time() - t0, 1), error="")
     except RuntimeError as e:
         return dict(StudyInstanceUID=uid, n_slices=counts.get(uid, -1), n_downloaded=-1, mb=0,
-                    status="error", seconds=round(time.time() - t0, 1), error=redact(str(e))[:200])
+                    status="error", seconds=round(time.time() - t0, 1), error=redact(str(e))[-250:])
 
 
 def main():
@@ -236,6 +237,14 @@ def main():
         if r.get("n_slices", 0) and r["n_slices"] > 0:
             counts.setdefault(r["StudyInstanceUID"], int(r["n_slices"]))
     rows = {r["StudyInstanceUID"]: r for r in log.to_dict("records") if r.get("status") == "ok"}
+    # Estudios con todos sus cortes ya en disco (completados en una ejecución interrumpida)
+    for u, n in counts.items():
+        if u not in rows and n > 0:
+            sel = select_slice_numbers(int(n))
+            if all((DICOM_DIR / u / f"{s}.dcm").exists() for s in sel):
+                mb = sum(p.stat().st_size for p in (DICOM_DIR / u).glob("*.dcm")) / 1e6
+                rows[u] = dict(StudyInstanceUID=u, n_slices=int(n), n_downloaded=len(sel), mb=round(mb, 2),
+                               status="ok", seconds=0, error="")
     todo = [u for u in uids if u not in rows]
     print(f"{len(todo)} estudios por descargar ({len(rows)} ya completos); "
           f"workers={args.workers}, intervalo={args.min_interval}s", flush=True)
@@ -244,9 +253,19 @@ def main():
     total_mb = sum(float(r.get("mb", 0) or 0) for r in rows.values())
     with ThreadPoolExecutor(args.workers) as ex:
         futs = [ex.submit(process, u, counts) for u in todo]
+        retried = set()
         try:
-            for fut in as_completed(futs):
+            pending = list(futs)
+            while pending:
+                fut = next(as_completed(pending))
+                pending.remove(fut)
                 r = fut.result()
+                if r["status"] == "error" and r["StudyInstanceUID"] not in retried and not STOP.is_set():
+                    retried.add(r["StudyInstanceUID"])  # un único reintento por estudio, al final de la cola
+                    print(f"  reintento programado: {r['StudyInstanceUID']} ({r['error'][-120:]})", flush=True)
+                    nf = ex.submit(process, r["StudyInstanceUID"], counts)
+                    futs.append(nf); pending.append(nf)
+                    continue
                 rows[r["StudyInstanceUID"]] = r
                 done += 1
                 total_mb += r["mb"]
