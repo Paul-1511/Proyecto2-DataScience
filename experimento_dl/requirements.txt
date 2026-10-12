@@ -1,0 +1,18 @@
+# Python 3.11. torch/torchvision con CUDA 12.8:
+#   pip install torch==2.11.0 torchvision==0.26.0 --index-url https://download.pytorch.org/whl/cu128
+torch==2.11.0
+torchvision==0.26.0
+numpy==2.4.3
+pandas==2.3.3
+scikit-learn==1.9.0
+matplotlib==3.11.1
+seaborn==0.13.2
+opencv-python==4.13.0.92
+pydicom==3.0.2
+pylibjpeg==2.1.0
+pylibjpeg-libjpeg==2.4.0
+python-gdcm==3.2.6
+kaggle==2.2.4
+streamlit==1.65.0
+plotly==7.1.0
+tabulate==0.10.0
