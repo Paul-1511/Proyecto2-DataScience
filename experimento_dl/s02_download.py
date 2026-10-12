@@ -81,6 +81,7 @@ class Throttle:
         self.max_throttle_s = max_throttle_s
         self.n_429 = 0
         self.n_requests = 0
+        self.n_ok = 0
 
     def wait(self):
         with self.lock:
@@ -98,11 +99,12 @@ class Throttle:
             now = time.time()
             pause = float(retry_after) + 3 if retry_after else self.backoff
             if self.next_t < now + pause * 0.5:  # otro hilo aún no inició la pausa
+                self.min_interval = min(self.min_interval * 1.25, 15.0)  # ritmo adaptativo
                 self.next_t = now + pause
                 self.total_pause += pause
                 print(f"  HTTP 429 ({time.strftime('%H:%M:%S')}): pausa global de {pause / 60:.1f} min "
                       f"(Retry-After={retry_after}; acumulado {self.total_pause / 60:.1f} min; "
-                      f"peticiones hasta ahora={self.n_requests})", flush=True)
+                      f"peticiones={self.n_requests}, exitosas={self.n_ok}, nuevo intervalo={self.min_interval:.1f}s)", flush=True)
                 if not retry_after:
                     self.backoff = min(self.backoff * 2, 600.0)
             if self.total_pause > self.max_throttle_s:
@@ -110,6 +112,7 @@ class Throttle:
 
     def ok(self):
         with self.lock:
+            self.n_ok += 1
             self.backoff = max(60.0, self.backoff * 0.75)
 
 
@@ -141,7 +144,8 @@ def fetch(uid: str, n: int, keep: bool):
                                              path=str(tmp), quiet=True, force=True)
             files = [p for p in tmp.iterdir() if p.is_file() and not p.name.endswith("partial")]
             if not files or files[0].stat().st_size == 0:
-                raise RuntimeError("descarga vacía")
+                partial = [p.read_bytes()[:150] for p in tmp.iterdir() if p.name.endswith("partial")]
+                raise RuntimeError(f"descarga vacía; parcial={partial!r}")
             _normalize(files[0])
             if keep:
                 dst.parent.mkdir(parents=True, exist_ok=True)
@@ -153,6 +157,7 @@ def fetch(uid: str, n: int, keep: bool):
         except Exception as e:  # noqa: BLE001
             msg = redact(str(e))
             if "404" in msg or "Not Found" in msg:
+                THR.ok()  # respuesta válida (el corte no existe)
                 return False
             if "429" in msg or "Too Many" in msg:
                 resp = getattr(e, "response", None)
@@ -162,6 +167,8 @@ def fetch(uid: str, n: int, keep: bool):
                 STOP.set()
                 raise SystemExit(f"Acceso denegado ({msg[:120]}). ¿Reglas aceptadas / token válido?")
             other_errors += 1
+            print(f"  error ({time.strftime('%H:%M:%S')}) {uid}/{n} intento {other_errors}: "
+                  f"{type(e).__name__}: {msg[-220:]}", flush=True)
             _local.__dict__.pop("api", None)  # p. ej. conexión caída tras una pausa larga: nueva sesión
             if other_errors >= 5:
                 raise RuntimeError(f"{uid}/{n}: {msg[:150]}")
@@ -273,7 +280,7 @@ def main():
                 el = time.time() - t0
                 print(f"[{done}/{len(todo)}] {r['status']} N={r['n_slices']} {r['seconds']}s | "
                       f"{total_mb / 1e3:.2f} GB | {el / 60:.1f} min | ETA {el / done * (len(todo) - done) / 60:.1f} min"
-                      f" | req={THR.n_requests} 429={THR.n_429}" + (f" | {r['error']}" if r["error"] else ""),
+                      f" | req={THR.n_requests} ok={THR.n_ok} 429={THR.n_429}" + (f" | {r['error']}" if r["error"] else ""),
                       flush=True)
                 if total_mb / 1e3 > args.max_gb:
                     print("Límite de GB alcanzado; deteniendo.", flush=True)

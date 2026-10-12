@@ -1,0 +1,4 @@
+split,planificados,completos,preprocesados,parciales,positivos_preprocesados
+test,32,0,0,6,0
+train,102,12,12,7,4
+val,26,0,0,0,0

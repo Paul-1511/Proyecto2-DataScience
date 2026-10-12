@@ -8,6 +8,19 @@ localización de fracturas y no tiene validación clínica.**
 Los resultados numéricos están únicamente en `results/` (generados por los scripts) y en
 `results/INFORME_RESULTADOS.md` (generado por `s05_compare_report.py`).
 
+## Ejecutar la aplicación (demostración)
+
+Desde la raíz del repositorio (Windows, Git Bash o PowerShell), con el entorno `.venv` ya creado:
+
+```bash
+.venv/Scripts/streamlit run experimento_dl/app_streamlit.py
+```
+
+Abre http://localhost:8501. Si `.venv` no existe, primero se instalan las dependencias de
+`experimento_dl/requirements.txt` (ver "Reproducción"). El visor DICOM usa los estudios de
+`experimento_dl/data/dicom/` (no versionados) o archivos `.dcm` subidos desde la propia app.
+Estado actual del proyecto: ver `ESTADO_PRESENTACION.md`.
+
 ## Reproducción
 
 ```bash

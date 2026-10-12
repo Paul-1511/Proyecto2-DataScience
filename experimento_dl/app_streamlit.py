@@ -93,6 +93,34 @@ def preprocess_uploaded(files):
     return vol, meta, bad
 
 
+def records_from_local(uid):
+    import pydicom
+    from s03_preprocess import slice_record
+    from common import DICOM_DIR
+    files = sorted((DICOM_DIR / uid).glob("*.dcm"), key=lambda p: int(p.stem))
+    return [slice_record(pydicom.dcmread(f), f.name, uid, int(f.stem)) for f in files]
+
+
+def records_from_upload(files):
+    import pydicom
+    from s03_preprocess import select_uploaded, slice_record
+    dsets, bad = [], []
+    for f in files:
+        try:
+            dsets.append(pydicom.dcmread(io.BytesIO(f.getvalue())))
+        except Exception as e:  # noqa: BLE001
+            bad.append(f"{f.name}: {type(e).__name__}")
+    sel = select_uploaded(dsets) if dsets else []
+    recs = [slice_record(ds, f"inst_{getattr(ds, 'InstanceNumber', i)}", "subido", i + 1)
+            for i, ds in enumerate(sel)]
+    return recs, bad
+
+
+def raw_display(hu):
+    """Solo para mostrar el corte crudo: HU recortadas a [-1024, 2000] y escaladas a [0,1]."""
+    return (np.clip(hu, -1024, 2000) + 1024) / 3024
+
+
 def show_volume(vol, key, slice_probs=None):
     i = st.slider("Corte (ordenado por z / ImagePositionPatient)", 0, len(vol) - 1, len(vol) // 2, key=key)
     c1, c2 = st.columns([1, 1])
@@ -130,8 +158,8 @@ with st.sidebar:
         st.warning("Todavía no hay modelos entrenados.")
     st.caption(f"K = {K_SLICES} cortes por estudio · ventana ósea L{BONE_WL}/W{BONE_WW}")
 
-tabs = st.tabs(["1 · Dataset y EDA", "2 · Preprocesamiento", "3 · Predicción", "4 · Métricas",
-                "5 · Comparación", "6 · Limitaciones"])
+tabs = st.tabs(["1 · Dataset y EDA", "2 · Preprocesamiento", "3 · Visor DICOM", "4 · Modelos y predicción",
+                "5 · Métricas", "6 · Comparación", "7 · Limitaciones"])
 
 # 1 · Dataset y EDA ------------------------------------------------------------
 with tabs[0]:
@@ -202,12 +230,71 @@ with tabs[1]:
             m = pd.read_csv(RESULTS_DIR / "dicom_metadata.csv")
             st.write(m[["slope", "intercept", "photometric", "transfer_syntax"]].value_counts().rename("cortes"))
 
-# 3 · Predicción ---------------------------------------------------------------
+# 3 · Visor DICOM --------------------------------------------------------------
 with tabs[2]:
+    from common import DICOM_DIR
+    st.markdown("Carga un estudio DICOM y observa el preprocesamiento real (mismas funciones que el pipeline).")
+    local = sorted(p.name for p in DICOM_DIR.glob("1.2*") if len(list(p.glob("*.dcm"))) >= K_SLICES)         if DICOM_DIR.exists() else []
+    src = st.radio("Fuente", ["Estudio descargado (local)", "Subir archivos .dcm"], horizontal=True,
+                   index=0 if local else 1)
+    recs, bad = [], []
+    if src.startswith("Estudio") and local:
+        uid = st.selectbox("Estudio", local)
+        recs = records_from_local(uid)
+    elif src.startswith("Subir"):
+        up = st.file_uploader("Archivos .dcm de un estudio", type=["dcm"], accept_multiple_files=True, key="viewer_up")
+        if up:
+            recs, bad = records_from_upload(up)
+    if bad:
+        st.warning(f"{len(bad)} archivo(s) no legibles: " + "; ".join(bad[:5]))
+    if recs:
+        from s03_preprocess import build_volume, bone_window
+        vol, recs = build_volume(recs)  # ordena por z y aplica ventana/normalización/224x224
+        meta = pd.DataFrame([r["meta"] for r in recs])
+        st.success(f"{len(recs)} cortes leídos y ordenados por ImagePositionPatient (z).")
+        i = st.slider("Corte", 0, len(recs) - 1, len(recs) // 2, key="viewer_slice")
+        r = recs[i]
+        c1, c2, c3 = st.columns(3)
+        c1.image(raw_display(r["hu"]), clamp=True, use_container_width=True,
+                 caption=f"ANTES: HU crudo {r['hu'].shape[0]}×{r['hu'].shape[1]} (rango [-1024, 2000])")
+        c2.image(vol[i], clamp=True, use_container_width=True,
+                 caption=f"DESPUÉS: ventana ósea L{BONE_WL}/W{BONE_WW}, [0,1], {IMG_SIZE}×{IMG_SIZE}")
+        hist = np.histogram(np.clip(r["hu"], -2100, 3100), bins=120)
+        fig = go.Figure(go.Bar(x=hist[1][:-1], y=hist[0], marker_color="gray"))
+        fig.add_vrect(x0=BONE_WL - BONE_WW / 2, x1=BONE_WL + BONE_WW / 2, fillcolor="orange", opacity=.25, line_width=0)
+        fig.update_layout(height=300, margin=dict(l=10, r=10, t=30, b=10), title="Histograma HU (ventana en naranja)",
+                          yaxis_type="log", xaxis_title="HU")
+        c3.plotly_chart(fig, use_container_width=True)
+        with st.expander("Metadatos DICOM del corte y del estudio", expanded=False):
+            st.json({k: (str(v) if v is not None else None) for k, v in r["meta"].items()})
+            st.dataframe(meta)
+        st.subheader("Comparación de cortes")
+        sel = st.multiselect("Cortes a comparar (orden z)", list(range(len(vol))),
+                             default=[0, len(vol) // 2, len(vol) - 1])
+        if sel:
+            cols = st.columns(len(sel))
+            for c, j in zip(cols, sel):
+                c.image(vol[j], clamp=True, use_container_width=True, caption=f"corte {j} · z={recs[j]['z']:.1f}")
+        with st.expander("Montaje de todos los cortes preprocesados"):
+            cols = st.columns(8)
+            for j in range(len(vol)):
+                cols[j % 8].image(vol[j], clamp=True, use_container_width=True, caption=str(j))
+
+# 4 · Modelos y predicción -----------------------------------------------------
+with tabs[3]:
     ready = {m: v for m, v in models.items() if v["weights"] is not None}
+    st.subheader("Estado de los modelos")
+    st.table(pd.DataFrame([dict(modelo=NAMES[m],
+                                estado="entrenado y evaluado" if m in ready else "PENDIENTE (no entrenado)")
+                           for m in NAMES]))
+    aud = RESULTS_DIR / "auditoria_estudios_disponibles.csv"
+    if aud.exists():
+        st.caption("Estudios disponibles localmente por partición (auditoría):")
+        st.dataframe(pd.read_csv(aud))
     if not ready:
-        st.info("**Predicción no disponible todavía**: no hay modelos entrenados con pesos locales "
-                "(data/weights/*_best.pt). No se muestran predicciones.")
+        st.warning("**Predicción no disponible.** No se entrenó ningún modelo: con los datos descargados "
+                   "no hay estudios de validación ni de prueba, por lo que una evaluación válida no es posible. "
+                   "No se muestran predicciones simuladas.")
     else:
         choice = st.radio("Modelo", [NAMES[m] for m in ready] + (["Comparar ambos"] if len(ready) == 2 else []),
                           horizontal=True)
@@ -255,8 +342,8 @@ with tabs[2]:
             mil_ps = results.get("mil", {}).get("ps")
             show_volume(vol, key="pred_slider", slice_probs=mil_ps if interactive else None)
 
-# 4 · Métricas -----------------------------------------------------------------
-with tabs[3]:
+# 5 · Métricas -----------------------------------------------------------------
+with tabs[4]:
     if not models:
         st.info("Métricas no disponibles: aún no se ha entrenado ni evaluado ningún modelo.")
     for m, v in models.items():
@@ -286,8 +373,8 @@ with tabs[3]:
         with st.expander("JSON completo"):
             st.json(mt)
 
-# 5 · Comparación --------------------------------------------------------------
-with tabs[4]:
+# 6 · Comparación --------------------------------------------------------------
+with tabs[5]:
     if len(models) < 2:
         st.info("La comparación requiere ambos modelos evaluados. "
                 + ("Solo hay uno disponible." if models else "No hay modelos evaluados."))
@@ -320,6 +407,6 @@ with tabs[4]:
             with st.expander("Informe de resultados generado"):
                 st.markdown(rep.read_text(encoding="utf-8"))
 
-# 6 · Limitaciones -------------------------------------------------------------
-with tabs[5]:
+# 7 · Limitaciones -------------------------------------------------------------
+with tabs[6]:
     st.markdown(LIMITS)
