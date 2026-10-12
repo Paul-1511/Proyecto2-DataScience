@@ -48,6 +48,8 @@ WORK = "/kaggle/working"
 EPOCHS, PATIENCE = 15, 4          # máximo de épocas y early stopping (AUC de validación)
 BS, ACCUM = 4, 2                  # estudios por paso y acumulación (batch efectivo 8 estudios)
 MODELS = ["mil", "bigru"]         # Modelo A primero (línea base), luego Modelo B
+CODE_DATASET = None               # alternativa al clon: carpeta de un Kaggle Dataset con el paquete de código
+                                  # (p. ej. "/kaggle/input/rsna-codigo-v2/rsna_codigo"), ver kaggle/README_KAGGLE.md
 CACHE_INPUT = None                # ruta a un cache_v2 de una versión anterior (Output) para no repreprocesar
 KEEP_CACHE_IN_OUTPUT = True       # conservar cache_v2 en Output (~5-6 GB) para reutilizarlo
 """)
@@ -104,9 +106,13 @@ code("""
 # ===== Código del repositorio (rama versionada) =====
 os.chdir(WORK)
 if not os.path.isdir("repo"):
-    subprocess.run(["git", "clone", "-q", "--depth", "1", "-b", BRANCH, REPO_URL, "repo"], check=True)
+    if CODE_DATASET:   # paquete de código subido como Kaggle Dataset (sin depender de GitHub)
+        shutil.copytree(CODE_DATASET, "repo")
+    else:
+        subprocess.run(["git", "clone", "-q", "--depth", "1", "-b", BRANCH, REPO_URL, "repo"], check=True)
 CODE = f"{WORK}/repo/experimento_dl"
-print(subprocess.run(["git", "-C", "repo", "log", "-1", "--oneline"], capture_output=True, text=True).stdout)
+print(subprocess.run(["git", "-C", "repo", "log", "-1", "--oneline"], capture_output=True, text=True).stdout
+      or open(f"{WORK}/repo/VERSION.txt").read())
 # train.csv del repo == train.csv de Kaggle (mismas etiquetas que las particiones)
 repo_train = pd.read_csv(f"{WORK}/repo/train.csv")
 assert repo_train.sort_values("StudyInstanceUID").reset_index(drop=True).equals(
