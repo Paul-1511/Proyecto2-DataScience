@@ -1,0 +1,7 @@
+.venv/
+experimento_dl/data/
+*.pt
+*.pth
+*.dcm
+__pycache__/
+.DS_Store

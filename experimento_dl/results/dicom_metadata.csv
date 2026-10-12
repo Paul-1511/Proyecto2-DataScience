@@ -1,0 +1,289 @@
+StudyInstanceUID,file,slope,intercept,is_hu,rows,cols,bits,pixel_representation,padding_value,photometric,transfer_syntax,pixel_spacing,slice_thickness,instance_number,z
+1.2.826.0.1.3680043.1470,453.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.44140625, 0.44140625]",0.6,453,-560.8
+1.2.826.0.1.3680043.1470,435.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.44140625, 0.44140625]",0.6,435,-553.6
+1.2.826.0.1.3680043.1470,416.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.44140625, 0.44140625]",0.6,416,-546.0
+1.2.826.0.1.3680043.1470,397.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.44140625, 0.44140625]",0.6,397,-538.4
+1.2.826.0.1.3680043.1470,379.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.44140625, 0.44140625]",0.6,379,-531.2
+1.2.826.0.1.3680043.1470,360.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.44140625, 0.44140625]",0.6,360,-523.6
+1.2.826.0.1.3680043.1470,341.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.44140625, 0.44140625]",0.6,341,-516.0
+1.2.826.0.1.3680043.1470,323.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.44140625, 0.44140625]",0.6,323,-508.8
+1.2.826.0.1.3680043.1470,304.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.44140625, 0.44140625]",0.6,304,-501.2
+1.2.826.0.1.3680043.1470,286.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.44140625, 0.44140625]",0.6,286,-494.0
+1.2.826.0.1.3680043.1470,267.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.44140625, 0.44140625]",0.6,267,-486.4
+1.2.826.0.1.3680043.1470,248.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.44140625, 0.44140625]",0.6,248,-478.8
+1.2.826.0.1.3680043.1470,230.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.44140625, 0.44140625]",0.6,230,-471.6
+1.2.826.0.1.3680043.1470,211.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.44140625, 0.44140625]",0.6,211,-464.0
+1.2.826.0.1.3680043.1470,192.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.44140625, 0.44140625]",0.6,192,-456.4
+1.2.826.0.1.3680043.1470,174.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.44140625, 0.44140625]",0.6,174,-449.2
+1.2.826.0.1.3680043.1470,155.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.44140625, 0.44140625]",0.6,155,-441.6
+1.2.826.0.1.3680043.1470,137.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.44140625, 0.44140625]",0.6,137,-434.4
+1.2.826.0.1.3680043.1470,118.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.44140625, 0.44140625]",0.6,118,-426.8
+1.2.826.0.1.3680043.1470,99.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.44140625, 0.44140625]",0.6,99,-419.2
+1.2.826.0.1.3680043.1470,81.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.44140625, 0.44140625]",0.6,81,-412.0
+1.2.826.0.1.3680043.1470,62.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.44140625, 0.44140625]",0.6,62,-404.4
+1.2.826.0.1.3680043.1470,43.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.44140625, 0.44140625]",0.6,43,-396.8
+1.2.826.0.1.3680043.1470,25.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.44140625, 0.44140625]",0.6,25,-389.6
+1.2.826.0.1.3680043.15277,547.dcm,1.0,0.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.312, 0.312]",0.5,547,-1415.9
+1.2.826.0.1.3680043.15277,525.dcm,1.0,0.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.312, 0.312]",0.5,525,-1407.1
+1.2.826.0.1.3680043.15277,502.dcm,1.0,0.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.312, 0.312]",0.5,502,-1397.9
+1.2.826.0.1.3680043.15277,480.dcm,1.0,0.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.312, 0.312]",0.5,480,-1389.1
+1.2.826.0.1.3680043.15277,457.dcm,1.0,0.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.312, 0.312]",0.5,457,-1379.9
+1.2.826.0.1.3680043.15277,435.dcm,1.0,0.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.312, 0.312]",0.5,435,-1371.1
+1.2.826.0.1.3680043.15277,412.dcm,1.0,0.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.312, 0.312]",0.5,412,-1361.9
+1.2.826.0.1.3680043.15277,390.dcm,1.0,0.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.312, 0.312]",0.5,390,-1353.1
+1.2.826.0.1.3680043.15277,367.dcm,1.0,0.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.312, 0.312]",0.5,367,-1343.9
+1.2.826.0.1.3680043.15277,345.dcm,1.0,0.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.312, 0.312]",0.5,345,-1335.1
+1.2.826.0.1.3680043.15277,322.dcm,1.0,0.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.312, 0.312]",0.5,322,-1325.9
+1.2.826.0.1.3680043.15277,300.dcm,1.0,0.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.312, 0.312]",0.5,300,-1317.1
+1.2.826.0.1.3680043.15277,277.dcm,1.0,0.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.312, 0.312]",0.5,277,-1307.9
+1.2.826.0.1.3680043.15277,255.dcm,1.0,0.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.312, 0.312]",0.5,255,-1299.1
+1.2.826.0.1.3680043.15277,232.dcm,1.0,0.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.312, 0.312]",0.5,232,-1289.9
+1.2.826.0.1.3680043.15277,210.dcm,1.0,0.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.312, 0.312]",0.5,210,-1281.1
+1.2.826.0.1.3680043.15277,187.dcm,1.0,0.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.312, 0.312]",0.5,187,-1271.9
+1.2.826.0.1.3680043.15277,165.dcm,1.0,0.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.312, 0.312]",0.5,165,-1263.1
+1.2.826.0.1.3680043.15277,142.dcm,1.0,0.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.312, 0.312]",0.5,142,-1253.9
+1.2.826.0.1.3680043.15277,120.dcm,1.0,0.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.312, 0.312]",0.5,120,-1245.1
+1.2.826.0.1.3680043.15277,97.dcm,1.0,0.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.312, 0.312]",0.5,97,-1235.9
+1.2.826.0.1.3680043.15277,75.dcm,1.0,0.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.312, 0.312]",0.5,75,-1227.1
+1.2.826.0.1.3680043.15277,52.dcm,1.0,0.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.312, 0.312]",0.5,52,-1217.9
+1.2.826.0.1.3680043.15277,30.dcm,1.0,0.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.312, 0.312]",0.5,30,-1209.1
+1.2.826.0.1.3680043.16919,389.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.298828125, 0.298828125]",1.0,389,451.700012
+1.2.826.0.1.3680043.16919,373.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.298828125, 0.298828125]",1.0,373,459.700012
+1.2.826.0.1.3680043.16919,357.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.298828125, 0.298828125]",1.0,357,467.700012
+1.2.826.0.1.3680043.16919,341.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.298828125, 0.298828125]",1.0,341,475.700012
+1.2.826.0.1.3680043.16919,325.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.298828125, 0.298828125]",1.0,325,483.700012
+1.2.826.0.1.3680043.16919,309.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.298828125, 0.298828125]",1.0,309,491.700012
+1.2.826.0.1.3680043.16919,293.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.298828125, 0.298828125]",1.0,293,499.700012
+1.2.826.0.1.3680043.16919,277.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.298828125, 0.298828125]",1.0,277,507.700012
+1.2.826.0.1.3680043.16919,261.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.298828125, 0.298828125]",1.0,261,515.700012
+1.2.826.0.1.3680043.16919,245.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.298828125, 0.298828125]",1.0,245,523.700012
+1.2.826.0.1.3680043.16919,229.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.298828125, 0.298828125]",1.0,229,531.700012
+1.2.826.0.1.3680043.16919,213.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.298828125, 0.298828125]",1.0,213,539.700012
+1.2.826.0.1.3680043.16919,197.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.298828125, 0.298828125]",1.0,197,547.700012
+1.2.826.0.1.3680043.16919,181.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.298828125, 0.298828125]",1.0,181,555.700012
+1.2.826.0.1.3680043.16919,165.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.298828125, 0.298828125]",1.0,165,563.700012
+1.2.826.0.1.3680043.16919,149.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.298828125, 0.298828125]",1.0,149,571.700012
+1.2.826.0.1.3680043.16919,133.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.298828125, 0.298828125]",1.0,133,579.700012
+1.2.826.0.1.3680043.16919,117.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.298828125, 0.298828125]",1.0,117,587.700012
+1.2.826.0.1.3680043.16919,101.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.298828125, 0.298828125]",1.0,101,595.700012
+1.2.826.0.1.3680043.16919,85.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.298828125, 0.298828125]",1.0,85,603.700012
+1.2.826.0.1.3680043.16919,69.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.298828125, 0.298828125]",1.0,69,611.700012
+1.2.826.0.1.3680043.16919,53.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.298828125, 0.298828125]",1.0,53,619.700012
+1.2.826.0.1.3680043.16919,37.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.298828125, 0.298828125]",1.0,37,627.700012
+1.2.826.0.1.3680043.16919,21.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.298828125, 0.298828125]",1.0,21,635.700012
+1.2.826.0.1.3680043.1772,468.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.38671875, 0.38671875]",0.6,468,1090.2
+1.2.826.0.1.3680043.1772,449.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.38671875, 0.38671875]",0.6,449,1097.8
+1.2.826.0.1.3680043.1772,430.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.38671875, 0.38671875]",0.6,430,1105.4
+1.2.826.0.1.3680043.1772,411.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.38671875, 0.38671875]",0.6,411,1113.0
+1.2.826.0.1.3680043.1772,391.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.38671875, 0.38671875]",0.6,391,1121.0
+1.2.826.0.1.3680043.1772,372.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.38671875, 0.38671875]",0.6,372,1128.6
+1.2.826.0.1.3680043.1772,353.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.38671875, 0.38671875]",0.6,353,1136.2
+1.2.826.0.1.3680043.1772,334.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.38671875, 0.38671875]",0.6,334,1143.8
+1.2.826.0.1.3680043.1772,314.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.38671875, 0.38671875]",0.6,314,1151.8
+1.2.826.0.1.3680043.1772,295.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.38671875, 0.38671875]",0.6,295,1159.4
+1.2.826.0.1.3680043.1772,276.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.38671875, 0.38671875]",0.6,276,1167.0
+1.2.826.0.1.3680043.1772,257.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.38671875, 0.38671875]",0.6,257,1174.6
+1.2.826.0.1.3680043.1772,237.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.38671875, 0.38671875]",0.6,237,1182.6
+1.2.826.0.1.3680043.1772,218.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.38671875, 0.38671875]",0.6,218,1190.2
+1.2.826.0.1.3680043.1772,199.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.38671875, 0.38671875]",0.6,199,1197.8
+1.2.826.0.1.3680043.1772,180.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.38671875, 0.38671875]",0.6,180,1205.4
+1.2.826.0.1.3680043.1772,160.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.38671875, 0.38671875]",0.6,160,1213.4
+1.2.826.0.1.3680043.1772,141.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.38671875, 0.38671875]",0.6,141,1221.0
+1.2.826.0.1.3680043.1772,122.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.38671875, 0.38671875]",0.6,122,1228.6
+1.2.826.0.1.3680043.1772,103.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.38671875, 0.38671875]",0.6,103,1236.2
+1.2.826.0.1.3680043.1772,83.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.38671875, 0.38671875]",0.6,83,1244.2
+1.2.826.0.1.3680043.1772,64.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.38671875, 0.38671875]",0.6,64,1251.8
+1.2.826.0.1.3680043.1772,45.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.38671875, 0.38671875]",0.6,45,1259.4
+1.2.826.0.1.3680043.1772,26.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.38671875, 0.38671875]",0.6,26,1267.0
+1.2.826.0.1.3680043.21292,341.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.53125, 0.53125]",0.625,341,-205.5
+1.2.826.0.1.3680043.21292,327.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.53125, 0.53125]",0.625,327,-196.75
+1.2.826.0.1.3680043.21292,313.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.53125, 0.53125]",0.625,313,-188.0
+1.2.826.0.1.3680043.21292,299.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.53125, 0.53125]",0.625,299,-179.25
+1.2.826.0.1.3680043.21292,285.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.53125, 0.53125]",0.625,285,-170.5
+1.2.826.0.1.3680043.21292,271.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.53125, 0.53125]",0.625,271,-161.75
+1.2.826.0.1.3680043.21292,257.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.53125, 0.53125]",0.625,257,-153.0
+1.2.826.0.1.3680043.21292,243.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.53125, 0.53125]",0.625,243,-144.25
+1.2.826.0.1.3680043.21292,229.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.53125, 0.53125]",0.625,229,-135.5
+1.2.826.0.1.3680043.21292,215.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.53125, 0.53125]",0.625,215,-126.75
+1.2.826.0.1.3680043.21292,201.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.53125, 0.53125]",0.625,201,-118.0
+1.2.826.0.1.3680043.21292,187.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.53125, 0.53125]",0.625,187,-109.25
+1.2.826.0.1.3680043.21292,173.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.53125, 0.53125]",0.625,173,-100.5
+1.2.826.0.1.3680043.21292,159.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.53125, 0.53125]",0.625,159,-91.75
+1.2.826.0.1.3680043.21292,145.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.53125, 0.53125]",0.625,145,-83.0
+1.2.826.0.1.3680043.21292,131.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.53125, 0.53125]",0.625,131,-74.25
+1.2.826.0.1.3680043.21292,117.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.53125, 0.53125]",0.625,117,-65.5
+1.2.826.0.1.3680043.21292,103.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.53125, 0.53125]",0.625,103,-56.75
+1.2.826.0.1.3680043.21292,89.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.53125, 0.53125]",0.625,89,-48.0
+1.2.826.0.1.3680043.21292,75.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.53125, 0.53125]",0.625,75,-39.25
+1.2.826.0.1.3680043.21292,61.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.53125, 0.53125]",0.625,61,-30.5
+1.2.826.0.1.3680043.21292,47.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.53125, 0.53125]",0.625,47,-21.75
+1.2.826.0.1.3680043.21292,33.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.53125, 0.53125]",0.625,33,-13.0
+1.2.826.0.1.3680043.21292,19.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.53125, 0.53125]",0.625,19,-4.25
+1.2.826.0.1.3680043.22701,267.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,267,-154.803
+1.2.826.0.1.3680043.22701,256.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,256,-147.928
+1.2.826.0.1.3680043.22701,245.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,245,-141.053
+1.2.826.0.1.3680043.22701,234.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,234,-134.178
+1.2.826.0.1.3680043.22701,223.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,223,-127.303
+1.2.826.0.1.3680043.22701,212.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,212,-120.428
+1.2.826.0.1.3680043.22701,201.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,201,-113.553
+1.2.826.0.1.3680043.22701,190.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,190,-106.678
+1.2.826.0.1.3680043.22701,179.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,179,-99.803
+1.2.826.0.1.3680043.22701,168.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,168,-92.928
+1.2.826.0.1.3680043.22701,157.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,157,-86.053
+1.2.826.0.1.3680043.22701,146.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,146,-79.178
+1.2.826.0.1.3680043.22701,136.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,136,-72.928
+1.2.826.0.1.3680043.22701,125.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,125,-66.053
+1.2.826.0.1.3680043.22701,114.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,114,-59.178
+1.2.826.0.1.3680043.22701,103.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,103,-52.303
+1.2.826.0.1.3680043.22701,92.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,92,-45.428
+1.2.826.0.1.3680043.22701,81.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,81,-38.553
+1.2.826.0.1.3680043.22701,70.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,70,-31.678
+1.2.826.0.1.3680043.22701,59.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,59,-24.803
+1.2.826.0.1.3680043.22701,48.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,48,-17.928
+1.2.826.0.1.3680043.22701,37.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,37,-11.053
+1.2.826.0.1.3680043.22701,26.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,26,-4.178
+1.2.826.0.1.3680043.22701,15.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,15,2.697
+1.2.826.0.1.3680043.29807,571.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.353516, 0.353516]",0.625,571,-181.509
+1.2.826.0.1.3680043.29807,548.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.353516, 0.353516]",0.625,548,-174.322
+1.2.826.0.1.3680043.29807,524.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.353516, 0.353516]",0.625,524,-166.822
+1.2.826.0.1.3680043.29807,501.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.353516, 0.353516]",0.625,501,-159.634
+1.2.826.0.1.3680043.29807,477.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.353516, 0.353516]",0.625,477,-152.134
+1.2.826.0.1.3680043.29807,454.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.353516, 0.353516]",0.625,454,-144.947
+1.2.826.0.1.3680043.29807,430.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.353516, 0.353516]",0.625,430,-137.447
+1.2.826.0.1.3680043.29807,407.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.353516, 0.353516]",0.625,407,-130.259
+1.2.826.0.1.3680043.29807,383.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.353516, 0.353516]",0.625,383,-122.759
+1.2.826.0.1.3680043.29807,360.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.353516, 0.353516]",0.625,360,-115.572
+1.2.826.0.1.3680043.29807,336.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.353516, 0.353516]",0.625,336,-108.072
+1.2.826.0.1.3680043.29807,313.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.353516, 0.353516]",0.625,313,-100.884
+1.2.826.0.1.3680043.29807,289.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.353516, 0.353516]",0.625,289,-93.384
+1.2.826.0.1.3680043.29807,266.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.353516, 0.353516]",0.625,266,-86.197
+1.2.826.0.1.3680043.29807,242.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.353516, 0.353516]",0.625,242,-78.697
+1.2.826.0.1.3680043.29807,219.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.353516, 0.353516]",0.625,219,-71.509
+1.2.826.0.1.3680043.29807,195.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.353516, 0.353516]",0.625,195,-64.009
+1.2.826.0.1.3680043.29807,172.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.353516, 0.353516]",0.625,172,-56.821
+1.2.826.0.1.3680043.29807,148.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.353516, 0.353516]",0.625,148,-49.321
+1.2.826.0.1.3680043.29807,125.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.353516, 0.353516]",0.625,125,-42.134
+1.2.826.0.1.3680043.29807,101.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.353516, 0.353516]",0.625,101,-34.634
+1.2.826.0.1.3680043.29807,78.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.353516, 0.353516]",0.625,78,-27.447
+1.2.826.0.1.3680043.29807,54.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.353516, 0.353516]",0.625,54,-19.947
+1.2.826.0.1.3680043.29807,31.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.353516, 0.353516]",0.625,31,-12.759
+1.2.826.0.1.3680043.3959,17.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,17,-175.5
+1.2.826.0.1.3680043.3959,29.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,29,-168.0
+1.2.826.0.1.3680043.3959,42.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,42,-159.875
+1.2.826.0.1.3680043.3959,54.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,54,-152.375
+1.2.826.0.1.3680043.3959,67.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,67,-144.25
+1.2.826.0.1.3680043.3959,79.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,79,-136.75
+1.2.826.0.1.3680043.3959,92.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,92,-128.625
+1.2.826.0.1.3680043.3959,104.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,104,-121.125
+1.2.826.0.1.3680043.3959,117.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,117,-113.0
+1.2.826.0.1.3680043.3959,129.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,129,-105.5
+1.2.826.0.1.3680043.3959,142.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,142,-97.375
+1.2.826.0.1.3680043.3959,154.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,154,-89.875
+1.2.826.0.1.3680043.3959,167.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,167,-81.75
+1.2.826.0.1.3680043.3959,179.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,179,-74.25
+1.2.826.0.1.3680043.3959,192.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,192,-66.125
+1.2.826.0.1.3680043.3959,204.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,204,-58.625
+1.2.826.0.1.3680043.3959,217.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,217,-50.5
+1.2.826.0.1.3680043.3959,229.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,229,-43.0
+1.2.826.0.1.3680043.3959,242.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,242,-34.875
+1.2.826.0.1.3680043.3959,254.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,254,-27.375
+1.2.826.0.1.3680043.3959,267.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,267,-19.25
+1.2.826.0.1.3680043.3959,279.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,279,-11.75
+1.2.826.0.1.3680043.3959,292.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,292,-3.625
+1.2.826.0.1.3680043.3959,304.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Implicit VR Little Endian,"[0.253906, 0.253906]",0.625,304,3.875
+1.2.826.0.1.3680043.482,514.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.46484375, 0.46484375]",0.6,514,8.3
+1.2.826.0.1.3680043.482,493.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.46484375, 0.46484375]",0.6,493,16.7
+1.2.826.0.1.3680043.482,472.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.46484375, 0.46484375]",0.6,472,25.1
+1.2.826.0.1.3680043.482,451.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.46484375, 0.46484375]",0.6,451,33.5
+1.2.826.0.1.3680043.482,429.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.46484375, 0.46484375]",0.6,429,42.3
+1.2.826.0.1.3680043.482,408.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.46484375, 0.46484375]",0.6,408,50.7
+1.2.826.0.1.3680043.482,387.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.46484375, 0.46484375]",0.6,387,59.1
+1.2.826.0.1.3680043.482,366.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.46484375, 0.46484375]",0.6,366,67.5
+1.2.826.0.1.3680043.482,345.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.46484375, 0.46484375]",0.6,345,75.9
+1.2.826.0.1.3680043.482,324.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.46484375, 0.46484375]",0.6,324,84.3
+1.2.826.0.1.3680043.482,303.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.46484375, 0.46484375]",0.6,303,92.7
+1.2.826.0.1.3680043.482,282.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.46484375, 0.46484375]",0.6,282,101.1
+1.2.826.0.1.3680043.482,260.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.46484375, 0.46484375]",0.6,260,109.9
+1.2.826.0.1.3680043.482,239.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.46484375, 0.46484375]",0.6,239,118.3
+1.2.826.0.1.3680043.482,218.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.46484375, 0.46484375]",0.6,218,126.7
+1.2.826.0.1.3680043.482,197.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.46484375, 0.46484375]",0.6,197,135.1
+1.2.826.0.1.3680043.482,176.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.46484375, 0.46484375]",0.6,176,143.5
+1.2.826.0.1.3680043.482,155.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.46484375, 0.46484375]",0.6,155,151.9
+1.2.826.0.1.3680043.482,134.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.46484375, 0.46484375]",0.6,134,160.3
+1.2.826.0.1.3680043.482,113.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.46484375, 0.46484375]",0.6,113,168.7
+1.2.826.0.1.3680043.482,91.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.46484375, 0.46484375]",0.6,91,177.5
+1.2.826.0.1.3680043.482,70.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.46484375, 0.46484375]",0.6,70,185.9
+1.2.826.0.1.3680043.482,49.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.46484375, 0.46484375]",0.6,49,194.3
+1.2.826.0.1.3680043.482,28.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,"JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])","[0.46484375, 0.46484375]",0.6,28,202.7
+1.2.826.0.1.3680043.5565,226.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.253906, 0.253906]",0.625,226,-119.035
+1.2.826.0.1.3680043.5565,217.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.253906, 0.253906]",0.625,217,-113.41
+1.2.826.0.1.3680043.5565,208.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.253906, 0.253906]",0.625,208,-107.785
+1.2.826.0.1.3680043.5565,198.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.253906, 0.253906]",0.625,198,-101.535
+1.2.826.0.1.3680043.5565,189.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.253906, 0.253906]",0.625,189,-95.91
+1.2.826.0.1.3680043.5565,180.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.253906, 0.253906]",0.625,180,-90.285
+1.2.826.0.1.3680043.5565,171.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.253906, 0.253906]",0.625,171,-84.66
+1.2.826.0.1.3680043.5565,161.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.253906, 0.253906]",0.625,161,-78.41
+1.2.826.0.1.3680043.5565,152.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.253906, 0.253906]",0.625,152,-72.785
+1.2.826.0.1.3680043.5565,143.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.253906, 0.253906]",0.625,143,-67.16
+1.2.826.0.1.3680043.5565,133.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.253906, 0.253906]",0.625,133,-60.91
+1.2.826.0.1.3680043.5565,124.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.253906, 0.253906]",0.625,124,-55.285
+1.2.826.0.1.3680043.5565,115.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.253906, 0.253906]",0.625,115,-49.66
+1.2.826.0.1.3680043.5565,106.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.253906, 0.253906]",0.625,106,-44.035
+1.2.826.0.1.3680043.5565,96.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.253906, 0.253906]",0.625,96,-37.785
+1.2.826.0.1.3680043.5565,87.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.253906, 0.253906]",0.625,87,-32.16
+1.2.826.0.1.3680043.5565,78.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.253906, 0.253906]",0.625,78,-26.535
+1.2.826.0.1.3680043.5565,68.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.253906, 0.253906]",0.625,68,-20.285
+1.2.826.0.1.3680043.5565,59.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.253906, 0.253906]",0.625,59,-14.66
+1.2.826.0.1.3680043.5565,50.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.253906, 0.253906]",0.625,50,-9.035
+1.2.826.0.1.3680043.5565,41.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.253906, 0.253906]",0.625,41,-3.41
+1.2.826.0.1.3680043.5565,31.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.253906, 0.253906]",0.625,31,2.84
+1.2.826.0.1.3680043.5565,22.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.253906, 0.253906]",0.625,22,8.465
+1.2.826.0.1.3680043.5565,13.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.253906, 0.253906]",0.625,13,14.09
+1.2.826.0.1.3680043.5903,132.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,Explicit VR Little Endian,"[0.427734375, 0.427734375]",1.0,132,-695.0
+1.2.826.0.1.3680043.5903,127.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,Explicit VR Little Endian,"[0.427734375, 0.427734375]",1.0,127,-690.0
+1.2.826.0.1.3680043.5903,121.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,Explicit VR Little Endian,"[0.427734375, 0.427734375]",1.0,121,-684.0
+1.2.826.0.1.3680043.5903,116.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,Explicit VR Little Endian,"[0.427734375, 0.427734375]",1.0,116,-679.0
+1.2.826.0.1.3680043.5903,110.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,Explicit VR Little Endian,"[0.427734375, 0.427734375]",1.0,110,-673.0
+1.2.826.0.1.3680043.5903,105.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,Explicit VR Little Endian,"[0.427734375, 0.427734375]",1.0,105,-668.0
+1.2.826.0.1.3680043.5903,100.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,Explicit VR Little Endian,"[0.427734375, 0.427734375]",1.0,100,-663.0
+1.2.826.0.1.3680043.5903,94.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,Explicit VR Little Endian,"[0.427734375, 0.427734375]",1.0,94,-657.0
+1.2.826.0.1.3680043.5903,89.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,Explicit VR Little Endian,"[0.427734375, 0.427734375]",1.0,89,-652.0
+1.2.826.0.1.3680043.5903,84.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,Explicit VR Little Endian,"[0.427734375, 0.427734375]",1.0,84,-647.0
+1.2.826.0.1.3680043.5903,78.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,Explicit VR Little Endian,"[0.427734375, 0.427734375]",1.0,78,-641.0
+1.2.826.0.1.3680043.5903,73.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,Explicit VR Little Endian,"[0.427734375, 0.427734375]",1.0,73,-636.0
+1.2.826.0.1.3680043.5903,67.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,Explicit VR Little Endian,"[0.427734375, 0.427734375]",1.0,67,-630.0
+1.2.826.0.1.3680043.5903,62.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,Explicit VR Little Endian,"[0.427734375, 0.427734375]",1.0,62,-625.0
+1.2.826.0.1.3680043.5903,56.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,Explicit VR Little Endian,"[0.427734375, 0.427734375]",1.0,56,-619.0
+1.2.826.0.1.3680043.5903,51.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,Explicit VR Little Endian,"[0.427734375, 0.427734375]",1.0,51,-614.0
+1.2.826.0.1.3680043.5903,46.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,Explicit VR Little Endian,"[0.427734375, 0.427734375]",1.0,46,-609.0
+1.2.826.0.1.3680043.5903,40.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,Explicit VR Little Endian,"[0.427734375, 0.427734375]",1.0,40,-603.0
+1.2.826.0.1.3680043.5903,35.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,Explicit VR Little Endian,"[0.427734375, 0.427734375]",1.0,35,-598.0
+1.2.826.0.1.3680043.5903,30.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,Explicit VR Little Endian,"[0.427734375, 0.427734375]",1.0,30,-593.0
+1.2.826.0.1.3680043.5903,24.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,Explicit VR Little Endian,"[0.427734375, 0.427734375]",1.0,24,-587.0
+1.2.826.0.1.3680043.5903,19.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,Explicit VR Little Endian,"[0.427734375, 0.427734375]",1.0,19,-582.0
+1.2.826.0.1.3680043.5903,13.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,Explicit VR Little Endian,"[0.427734375, 0.427734375]",1.0,13,-576.0
+1.2.826.0.1.3680043.5903,8.dcm,1.0,-1024.0,True,512,512,12,0,,MONOCHROME2,Explicit VR Little Endian,"[0.427734375, 0.427734375]",1.0,8,-571.0
+1.2.826.0.1.3680043.8368,313.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.375, 0.375]",0.625,313,-236.69
+1.2.826.0.1.3680043.8368,300.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.375, 0.375]",0.625,300,-228.565
+1.2.826.0.1.3680043.8368,287.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.375, 0.375]",0.625,287,-220.44
+1.2.826.0.1.3680043.8368,274.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.375, 0.375]",0.625,274,-212.315
+1.2.826.0.1.3680043.8368,261.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.375, 0.375]",0.625,261,-204.19
+1.2.826.0.1.3680043.8368,248.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.375, 0.375]",0.625,248,-196.065
+1.2.826.0.1.3680043.8368,236.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.375, 0.375]",0.625,236,-188.565
+1.2.826.0.1.3680043.8368,223.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.375, 0.375]",0.625,223,-180.44
+1.2.826.0.1.3680043.8368,210.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.375, 0.375]",0.625,210,-172.315
+1.2.826.0.1.3680043.8368,197.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.375, 0.375]",0.625,197,-164.19
+1.2.826.0.1.3680043.8368,184.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.375, 0.375]",0.625,184,-156.065
+1.2.826.0.1.3680043.8368,171.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.375, 0.375]",0.625,171,-147.94
+1.2.826.0.1.3680043.8368,159.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.375, 0.375]",0.625,159,-140.44
+1.2.826.0.1.3680043.8368,146.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.375, 0.375]",0.625,146,-132.315
+1.2.826.0.1.3680043.8368,133.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.375, 0.375]",0.625,133,-124.19
+1.2.826.0.1.3680043.8368,120.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.375, 0.375]",0.625,120,-116.065
+1.2.826.0.1.3680043.8368,107.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.375, 0.375]",0.625,107,-107.94
+1.2.826.0.1.3680043.8368,94.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.375, 0.375]",0.625,94,-99.815
+1.2.826.0.1.3680043.8368,82.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.375, 0.375]",0.625,82,-92.315
+1.2.826.0.1.3680043.8368,69.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.375, 0.375]",0.625,69,-84.19
+1.2.826.0.1.3680043.8368,56.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.375, 0.375]",0.625,56,-76.065
+1.2.826.0.1.3680043.8368,43.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.375, 0.375]",0.625,43,-67.94
+1.2.826.0.1.3680043.8368,30.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.375, 0.375]",0.625,30,-59.815
+1.2.826.0.1.3680043.8368,17.dcm,1.0,-1024.0,True,512,512,16,1,,MONOCHROME2,Explicit VR Little Endian,"[0.375, 0.375]",0.625,17,-51.69
