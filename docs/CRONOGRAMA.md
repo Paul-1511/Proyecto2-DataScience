@@ -43,8 +43,22 @@ Archivo compartido. Cada responsable actualiza **solo su sección**. Estados: �
 |---|---|---|---|
 | — | *(a completar por el responsable)* | | Secciones [PENDIENTE] de `experimento_dl/INFORME_TECNICO.md` con datos de `RESULTADOS_ENTRENAMIENTO.md` |
 
-## Auditoría experimental (responsable de la auditoría)
+## Auditoría experimental (responsable de la auditoría — Hansel López)
 
-| # | Tarea | Estado | Depende de |
-|---|---|---|---|
-| — | *(a completar por el responsable)* | | `artifacts/v2/results/` y comandos de `artifacts/README.md` |
+| # | Tarea | Estado | Fecha | Evidencia |
+|---|---|---|---|---|
+| 1 | Creación de rama `feature/evaluacion` a partir de `main` | ✅ | 13-oct | `git branch feature/evaluacion` |
+| 2 | Módulo independiente `metrics_eval.py` (métricas, IC95%, DeLong, McNemar, bootstrap pareado) | ✅ | 13-oct | `experimento_dl/metrics_eval.py` |
+| 3 | Pruebas unitarias con datos sintéticos (26 tests, todos passing) | ✅ | 13-oct | `experimento_dl/tests/test_metrics_eval.py` |
+| 4 | Verificación independiente de particiones disjuntas (sin fuga de datos) | ✅ | 13-oct | `notebooks/03_evaluacion.ipynb` §5 |
+| 5 | Validación de formato de predicciones (columnas, rangos, UIDs) | ✅ | 13-oct | `notebooks/03_evaluacion.ipynb` §4 |
+| 6 | Recálculo de métricas desde predicciones (tolerancia < 1e-6 vs JSON reportado) | ✅ | 13-oct | `notebooks/03_evaluacion.ipynb` §7 |
+| 7 | Prueba de DeLong: ΔAUC = +0.099, p < 0.001 | ✅ | 13-oct | `notebooks/03_evaluacion.ipynb` §9.1 |
+| 8 | Bootstrap pareado: IC95% [+0.048, +0.147], 100% remuestreos favorecen BiGRU | ✅ | 13-oct | `notebooks/03_evaluacion.ipynb` §9.2 |
+| 9 | McNemar exacto: 66 vs 48 aciertos exclusivos, p = 0.11 | ✅ | 13-oct | `notebooks/03_evaluacion.ipynb` §9.3 |
+| 10 | Análisis de errores (FP, FN, desacuerdos entre modelos) | ✅ | 13-oct | `notebooks/03_evaluacion.ipynb` §10 |
+| 11 | Figuras para el informe (ROC, matrices de confusión, distribuciones) | ✅ | 13-oct | `notebooks/03_evaluacion.ipynb` §11 |
+| 12 | Conclusiones, limitaciones y recomendaciones documentadas | ✅ | 13-oct | `notebooks/03_evaluacion.ipynb` §13–14 |
+| 13 | Sección DEPENDENCIAS E INTEGRACIÓN completada | ✅ | 13-oct | `notebooks/03_evaluacion.ipynb` §15 |
+| 14 | Actualización de secciones pendientes en INFORME_TECNICO.md | 🔄 | 13-oct | secciones 7, 8, 11 |
+| 15 | Pull request `feature/evaluacion` → `main` | ⏳ | — | pendiente de autorización |

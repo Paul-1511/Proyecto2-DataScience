@@ -166,15 +166,90 @@ entrenamiento y de inferencia por estudio.
 
 # 7. Resultados experimentales
 
-**[PENDIENTE]** — Se completarán con `results/comparacion_modelos.csv` e
-`results/INFORME_RESULTADOS.md`. Figuras previstas: `results/figures/confusion_*.png`,
-`roc_*.png`, `curvas_*.png`, `comparacion_*.png`.
+> Datos reproducidos de forma independiente por Hansel López (P3) en `notebooks/03_evaluacion.ipynb`,
+> a partir de `artifacts/v2/results/`. Métricas recalculadas coinciden con las reportadas en
+> `metrics_*.json` con diferencia < 1e-6.
+
+## 7.1 Tamaño de muestra y particiones
+
+Particiones disjuntas por `StudyInstanceUID` (verificado), estratificadas por `patient_overall`, semilla 42.
+
+| Partición | Estudios | Con fractura | Prevalencia |
+|-----------|----------|--------------|-------------|
+| Entrenamiento | 1292 | 615 | 47.6 % |
+| Validación | 323 | 154 | 47.7 % |
+| Prueba | 404 | 192 | 47.5 % |
+
+Prevalencia balanceada entre particiones (47.5–47.7 %).
+
+## 7.2 Métricas en prueba (umbral fijado en validación — índice de Youden)
+
+| Métrica | MIL (top-3) | BiGRU | Δ (BiGRU − MIL) |
+|---------|-------------|-------|------------------|
+| ROC-AUC | 0.638 [0.583, 0.693] | **0.737** [0.688, 0.784] | **+0.099** |
+| Sensibilidad | 0.365 | **0.641** | +0.276 |
+| Especificidad | **0.816** | 0.651 | −0.165 |
+| Precisión | **0.642** | 0.624 | −0.018 |
+| F1 | 0.465 | **0.632** | +0.167 |
+| Exactitud | 0.601 | **0.646** | +0.045 |
+| TP / FP / TN / FN | 70 / 39 / 173 / 122 | 123 / 74 / 138 / 69 | — |
+
+IC95 % bootstrap (2000 remuestreos, semilla 42). Los IC95 % apenas se solapan en AUC
+(0.693 vs 0.688), lo que sugiere —y las pruebas pareadas confirman— una diferencia real.
+
+## 7.3 Visualizaciones
+
+Figuras generadas en `artifacts/v2/results/figures/` y reproducidas en `notebooks/03_evaluacion.ipynb`:
+
+- `comparacion_roc_prueba.png` — curvas ROC superpuestas con AUC e IC95 %.
+- `comparacion_metricas_prueba.png` — barras comparativas de todas las métricas.
+- `comparacion_probabilidades_prueba.png` — distribución de probabilidades por clase real.
+- `comparacion_auc_validacion.png` — selección de época por AUC de validación.
+- `comparacion_tiempos.png` — entrenamiento e inferencia.
+- `confusion_{mil,bigru}.png` — matrices de confusión.
+- `roc_{mil,bigru}.png` — curvas ROC individuales.
+- `curvas_{mil,bigru}.png` — pérdida y AUC por época.
+
+## 7.4 Tiempos de ejecución (Tesla T4, Kaggle)
+
+| Modelo | Entrenamiento | s/época | Inferencia (GPU) | VRAM pico |
+|--------|---------------|---------|------------------|-----------|
+| MIL | 13.7 min | ~81 s | 28.0 ms/estudio | 3.21 GB |
+| BiGRU | 12.4 min | ~81 s | 23.8 ms/estudio | 3.21 GB |
+
+La inferencia excluye lectura y preprocesamiento DICOM (~2.5 s/estudio en CPU), que dominan
+el tiempo de extremo a extremo.
 
 # 8. Comparación de modelos y selección final
 
-**[PENDIENTE]** — La selección se basará en ROC-AUC y en el equilibrio sensibilidad/especificidad en
-validación y prueba, considerando el solapamiento de los IC95 %. Si no hay diferencia clara, se
-indicará explícitamente.
+## 8.1 Pruebas estadísticas pareadas (mismo conjunto de prueba, n = 404)
+
+| Prueba | Resultado | Interpretación |
+|--------|-----------|----------------|
+| **DeLong** (1988) | ΔAUC = +0.099, z = 4.09, p = 4.3·10⁻⁵ | Diferencia **altamente significativa** |
+| **Bootstrap pareado** (2000 remuestreos) | IC95 % ΔAUC: [+0.048, +0.147]; 0 % de remuestreos ≤ 0 | BiGRU consistentemente superior |
+| **McNemar exacto** (umbral val) | 66 vs 48 aciertos exclusivos, p = 0.11 | Dirección favorable a BiGRU, no significativo en predicciones binarias |
+| **Correlación Spearman** | ρ = 0.60 | Acuerdo moderado entre probabilidades |
+
+En validación (n = 323), la dirección es la misma pero la diferencia no alcanza significación
+(DeLong p = 0.115; bootstrap IC95 % [−0.010, +0.086]).
+
+## 8.2 Selección: **B · ResNet18 + BiGRU**
+
+**Criterio fijado antes de entrenar:** AUC de prueba y equilibrio sensibilidad/especificidad.
+
+**Justificación:**
+
+1. **AUC superior y estadísticamente significativo:** 0.737 vs 0.638 (DeLong p < 0.001).
+2. **Mejor sensibilidad** (0.641 vs 0.365): detecta 53 más fracturas reales que MIL (123 vs 70 TP).
+3. **Mejor F1** (0.632 vs 0.465): balance más equilibrado entre precisión y sensibilidad.
+4. **Estabilidad entre validación y prueba:** AUC estable (0.725 → 0.737), mientras que MIL cayó (0.687 → 0.638).
+5. **Inferencia más rápida:** 23.8 vs 28.0 ms/estudio.
+
+**Matiz importante:** la McNemar no alcanza significación en predicciones binarias (p = 0.11),
+lo que indica que la diferencia es más clara en probabilidades continuas (DeLong) que en
+clasificaciones binarias con un umbral fijo. Con los umbrales de validación, MIL opera con
+baja sensibilidad (0.365) y BiGRU con un punto más equilibrado (0.641 / 0.651).
 
 # 9. Aplicación desarrollada
 
@@ -198,7 +273,60 @@ muestra predicciones. Las etiquetas reales se muestran separadas y rotuladas com
 
 # 11. Conclusiones
 
-**[PENDIENTE]** — se redactarán a partir de los resultados reales.
+El experimento completó exitosamente el pipeline de clasificación de fracturas cervicales en TC
+desde el preprocesamiento DICOM hasta la evaluación comparativa de modelos, utilizando los 2019
+estudios completos del dataset RSNA 2022 y entrenamiento en GPU Tesla T4 mediante Kaggle Notebooks.
+
+**Hallazgos principales:**
+
+1. **BiGRU supera estadísticamente a MIL** (ΔAUC = +0.099, p < 0.001 según prueba de DeLong).
+   El bootstrap pareado confirma que en el 100% de los remuestreos BiGRU tuvo mejor AUC, con IC95%
+   de la diferencia [+0.048, +0.147] que no incluye el cero.
+
+2. **BiGRU ofrece mejor sensibilidad** (0.641 vs 0.365), detectando 53 fracturas reales más que MIL
+   (123 vs 70 TP). Esto es clínicamente relevante: en screening médico, los falsos negativos son más
+   costosos que los falsos positivos.
+
+3. **Ambos modelos tienen desempeño moderado.** El mejor AUC alcanzado (0.737) está lejos del umbral
+   de utilidad clínica (>0.90). La especificidad de BiGRU (0.651) genera 74 falsos positivos, lo que
+   limitaría su uso como herramienta autónoma.
+
+4. **El modelado secuencial captura contexto anatómico.** BiGRU procesa los 48 cortes ordenados por z,
+   permitiendo que la red aprenda relaciones espaciales entre vértebras adyacentes. MIL trata cada corte
+   independientemente y solo promedia los top-3, perdiendo información contextual.
+
+**Limitaciones críticas:**
+
+- **Una sola partición train/val/test** (semilla 42): los resultados pueden no generalizar a otras
+  divisiones de datos. Se requiere validación cruzada k-fold para estimar varianza.
+- **Muestreo de 48 cortes** de estudios con 69-1082 cortes totales: muchas fracturas pueden no estar
+  en los cortes seleccionados, introduciendo ruido de etiqueta.
+- **Prevalencia del 47.5%** en el conjunto de prueba es artificialmente alta comparada con la población
+  clínica real (~5-10% en pacientes de trauma), lo que infla métricas como precisión.
+- **Sin validación externa:** los modelos se evaluaron solo en datos de las mismas instituciones del
+  entrenamiento. No se conoce el desempeño en poblaciones demográficas o equipos de TC diferentes.
+
+**Recomendaciones:**
+
+1. **No desplegar en producción clínica** sin validación prospectiva con radiólogos y datos de
+   instituciones independientes.
+2. **Incrementar el muestreo de cortes** (ej. 96 o 128 posiciones) para reducir el riesgo de no
+   muestrear la fractura.
+3. **Implementar validación cruzada 5-fold** para obtener estimaciones más robustas del desempeño y
+   su varianza.
+4. **Explorar arquitecturas 3D** (ej. 3D ResNet) que procesen el volumen completo sin necesidad de
+   muestreo de cortes.
+5. **Ajustar el umbral de decisión** según el costo clínico de falsos positivos vs falsos negativos,
+   en consulta con radiólogos.
+
+**Contribución académica:**
+
+Este proyecto demuestra que es posible construir un pipeline reproducible de clasificación médica en
+TC con recursos computacionales limitados (GPU de 16 GB, ~26 min de entrenamiento), utilizando
+herramientas de código abierto (PyTorch, pydicom, scikit-learn) y prácticas de ciencia de datos
+rigurosas (particiones estratificadas, validación independiente, pruebas estadísticas pareadas).
+El código, los artefactos y el notebook de evaluación están versionados en GitHub y son completamente
+reproducibles por terceros.
 
 # Referencias
 
