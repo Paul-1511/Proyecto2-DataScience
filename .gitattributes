@@ -1,0 +1,2 @@
+# Artefactos con hash en MANIFEST.json: se conservan byte a byte (sin conversión de fin de línea)
+artifacts/** -text

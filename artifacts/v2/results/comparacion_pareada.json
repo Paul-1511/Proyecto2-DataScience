@@ -1,0 +1,55 @@
+{
+  "test": {
+    "n": 404,
+    "positivos": 192,
+    "delong": {
+      "auc_a": 0.6381928066037735,
+      "auc_b": 0.7371020047169812,
+      "diff": 0.09890919811320764,
+      "z": 4.090604205102885,
+      "p_value": 4.302508419403626e-05
+    },
+    "bootstrap_pareado": {
+      "diff_mean": 0.09777887335622228,
+      "ci95": [
+        0.04755550634668569,
+        0.14744434182871255
+      ],
+      "prop_diff_le_0": 0.0,
+      "n_resamples": 2000
+    },
+    "mcnemar_umbral_val": {
+      "solo_mil_acierta": 48,
+      "solo_bigru_acierta": 66,
+      "p_value_exacto": 0.11093931188461242
+    },
+    "correlacion_probs_spearman": 0.6041492641725228
+  },
+  "val": {
+    "n": 323,
+    "positivos": 154,
+    "delong": {
+      "auc_a": 0.6870437255052639,
+      "auc_b": 0.7254860524091293,
+      "diff": 0.0384423269038654,
+      "z": 1.575275660371082,
+      "p_value": 0.11519282959449363
+    },
+    "bootstrap_pareado": {
+      "diff_mean": 0.03850660933338453,
+      "ci95": [
+        -0.010085212875924761,
+        0.08559113279958522
+      ],
+      "prop_diff_le_0": 0.0595,
+      "n_resamples": 2000
+    },
+    "mcnemar_umbral_val": {
+      "solo_mil_acierta": 39,
+      "solo_bigru_acierta": 50,
+      "p_value_exacto": 0.2890960806960612
+    },
+    "correlacion_probs_spearman": 0.6786954835271567
+  },
+  "nota": "Diferencias = BiGRU - MIL. Evaluación post hoc sobre el mismo conjunto; la selección de modelo se definió a priori por AUC/IC y no se ajustó nada con la prueba."
+}

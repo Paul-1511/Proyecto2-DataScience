@@ -1,0 +1,40 @@
+{
+  "mil": {
+    "ids_val_exactos": true,
+    "ids_test_exactos": true,
+    "sin_fuga_train": true,
+    "etiquetas_coinciden_splits": true,
+    "pred_csv_coincide_umbral": true,
+    "estudios_en_el_limite_val_test": [
+      1,
+      0
+    ],
+    "probs_en_0_1_y_finitas": true,
+    "val_coincide": true,
+    "test_thr_val_youden_coincide": true,
+    "test_thr_0_5_coincide": true,
+    "ic95_auc_reproducible": true,
+    "mejor_epoca_es_max_val_auc": true,
+    "historial_finito": true
+  },
+  "bigru": {
+    "ids_val_exactos": true,
+    "ids_test_exactos": true,
+    "sin_fuga_train": true,
+    "etiquetas_coinciden_splits": true,
+    "pred_csv_coincide_umbral": true,
+    "estudios_en_el_limite_val_test": [
+      1,
+      0
+    ],
+    "probs_en_0_1_y_finitas": true,
+    "val_coincide": true,
+    "test_thr_val_youden_coincide": true,
+    "test_thr_0_5_coincide": true,
+    "ic95_auc_reproducible": true,
+    "mejor_epoca_es_max_val_auc": true,
+    "historial_finito": true
+  },
+  "comparacion_csv_coincide_json": true,
+  "all_ok": true
+}

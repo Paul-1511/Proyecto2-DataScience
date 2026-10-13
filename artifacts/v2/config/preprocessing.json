@@ -1,0 +1,11 @@
+{
+  "exp": "v2",
+  "k_slices": 48,
+  "context_mm": 2.0,
+  "slice_margin": 0.05,
+  "img_size": 224,
+  "bone_wl": 400,
+  "bone_ww": 1800,
+  "order": "ImagePositionPatient[2] ascendente",
+  "normalization": "HU -> ventana ósea -> [0,1]; en la red: media/desv. ImageNet"
+}

@@ -14,7 +14,7 @@ from sklearn.metrics import roc_curve
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 
-from common import FIG_DIR, K_SLICES, N_STUDIES, RESULTS_DIR  # noqa: E402
+from common import CONTEXT_MM, EXP, FIG_DIR, K_SLICES, RESULTS_DIR  # noqa: E402
 
 NAMES = {"mil": "ResNet18 + MIL (top-3)", "bigru": "ResNet18 + BiGRU"}
 COLORS = {"mil": "#2a6fdb", "bigru": "#e07a1f"}
@@ -119,7 +119,8 @@ def figures(res):
 
 def report(res, df):
     splits = pd.read_csv(RESULTS_DIR / "splits.csv")
-    dl = pd.read_csv(RESULTS_DIR / "download_log.csv")
+    dl_path = RESULTS_DIR / "download_log.csv"   # solo existe en v1 (descarga local)
+    dl = pd.read_csv(dl_path) if dl_path.exists() else None
     audit = pd.read_csv(RESULTS_DIR / "orden_z_auditoria.csv")
     meta = pd.read_csv(RESULTS_DIR / "dicom_metadata.csv")
     used = set(audit["StudyInstanceUID"])
@@ -128,10 +129,13 @@ def report(res, df):
     L = ["# Resultados del experimento (generado automáticamente por s05_compare_report.py)", "",
          "Todos los valores provienen de `results/*.json|csv` producidos en esta ejecución.", "",
          "## Datos", "",
-         f"- Muestra planificada: {N_STUDIES} estudios estratificados por `patient_overall` (semilla 42).",
-         f"- Estudios descargados OK: {int((dl['status'] == 'ok').sum())}; preprocesados: {len(used)}.",
-         f"- Cortes por estudio: {K_SLICES}, equiespaciados entre el 5% y 95% del rango de instancias.",
-         f"- Volumen DICOM descargado: {dl['mb'].sum() / 1e3:.2f} GB.", "",
+         f"- Configuración: {EXP}. Muestra planificada: {len(splits)} estudios estratificados por "
+         "`patient_overall` (semilla 42).",
+         (f"- Estudios descargados OK: {int((dl['status'] == 'ok').sum())} "
+          f"({dl['mb'].sum() / 1e3:.2f} GB); " if dl is not None else "- Fuente: dataset montado en Kaggle; ")
+         + f"preprocesados: {len(used)}.",
+         f"- Posiciones por estudio: {K_SLICES}, equiespaciadas entre el 5% y 95% del rango de instancias"
+         + (f"; entrada 2.5D (vecinos a ±{CONTEXT_MM:g} mm)." if CONTEXT_MM > 0 else "; entrada 2D."), "",
          "| partición | estudios | positivos |", "|---|---|---|"]
     L += [f"| {k} | {int(v['size'])} | {int(v['sum'])} |" for k, v in s.iterrows()]
     L += ["", "## Preprocesamiento (auditoría)", "",

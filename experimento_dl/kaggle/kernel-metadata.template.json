@@ -1,0 +1,15 @@
+{
+  "id": "<USUARIO_KAGGLE>/rsna-2022-entrenamiento-v2",
+  "title": "RSNA 2022 entrenamiento v2",
+  "code_file": "rsna_entrenamiento_v2.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "dataset_sources": [],
+  "competition_sources": ["rsna-2022-cervical-spine-fracture-detection"],
+  "kernel_sources": [],
+  "model_sources": []
+}

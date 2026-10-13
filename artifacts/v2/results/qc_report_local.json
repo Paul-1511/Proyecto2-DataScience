@@ -1,0 +1,28 @@
+{
+  "splits": {
+    "disjoint": true,
+    "unique_ids": true,
+    "sizes": {
+      "test": 404,
+      "train": 1292,
+      "val": 323
+    }
+  },
+  "mil": {
+    "history_finite": true,
+    "pred_ids_in_split": true,
+    "threshold_matches_val_youden": true,
+    "test_metrics_match_predictions": true,
+    "n_test_evaluated": 404,
+    "checkpoint_exists": true
+  },
+  "bigru": {
+    "history_finite": true,
+    "pred_ids_in_split": true,
+    "threshold_matches_val_youden": true,
+    "test_metrics_match_predictions": true,
+    "n_test_evaluated": 404,
+    "checkpoint_exists": true
+  },
+  "all_ok": true
+}

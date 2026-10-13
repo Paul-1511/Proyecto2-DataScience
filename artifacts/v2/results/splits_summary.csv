@@ -1,0 +1,4 @@
+split,n,positivos,prop_pos
+test,404,192,0.475
+train,1292,615,0.476
+val,323,154,0.477
