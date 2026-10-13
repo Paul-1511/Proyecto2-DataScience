@@ -208,7 +208,7 @@ md("""
   `results_v2.zip` (métricas JSON/CSV, predicciones, historiales, figuras, `qc_report.json`).
 - En el repositorio se versiona `results_v2/` (sin pesos ni caché). Los checkpoints se comparten como
   Output de Kaggle (o artefacto privado), no en GitHub.
-- Inferencia: `inference.py` (`load_classifier` + `predict_study`), ver `INTEGRACION_STREAMLIT.md`.
+- Inferencia: `inference.py` (`load_classifier` + `predict_study`), ver `docs/INTEGRACION_STREAMLIT.md`.
 """)
 
 nb = dict(cells=cells, metadata=dict(

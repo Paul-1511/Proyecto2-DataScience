@@ -19,7 +19,7 @@ Desde la raíz del repositorio (Windows, Git Bash o PowerShell), con el entorno 
 Abre http://localhost:8501. Si `.venv` no existe, primero se instalan las dependencias de
 `experimento_dl/requirements.txt` (ver "Reproducción"). El visor DICOM usa los estudios de
 `experimento_dl/data/dicom/` (no versionados) o archivos `.dcm` subidos desde la propia app.
-Estado actual del proyecto: ver `ESTADO_PRESENTACION.md`.
+Estado actual del proyecto: ver `docs/ESTADO_PRESENTACION.md`.
 
 ## Reproducción
 

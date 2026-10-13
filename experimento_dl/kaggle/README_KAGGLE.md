@@ -1,7 +1,7 @@
 # Ejecutar el entrenamiento v2 en Kaggle — guía paso a paso
 
 Notebook: `rsna_entrenamiento_v2.ipynb` (generado por `build_notebook.py`; no editar a mano).
-Contexto, auditoría y decisión de muestreo: `../KAGGLE_NOTEBOOK.md`.
+Contexto, auditoría y decisión de muestreo: `../../docs/KAGGLE_NOTEBOOK.md`.
 
 ## 0. Requisitos de la cuenta
 - Reglas de la competencia **RSNA 2022 Cervical Spine Fracture Detection** aceptadas.
@@ -39,7 +39,7 @@ Contexto, auditoría y decisión de muestreo: `../KAGGLE_NOTEBOOK.md`.
 - `cache_v2/` (~5–6 GB): solo para reentrenar sin repreprocesar (`CACHE_INPUT`).
 
 Después, en local: `RSNA_EXP=v2 python s07_qc.py --n-infer 0` (re-verifica métricas contra predicciones)
-y completar `RESULTADOS_ENTRENAMIENTO.md` con los valores de `results_v2/`.
+y completar `docs/RESULTADOS_ENTRENAMIENTO.md` con los valores de `results_v2/`.
 
 ## Fallos previstos y qué hacer
 | Síntoma | Causa probable | Acción |

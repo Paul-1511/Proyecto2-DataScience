@@ -409,7 +409,7 @@ Todos los requisitos de la guía "Proyecto 2. Resultados" han sido completados y
 - ✅ Entrenamiento de ambos modelos en Kaggle
 - ✅ Generación de checkpoints y predicciones
 - ✅ Control de calidad y verificación
-- ✅ Documentación técnica (`RESULTADOS_ENTRENAMIENTO.md`)
+- ✅ Documentación técnica (`docs/RESULTADOS_ENTRENAMIENTO.md`)
 
 ### Pablo Cabrera (P2 - Aplicación)
 - ✅ Aplicación Streamlit completa

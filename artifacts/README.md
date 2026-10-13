@@ -2,7 +2,7 @@
 
 Salida **real y verificada** del entrenamiento en Kaggle (Tesla T4) de dos clasificadores globales por
 estudio: **A · ResNet18 + MIL** y **B · ResNet18 + BiGRU**. Fuente técnica completa:
-[`experimento_dl/RESULTADOS_ENTRENAMIENTO.md`](../experimento_dl/RESULTADOS_ENTRENAMIENTO.md).
+[`docs/RESULTADOS_ENTRENAMIENTO.md`](../docs/RESULTADOS_ENTRENAMIENTO.md).
 Modelo recomendado: **B (BiGRU)**, AUC prueba 0.737 [0.688, 0.784] vs 0.638 [0.583, 0.693].
 No es una herramienta clínica; no localiza fracturas.
 
@@ -58,14 +58,14 @@ artifacts/
 
 **App Streamlit**
 - `v2/weights/{mil,bigru}_final.pt` (fuera de git) + `experimento_dl/inference.py`
-  (`load_classifier`, `predict_study`) — contrato en `experimento_dl/INTEGRACION_STREAMLIT.md`.
+  (`load_classifier`, `predict_study`) — contrato en `docs/INTEGRACION_STREAMLIT.md`.
 - Para mostrar resultados: `metrics_*.json`, `comparacion_modelos.csv`, `comparacion_pareada.json`,
   `history_*.csv`, `test_predictions_*.csv`, `figures/` (todas reales).
 - Importante: los modelos v2 usan 48 posiciones 2.5D; la app actual (v1, 24 cortes 2D) no debe
   reutilizar su preprocesamiento para ellos — `inference.py` lo resuelve desde el checkpoint.
 
 **Informe científico**
-- `experimento_dl/RESULTADOS_ENTRENAMIENTO.md` (tablas listas), `comparacion_modelos.csv`,
+- `docs/RESULTADOS_ENTRENAMIENTO.md` (tablas listas), `comparacion_modelos.csv`,
   `comparacion_pareada.json`, figuras `comparacion_*.png`, `confusion_*.png`, `roc_*.png`,
   `curvas_*.png`, `entrada_25d_*.png`, `preproc_antes_despues_*.png`, `config/*.json`.
 - Secciones [PENDIENTE] de `experimento_dl/INFORME_TECNICO.md` (resultados, comparación, selección, conclusiones).

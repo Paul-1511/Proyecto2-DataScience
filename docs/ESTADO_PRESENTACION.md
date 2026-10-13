@@ -57,7 +57,7 @@ Ejecutar: `.venv/Scripts/streamlit run experimento_dl/app_streamlit.py` (desde l
 
 - Descargar los estudios de validación (26) y prueba (32), y completar entrenamiento (90 restantes).
   Con la cuota observada (~8–9 peticiones/min, ~36 peticiones por estudio) son ~10 h; alternativa
-  recomendada: ejecutar el pipeline en un Kaggle Notebook (`KAGGLE_NOTEBOOK.md`), donde los datos ya
+  recomendada: ejecutar el pipeline en un Kaggle Notebook (`docs/KAGGLE_NOTEBOOK.md`), donde los datos ya
   están montados.
 - Entrenar y evaluar ResNet18 + MIL y ResNet18 + BiGRU (`run_experiment.py`), y generar la comparación.
 - Completar las secciones [PENDIENTE] de `INFORME_TECNICO.md`.
