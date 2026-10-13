@@ -1,0 +1,126 @@
+{
+  "meta": {
+    "fuente": "auditoría del pipeline (dicom_metadata.csv.gz)",
+    "cortes": "96912 (48 centrales por estudio)",
+    "muestreo": "todos los estudios de la partición v2",
+    "limitacion": "Sin DICOM no se leen cabeceras de todos los cortes (ver Dependencias, punto 5)."
+  },
+  "n_estudios": 2019,
+  "checks": {
+    "no_512x512": {
+      "descripcion": "Matriz distinta de 512×512",
+      "n": 3,
+      "pct": 0.15,
+      "ejemplos": [
+        "1.2.826.0.1.3680043.22678",
+        "1.2.826.0.1.3680043.23400",
+        "1.2.826.0.1.3680043.8858"
+      ]
+    },
+    "intercept_atipico": {
+      "descripcion": "RescaleIntercept distinto de −1024 y 0 (p. ej. −8192/−10240)",
+      "n": 144,
+      "pct": 7.13,
+      "ejemplos": [
+        "1.2.826.0.1.3680043.10041",
+        "1.2.826.0.1.3680043.1016",
+        "1.2.826.0.1.3680043.10579"
+      ]
+    },
+    "slope_distinto_1": {
+      "descripcion": "RescaleSlope distinto de 1",
+      "n": 141,
+      "pct": 6.98,
+      "ejemplos": [
+        "1.2.826.0.1.3680043.10041",
+        "1.2.826.0.1.3680043.1016",
+        "1.2.826.0.1.3680043.10579"
+      ]
+    },
+    "shape_variable": {
+      "descripcion": "Dimensiones de matriz distintas dentro del estudio",
+      "n": 0,
+      "pct": 0.0,
+      "ejemplos": []
+    },
+    "rescale_variable": {
+      "descripcion": "Slope/intercept distintos dentro del estudio",
+      "n": 0,
+      "pct": 0.0,
+      "ejemplos": []
+    },
+    "grosor_variable": {
+      "descripcion": "SliceThickness variable dentro del estudio",
+      "n": 0,
+      "pct": 0.0,
+      "ejemplos": []
+    },
+    "grosor_vs_spacing_z": {
+      "descripcion": "|SliceThickness − espaciado z medido| > 0.05 mm",
+      "n": 879,
+      "pct": 43.54,
+      "ejemplos": [
+        "1.2.826.0.1.3680043.10014",
+        "1.2.826.0.1.3680043.10016",
+        "1.2.826.0.1.3680043.10058"
+      ]
+    },
+    "not_16bit_signed_or_unsigned": {
+      "descripcion": "BitsStored fuera de {12,16}",
+      "n": 0,
+      "pct": 0.0,
+      "ejemplos": []
+    },
+    "monochrome1": {
+      "descripcion": "PhotometricInterpretation ≠ MONOCHROME2",
+      "n": 0,
+      "pct": 0.0,
+      "ejemplos": []
+    },
+    "outlier_iqr_n_slices": {
+      "descripcion": "Atípico (IQR×1.5) en n.º de cortes",
+      "n": 27,
+      "pct": 1.34,
+      "ejemplos": [
+        "1.2.826.0.1.3680043.1371",
+        "1.2.826.0.1.3680043.15000",
+        "1.2.826.0.1.3680043.15149"
+      ]
+    },
+    "outlier_iqr_thickness": {
+      "descripcion": "Atípico (IQR×1.5) en SliceThickness",
+      "n": 0,
+      "pct": 0.0,
+      "ejemplos": []
+    },
+    "outlier_iqr_pixel_mm": {
+      "descripcion": "Atípico (IQR×1.5) en PixelSpacing",
+      "n": 111,
+      "pct": 5.5,
+      "ejemplos": [
+        "1.2.826.0.1.3680043.10261",
+        "1.2.826.0.1.3680043.10431",
+        "1.2.826.0.1.3680043.11300"
+      ]
+    },
+    "outlier_iqr_spacing_z": {
+      "descripcion": "Atípico (IQR×1.5) en espaciado z",
+      "n": 2,
+      "pct": 0.1,
+      "ejemplos": [
+        "1.2.826.0.1.3680043.24673",
+        "1.2.826.0.1.3680043.8693"
+      ]
+    }
+  },
+  "checks_omitidos": [
+    "pixel_aniso",
+    "z_gap_ratio",
+    "z_dup",
+    "z_range_mm",
+    "manufacturer",
+    "kvp",
+    "kernel",
+    "non_axial"
+  ]
+}
