@@ -1,0 +1,40 @@
+{
+  "splits": {
+    "disjoint": true,
+    "unique_ids": true,
+    "sizes": {
+      "test": 404,
+      "train": 1292,
+      "val": 323
+    }
+  },
+  "mil": {
+    "history_finite": true,
+    "pred_ids_in_split": true,
+    "threshold_matches_val_youden": true,
+    "test_metrics_match_predictions": true,
+    "n_test_evaluated": 404,
+    "checkpoint_exists": true,
+    "inference_unseen_test": {
+      "n": 5,
+      "max_abs_diff": 9.045036888122304e-05,
+      "same_predictions": true
+    },
+    "inference_consistent": true
+  },
+  "bigru": {
+    "history_finite": true,
+    "pred_ids_in_split": true,
+    "threshold_matches_val_youden": true,
+    "test_metrics_match_predictions": true,
+    "n_test_evaluated": 404,
+    "checkpoint_exists": true,
+    "inference_unseen_test": {
+      "n": 5,
+      "max_abs_diff": 3.0459989166287116e-05,
+      "same_predictions": true
+    },
+    "inference_consistent": true
+  },
+  "all_ok": true
+}

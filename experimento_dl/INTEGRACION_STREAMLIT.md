@@ -5,6 +5,11 @@ preprocesamiento ni la arquitectura: debe usar `inference.py`.
 
 ## Artefactos
 
+> **Actualizado (13-oct-2026):** los modelos v2 ya están entrenados. Ubicación canónica:
+> `artifacts/v2/` (ver `artifacts/README.md`): resultados en `artifacts/v2/results/`, pesos en
+> `artifacts/v2/weights/` (no versionados), configuración en `artifacts/v2/config/`. Las rutas
+> `results_v2/` y `data/weights/` de la tabla siguiente se refieren a la salida directa del pipeline.
+
 | Artefacto | Ubicación | Contenido |
 |---|---|---|
 | `mil_final.pt`, `bigru_final.pt` | Output del notebook de Kaggle → copiar a `experimento_dl/data/weights/` (no versionado) | `state_dict`, `model_name`, `threshold` (Youden en validación), `preprocessing` (K, 2.5D, ventana, tamaño), `hparams`, `best_epoch`, `val_auc` |
@@ -20,7 +25,7 @@ preprocesamiento ni la arquitectura: debe usar `inference.py`.
 ```python
 from inference import load_classifier, predict_study
 
-clf = load_classifier("data/weights/mil_final.pt")      # una vez (st.cache_resource)
+clf = load_classifier("artifacts/v2/weights/bigru_final.pt")   # modelo recomendado; una vez (st.cache_resource)
 out = predict_study(uploaded_files, clf)                 # lista de st.file_uploader, rutas o bytes
 ```
 

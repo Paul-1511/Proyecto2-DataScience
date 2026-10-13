@@ -1,0 +1,301 @@
+{
+  "generated_utc": "2026-10-13T17:35:27+00:00",
+  "source": "Kaggle Notebook rsna_entrenamiento_v2 (GPU Tesla T4), código feature/entrenamiento @ 772a276",
+  "versioned_in_git": "todo excepto weights/*.pt",
+  "files": [
+    {
+      "path": "config/model_bigru.json",
+      "bytes": 792,
+      "sha256": "64bc1926b78b1588e4c2f0f9a44ebd6d592cf3fc06cd40d30e5ac6c7717f7414",
+      "in_git": true
+    },
+    {
+      "path": "config/model_mil.json",
+      "bytes": 786,
+      "sha256": "affd973e0158f604d2393ce9bddeccf970502ae9691e369be5422755ae3940b9",
+      "in_git": true
+    },
+    {
+      "path": "config/preprocessing.json",
+      "bytes": 279,
+      "sha256": "42685f0c0dfa857e2d63282274aa79023ae3195ea54b7088de102419110c1c6c",
+      "in_git": true
+    },
+    {
+      "path": "results/comparacion_modelos.csv",
+      "bytes": 826,
+      "sha256": "05cd21cbd94c8ab4c2f258561471a0dfd216f291ae947478d52251e7c56fcef9",
+      "in_git": true
+    },
+    {
+      "path": "results/comparacion_pareada.json",
+      "bytes": 1544,
+      "sha256": "69b6aa0128da05b58e0a03ec15326c2783e0d6443bb6c0a9a4af6545a989491a",
+      "in_git": true
+    },
+    {
+      "path": "results/dicom_metadata.csv.gz",
+      "bytes": 993632,
+      "sha256": "ae1ccefed8f34a1ed0782aa47bf1f7353d9b1b004a62661e9318bbad55b15473",
+      "in_git": true
+    },
+    {
+      "path": "results/figures/comparacion_auc_validacion.png",
+      "bytes": 53620,
+      "sha256": "7322a8cd5d74497630a871bb117227dbef04cebd0a4d6b8a8aae730ad64bb910",
+      "in_git": true
+    },
+    {
+      "path": "results/figures/comparacion_metricas_prueba.png",
+      "bytes": 31784,
+      "sha256": "5c2ad019a080c7556d01fc3cc30cd4ce822cee529463a75c74ea4ab857a71274",
+      "in_git": true
+    },
+    {
+      "path": "results/figures/comparacion_probabilidades_prueba.png",
+      "bytes": 111382,
+      "sha256": "e3ad32513fea89760ff43cd185fccada6d306642c620add8a0a0aee371dd0e29",
+      "in_git": true
+    },
+    {
+      "path": "results/figures/comparacion_roc_prueba.png",
+      "bytes": 48743,
+      "sha256": "5c5937d6110ee43fffbe9dc2825fdaa102a2dede510488b68b808611438e9d80",
+      "in_git": true
+    },
+    {
+      "path": "results/figures/comparacion_tiempos.png",
+      "bytes": 27568,
+      "sha256": "31075ec66cff3ab3288a94bfedb215e586ebd657bdff991f268495642eeaeb15",
+      "in_git": true
+    },
+    {
+      "path": "results/figures/confusion_bigru.png",
+      "bytes": 12924,
+      "sha256": "1f939342a016e1f772598e77953fabbebfaf592169e2e06533ee6f9e38a3df68",
+      "in_git": true
+    },
+    {
+      "path": "results/figures/confusion_mil.png",
+      "bytes": 12503,
+      "sha256": "cdfe7f2531926458da1144f6d043e07b60b16d755e3aac00e2f955821fef3012",
+      "in_git": true
+    },
+    {
+      "path": "results/figures/curvas_bigru.png",
+      "bytes": 64738,
+      "sha256": "bebd3156a19b60f92e788037bb309783af1337f9fdb47f82ed8ac5296b7ef4a5",
+      "in_git": true
+    },
+    {
+      "path": "results/figures/curvas_mil.png",
+      "bytes": 66841,
+      "sha256": "d2f571fb437f1b5f85c45f0b7b27b56e0bd7d0ce91ae21854e24d78896480380",
+      "in_git": true
+    },
+    {
+      "path": "results/figures/entrada_25d_y0_10639.png",
+      "bytes": 289693,
+      "sha256": "bd7d06ef98c18631e23da47bf53532eae4571a4ad68e90fa76320a4dbafbf885",
+      "in_git": true
+    },
+    {
+      "path": "results/figures/entrada_25d_y0_24593.png",
+      "bytes": 254518,
+      "sha256": "fef039314037c16972e10260bec9db65a50fbb6dc17919e0c8f7dc2f03969b8c",
+      "in_git": true
+    },
+    {
+      "path": "results/figures/entrada_25d_y1_21806.png",
+      "bytes": 257638,
+      "sha256": "7a05cdbc59badc2f6251362baef8fba73eb06f691bd961baa246bdb9f3794d1f",
+      "in_git": true
+    },
+    {
+      "path": "results/figures/entrada_25d_y1_22050.png",
+      "bytes": 192059,
+      "sha256": "6774662547b84c59ac43b0e12cc5f0d9fca3d2f0de1efb61093bcf67d3c077a3",
+      "in_git": true
+    },
+    {
+      "path": "results/figures/montaje_cortes_y0_10639.png",
+      "bytes": 528059,
+      "sha256": "ba5c4a5960805a152215f3936fe8066b694a5b96037137151ce364604345ce9f",
+      "in_git": true
+    },
+    {
+      "path": "results/figures/montaje_cortes_y0_24593.png",
+      "bytes": 560068,
+      "sha256": "8ffdd38f9ca3649d98881e58e5ea3e18c307902b3c257759be003ab0b263ad99",
+      "in_git": true
+    },
+    {
+      "path": "results/figures/montaje_cortes_y1_21806.png",
+      "bytes": 435219,
+      "sha256": "dbc9c02fca3905207773db0dad5d76e15a22c8c70d9daa2f1a8f9a1cf2b5033d",
+      "in_git": true
+    },
+    {
+      "path": "results/figures/montaje_cortes_y1_22050.png",
+      "bytes": 416485,
+      "sha256": "7660edd7d7995e396b1cf201c9a9d57e9615072f6543a3a9ef6900b0cf9f2b57",
+      "in_git": true
+    },
+    {
+      "path": "results/figures/preproc_antes_despues_y0_10639.png",
+      "bytes": 215955,
+      "sha256": "ec90c736f052dabcea0b2d728720c3f300a6b52c24c32d7c7cff314b7b2cfe37",
+      "in_git": true
+    },
+    {
+      "path": "results/figures/preproc_antes_despues_y0_24593.png",
+      "bytes": 208697,
+      "sha256": "995ac1551d7eaadd414765d9323c26e59870d32209574936641f3cbb19824e16",
+      "in_git": true
+    },
+    {
+      "path": "results/figures/preproc_antes_despues_y1_21806.png",
+      "bytes": 181474,
+      "sha256": "95ab55597df57e97cc70a86f6abb4cd96986f7cce60a420918b5df5e442255a3",
+      "in_git": true
+    },
+    {
+      "path": "results/figures/preproc_antes_despues_y1_22050.png",
+      "bytes": 178330,
+      "sha256": "5e401f247541168b482f8bacedee6cabaca3666503ac7dea91335bd56663488b",
+      "in_git": true
+    },
+    {
+      "path": "results/figures/roc_bigru.png",
+      "bytes": 27150,
+      "sha256": "8d6e865f3ee851009ebcb40595ca3280cd0cbec4e9f9014500cdb7213420c949",
+      "in_git": true
+    },
+    {
+      "path": "results/figures/roc_mil.png",
+      "bytes": 27600,
+      "sha256": "fa483c91e86846d75b423890db729e5ddc7cb67add173e14209ac65ddf945a3d",
+      "in_git": true
+    },
+    {
+      "path": "results/history_bigru.csv",
+      "bytes": 947,
+      "sha256": "20535cf930b4d4db2620c24dcbf81359c6cfbe87b02df6a2bf8f6be20501d6a8",
+      "in_git": true
+    },
+    {
+      "path": "results/history_mil.csv",
+      "bytes": 1046,
+      "sha256": "7e3a303c025b8156fc1fb478c638bccc407e63cbf03f7dfdd175b9d006b9e921",
+      "in_git": true
+    },
+    {
+      "path": "results/INFORME_RESULTADOS.md",
+      "bytes": 3503,
+      "sha256": "874a77510b632d2b725694856ddbc670951feaf254ff0d94e44c5146dee54e4d",
+      "in_git": true
+    },
+    {
+      "path": "results/metrics_bigru.json",
+      "bytes": 2384,
+      "sha256": "f98a7bc8b3a8395b14c908a4b2dfc92f9b43a04cb47ca75f556a7290b67e675b",
+      "in_git": true
+    },
+    {
+      "path": "results/metrics_mil.json",
+      "bytes": 2360,
+      "sha256": "948408e78f241cf8e5bfeb46eed54c5b5248a42b0be0f0d7aca54fae760047ee",
+      "in_git": true
+    },
+    {
+      "path": "results/orden_z_auditoria.csv",
+      "bytes": 172630,
+      "sha256": "ba394faefc224f3f993524143fc271974b611c025451b623c24930118983f93c",
+      "in_git": true
+    },
+    {
+      "path": "results/preprocess_failures.csv",
+      "bytes": 23,
+      "sha256": "d978c82ed12e20a71941692e1785e1f155b2a9f108d194549daf00439728fe70",
+      "in_git": true
+    },
+    {
+      "path": "results/preprocess_times.csv",
+      "bytes": 71840,
+      "sha256": "f46b0c06f6380db18aa704af1ea21acf06b2470df7dc8c66e1eefc27790d0257",
+      "in_git": true
+    },
+    {
+      "path": "results/qc_report.json",
+      "bytes": 930,
+      "sha256": "4e1c3519511d23dd923e7581876cb3f160f22ac35150524cda3e19339fbee6b4",
+      "in_git": true
+    },
+    {
+      "path": "results/qc_report_local.json",
+      "bytes": 632,
+      "sha256": "90cd17e8e683d2237d1638087553291d59652ed2a88c91941d50c3a21024c5ff",
+      "in_git": true
+    },
+    {
+      "path": "results/splits.csv",
+      "bytes": 66951,
+      "sha256": "675134b4dc2f785e40e6d392a37298046e97d2fef0e880ac5d30551e72126ecb",
+      "in_git": true
+    },
+    {
+      "path": "results/splits_summary.csv",
+      "bytes": 85,
+      "sha256": "32083e122c8f40e56cbe4597abcae23c4f7e038d96209511a2fdd41b015caa16",
+      "in_git": true
+    },
+    {
+      "path": "results/test_predictions_bigru.csv",
+      "bytes": 18284,
+      "sha256": "ff1d3c39009d09c8d19ed22ac07230a1da1efab43b05f1dd50c471849fe03632",
+      "in_git": true
+    },
+    {
+      "path": "results/test_predictions_mil.csv",
+      "bytes": 18310,
+      "sha256": "9e45f3d6a4f8b472265a775dc96de5ce6056cb59568ee085220eaca099b06928",
+      "in_git": true
+    },
+    {
+      "path": "results/test_slice_probs_mil.npz",
+      "bytes": 46299,
+      "sha256": "a38927265ba5f78f91e003677cbb55f8fe367bae61a87e33a96696919d132705",
+      "in_git": true
+    },
+    {
+      "path": "results/val_predictions_bigru.csv",
+      "bytes": 14306,
+      "sha256": "a15fe835c572d82581036f8f94f3160cf727006c67f25a32eb459496cb7b8282",
+      "in_git": true
+    },
+    {
+      "path": "results/val_predictions_mil.csv",
+      "bytes": 14324,
+      "sha256": "b88631558c03c911d026552aaf0ba6d84f6f3daf2c220d6a397638e3737d2980",
+      "in_git": true
+    },
+    {
+      "path": "results/verificacion_metricas.json",
+      "bytes": 1078,
+      "sha256": "f71502f2d8805425b660cca0356e51039ab5b923e2c6167ff0a3079a26fe8ebc",
+      "in_git": true
+    },
+    {
+      "path": "weights/bigru_final.pt",
+      "bytes": 46765005,
+      "sha256": "14b4c2ee511854eed28be3c56cb2beeb6cfaf12ab188340b4b7c86618f4deb9b",
+      "in_git": false
+    },
+    {
+      "path": "weights/mil_final.pt",
+      "bytes": 44791371,
+      "sha256": "d49e18c4effd476b53c8f026b0ffb38c2c1872c2ce6fd01007527091762915c9",
+      "in_git": false
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+modelo,conjunto,n,umbral,roc_auc,sensitivity,specificity,precision,f1,accuracy,TP,FP,TN,FN,AUC_IC95_bootstrap,tiempo_entrenamiento_s,inferencia_ms_estudio,mejor_epoca_val
+ResNet18 + MIL (top-3),validación,323,0.55,0.687,0.481,0.811,0.698,0.569,0.653,74,32,137,80,,,,
+ResNet18 + MIL (top-3),prueba (umbral val),404,0.55,0.638,0.365,0.816,0.642,0.465,0.601,70,39,173,122,"[0.583, 0.693]",822.7,28.0,6.0
+ResNet18 + MIL (top-3),prueba (umbral 0.5),404,0.5,0.638,0.516,0.708,0.615,0.561,0.616,99,62,150,93,,,,
+ResNet18 + BiGRU,validación,323,0.548,0.725,0.721,0.657,0.657,0.687,0.687,111,58,111,43,,,,
+ResNet18 + BiGRU,prueba (umbral val),404,0.548,0.737,0.641,0.651,0.624,0.632,0.646,123,74,138,69,"[0.688, 0.784]",741.6,23.8,5.0
+ResNet18 + BiGRU,prueba (umbral 0.5),404,0.5,0.737,0.714,0.59,0.612,0.659,0.649,137,87,125,55,,,,
