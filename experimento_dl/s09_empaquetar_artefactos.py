@@ -40,8 +40,8 @@ def main():
                    n_params=sum(v.numel() for k, v in ck["state_dict"].items() if "num_batches_tracked" not in k
                                 and not k.endswith(("running_mean", "running_var"))),
                    checkpoint=f"weights/{m}_final.pt", note=ck["note"])
-        (ART / "config" / f"model_{m}.json").write_text(json.dumps(cfg, indent=2, ensure_ascii=False), encoding="utf-8")
-    (ART / "config" / "preprocessing.json").write_text(json.dumps(pre, indent=2, ensure_ascii=False), encoding="utf-8")
+        (ART / "config" / f"model_{m}.json").write_text(json.dumps(cfg, indent=2, ensure_ascii=False), encoding="utf-8", newline="\n")
+    (ART / "config" / "preprocessing.json").write_text(json.dumps(pre, indent=2, ensure_ascii=False), encoding="utf-8", newline="\n")
 
     files = sorted(p for p in ART.rglob("*") if p.is_file() and p.name != "MANIFEST.json")
     manifest = dict(
@@ -50,7 +50,7 @@ def main():
         versioned_in_git="todo excepto weights/*.pt",
         files=[dict(path=p.relative_to(ART).as_posix(), bytes=p.stat().st_size, sha256=sha256(p),
                     in_git=p.suffix != ".pt") for p in files])
-    (ART / "MANIFEST.json").write_text(json.dumps(manifest, indent=2, ensure_ascii=False), encoding="utf-8")
+    (ART / "MANIFEST.json").write_text(json.dumps(manifest, indent=2, ensure_ascii=False), encoding="utf-8", newline="\n")
     print(f"{len(files)} archivos; {sum(f['bytes'] for f in manifest['files'] if f['in_git']) / 1e6:.1f} MB versionables; "
           f"{sum(f['bytes'] for f in manifest['files'] if not f['in_git']) / 1e6:.1f} MB de pesos (no versionados)")
 

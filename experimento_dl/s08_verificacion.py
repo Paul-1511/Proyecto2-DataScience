@@ -117,7 +117,7 @@ def main():
     ver["comparacion_csv_coincide_json"] = bool(cc)
     ok &= cc
     ver["all_ok"] = bool(ok)
-    (RESULTS_DIR / "verificacion_metricas.json").write_text(json.dumps(ver, indent=2, ensure_ascii=False), encoding="utf-8")
+    (RESULTS_DIR / "verificacion_metricas.json").write_text(json.dumps(ver, indent=2, ensure_ascii=False), encoding="utf-8", newline="\n")
 
     pair = {}
     for split, idx in (("test", 1), ("val", 0)):
@@ -131,7 +131,7 @@ def main():
                            correlacion_probs_spearman=float(stats.spearmanr(a.prob, b.prob).statistic))
     pair["nota"] = ("Diferencias = BiGRU - MIL. Evaluación post hoc sobre el mismo conjunto; la selección de "
                     "modelo se definió a priori por AUC/IC y no se ajustó nada con la prueba.")
-    (RESULTS_DIR / "comparacion_pareada.json").write_text(json.dumps(pair, indent=2, ensure_ascii=False), encoding="utf-8")
+    (RESULTS_DIR / "comparacion_pareada.json").write_text(json.dumps(pair, indent=2, ensure_ascii=False), encoding="utf-8", newline="\n")
     print(json.dumps(dict(verificacion=ver, comparacion_pareada=pair), indent=2, ensure_ascii=False))
     sys.exit(0 if ok else 1)
 

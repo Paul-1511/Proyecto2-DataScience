@@ -1,24 +1,24 @@
 {
-  "generated_utc": "2026-10-13T17:35:27+00:00",
+  "generated_utc": "2026-10-13T17:37:42+00:00",
   "source": "Kaggle Notebook rsna_entrenamiento_v2 (GPU Tesla T4), código feature/entrenamiento @ 772a276",
   "versioned_in_git": "todo excepto weights/*.pt",
   "files": [
     {
       "path": "config/model_bigru.json",
-      "bytes": 792,
-      "sha256": "64bc1926b78b1588e4c2f0f9a44ebd6d592cf3fc06cd40d30e5ac6c7717f7414",
+      "bytes": 765,
+      "sha256": "c2f95599281388cec44aa88b1322904dc61ef3ed36176e20b3f1c174f3091610",
       "in_git": true
     },
     {
       "path": "config/model_mil.json",
-      "bytes": 786,
-      "sha256": "affd973e0158f604d2393ce9bddeccf970502ae9691e369be5422755ae3940b9",
+      "bytes": 759,
+      "sha256": "8528a9975bb7b623da46b192cbd422fc9ddfa82cfc73bb4562ba2a30eb5aed0c",
       "in_git": true
     },
     {
       "path": "config/preprocessing.json",
-      "bytes": 279,
-      "sha256": "42685f0c0dfa857e2d63282274aa79023ae3195ea54b7088de102419110c1c6c",
+      "bytes": 269,
+      "sha256": "43b2c82438ac3b4d2fdee39fe5a3aa22008fb23be11006694526050878e0edb0",
       "in_git": true
     },
     {
@@ -29,8 +29,8 @@
     },
     {
       "path": "results/comparacion_pareada.json",
-      "bytes": 1544,
-      "sha256": "69b6aa0128da05b58e0a03ec15326c2783e0d6443bb6c0a9a4af6545a989491a",
+      "bytes": 1490,
+      "sha256": "018ebf5aa79046887314ac1b3191bd5200b5e80143c3de2bd851c2930cef823a",
       "in_git": true
     },
     {
@@ -233,8 +233,8 @@
     },
     {
       "path": "results/qc_report_local.json",
-      "bytes": 632,
-      "sha256": "90cd17e8e683d2237d1638087553291d59652ed2a88c91941d50c3a21024c5ff",
+      "bytes": 605,
+      "sha256": "6f94d6707096966eb99ea12b4105a05e1232791f82fb94281251ed4fe093f034",
       "in_git": true
     },
     {
@@ -281,8 +281,8 @@
     },
     {
       "path": "results/verificacion_metricas.json",
-      "bytes": 1078,
-      "sha256": "f71502f2d8805425b660cca0356e51039ab5b923e2c6167ff0a3079a26fe8ebc",
+      "bytes": 1039,
+      "sha256": "cd657cc77dccfb9ecf688d08f386cc55fa9183e7c57cbe918e7a19355f118c03",
       "in_git": true
     },
     {

@@ -89,7 +89,7 @@ def main():
         rep[m] = r
 
     rep["all_ok"] = bool(ok)
-    (RESULTS_DIR / args.out).write_text(json.dumps(rep, indent=2, ensure_ascii=False), encoding="utf-8")
+    (RESULTS_DIR / args.out).write_text(json.dumps(rep, indent=2, ensure_ascii=False), encoding="utf-8", newline="\n")
     print(json.dumps(rep, indent=2, ensure_ascii=False))
     sys.exit(0 if ok else 1)
 
