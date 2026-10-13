@@ -24,7 +24,10 @@ import torch
 
 
 def load_classifier(checkpoint_path, device=None):
-    ck = torch.load(checkpoint_path, map_location="cpu", weights_only=False)
+    # Carga segura (sin ejecutar pickle arbitrario); TorchVersion es la única clase extra permitida
+    from torch.torch_version import TorchVersion
+    with torch.serialization.safe_globals([TorchVersion]):
+        ck = torch.load(checkpoint_path, map_location="cpu", weights_only=True)
     pre = ck["preprocessing"]
     # Fijar la configuración del pipeline ANTES de importar common/s03/s04
     os.environ["RSNA_EXP"] = pre["exp"]

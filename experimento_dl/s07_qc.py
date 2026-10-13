@@ -36,6 +36,7 @@ print("JSON:" + json.dumps(out))
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--n-infer", type=int, default=3)
+    ap.add_argument("--out", default="qc_report.json", help="nombre del informe en RESULTS_DIR")
     args = ap.parse_args()
     rep, ok = {}, True
 
@@ -88,7 +89,7 @@ def main():
         rep[m] = r
 
     rep["all_ok"] = bool(ok)
-    (RESULTS_DIR / "qc_report.json").write_text(json.dumps(rep, indent=2, ensure_ascii=False), encoding="utf-8")
+    (RESULTS_DIR / args.out).write_text(json.dumps(rep, indent=2, ensure_ascii=False), encoding="utf-8")
     print(json.dumps(rep, indent=2, ensure_ascii=False))
     sys.exit(0 if ok else 1)
 

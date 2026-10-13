@@ -287,7 +287,7 @@ def run(args):
                n_train=int(len(ytr)), n_val=int(len(yva)), n_test=int(len(yte)),
                n_train_planned=len(ids["train"]), n_val_planned=len(ids["val"]), n_test_planned=len(ids["test"]),
                device=torch.cuda.get_device_name(0) if device.type == "cuda" else "cpu",
-               torch_version=torch.__version__, hparams=hparams, preprocessing=preprocessing_config(),
+               torch_version=str(torch.__version__), hparams=hparams, preprocessing=preprocessing_config(),
                val=metrics(yva, pva, thr_val),
                test_thr_val_youden=metrics(yte, pte, thr_val),
                test_thr_0_5=metrics(yte, pte, 0.5),
@@ -296,14 +296,14 @@ def run(args):
                             else "BiGRU sobre secuencia ordenada por z + [media,max]"))
     (RESULTS_DIR / f"metrics_{args.model}.json").write_text(json.dumps(res, indent=2, ensure_ascii=False), encoding="utf-8")
     pd.DataFrame(hist).to_csv(RESULTS_DIR / f"history_{args.model}.csv", index=False)
-    sva.assign(prob=pva, pred=(pva >= thr_val).astype(int)).to_csv(
+    sva.assign(prob=pva.astype(np.float64), pred=(pva >= thr_val).astype(int)).to_csv(
         RESULTS_DIR / f"val_predictions_{args.model}.csv", index=False)
-    ste.assign(prob=pte, pred=(pte >= thr_val).astype(int)).to_csv(
+    ste.assign(prob=pte.astype(np.float64), pred=(pte >= thr_val).astype(int)).to_csv(
         RESULTS_DIR / f"test_predictions_{args.model}.csv", index=False)
     # Checkpoint autocontenido para el equipo (inference.py)
     torch.save(dict(state_dict=model.state_dict(), model_name=args.model, threshold=thr_val,
                     preprocessing=preprocessing_config(), hparams=hparams, best_epoch=best_ep,
-                    val_auc=best_auc, torch_version=torch.__version__,
+                    val_auc=best_auc, torch_version=str(torch.__version__),
                     note="Clasificador global por estudio; no localiza fracturas; sin validación clínica."),
                WEIGHTS_DIR / f"{args.model}_final.pt")
 
