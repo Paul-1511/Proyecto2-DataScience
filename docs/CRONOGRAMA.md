@@ -26,7 +26,16 @@ Archivo compartido. Cada responsable actualiza **solo su sección**. Estados: �
 
 | # | Tarea | Estado | Depende de |
 |---|---|---|---|
-| — | *(a completar por el responsable)* | | Integrar `inference.py` y `artifacts/v2/`; la app actual usa la configuración v1 y muestra los modelos como PENDIENTE |
+| 1 | Migración de la app a v2 (`artifacts/v2/`, `inference.py`, sin conflicto v1/v2) | ✅ 13-oct | `experimento_dl/app_core.py`, `app_streamlit.py` |
+| 2 | Selección Modelo A / B / ambos; estado PENDIENTE sin checkpoints; SHA-256 vs MANIFEST | ✅ 13-oct | pestaña 4 |
+| 3 | EDA y metadatos DICOM interactivos; visor DICOM conservado + entrada real 2.5D | ✅ 13-oct | pestañas 1–3 |
+| 4 | Comparación interactiva de métricas, pruebas pareadas, umbral exploratorio; controles para mostrar/ocultar gráficas | ✅ 13-oct | pestañas 5–6 |
+| 5 | Validación de entradas inválidas y errores de carga | ✅ 13-oct | `experimento_dl/tests/test_app_core.py` (19 passed) |
+| 6 | Notebook de integración con salidas reales | ✅ 13-oct | `notebooks/04_integracion_app.ipynb` |
+| 7 | Capturas, documentación y sección del informe → Méndez | ✅ 13-oct | `docs/app/` |
+| 8 | Incompatibilidades del contrato → Majo; formatos de métricas → Hansel | ✅ 13-oct | `docs/app/APP_STREAMLIT.md` |
+| 9 | Inferencia con checkpoints reales y estudio RSNA completo | ⏳ | Requiere `mil_final.pt`, `bigru_final.pt` (Majo) y un estudio DICOM |
+| 10 | Pull request `feature/streamlit` → `main` | ⏳ | pendiente de autorización |
 
 ## Informe científico (responsable del informe)
 

@@ -5,7 +5,7 @@ experimento_dl/data/
 *.dcm
 __pycache__/
 .DS_Store
-
-# Descarga original de Kaggle (incluye checkpoints como .zip); la copia curada está en artifacts/
-resultados_finales_kaggle/
-artifacts/**/weights/
+/resultados_finales_kaggle/
+/artifacts/**/weights/
+.claude/
+.pytest_cache/
