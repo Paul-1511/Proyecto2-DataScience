@@ -5,4 +5,5 @@ experimento_dl/data/
 *.dcm
 __pycache__/
 .DS_Store
-/resultados_finales_kaggle
+/resultados_finales_kaggle/
+/artifacts/**/weights/
