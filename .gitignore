@@ -7,3 +7,5 @@ __pycache__/
 .DS_Store
 /resultados_finales_kaggle/
 /artifacts/**/weights/
+.claude/
+.pytest_cache/
