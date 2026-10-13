@@ -167,7 +167,7 @@ extensión `.zip` (es el formato interno de `torch.save`); basta renombrarlos a 
 python experimento_dl/inference.py artifacts/v2/weights/bigru_final.pt <carpeta_con_los_dcm_de_un_estudio>
 ```
 
-API y formato de salida: `experimento_dl/INTEGRACION_STREAMLIT.md`. Carga segura
+API y formato de salida: `docs/INTEGRACION_STREAMLIT.md`. Carga segura
 (`weights_only=True`). Verificado en Kaggle: la inferencia desde DICOM crudo reproduce las
 probabilidades de evaluación en 5 estudios de prueba por modelo (|Δ| ≤ 9·10⁻⁵).
 

@@ -554,7 +554,7 @@ with tabs[6]:
     st.markdown("""
 Para habilitar la predicción, copiar `mil_final.pt` y `bigru_final.pt` (Output del notebook de Kaggle)
 en `artifacts/v2/weights/`. La app verifica su SHA-256 contra `artifacts/v2/MANIFEST.json` y solo usa
-los archivos que coinciden. Contrato: `experimento_dl/INTEGRACION_STREAMLIT.md`.
+los archivos que coinciden. Contrato: `docs/INTEGRACION_STREAMLIT.md`.
 """)
 
 # 8 · Limitaciones -------------------------------------------------------------
