@@ -1,0 +1,34 @@
+\section{Metodolog\'ia}
+\subsection{Pasos seguidos por el grupo}
+\begin{enumerate}[nosep]
+\item An\'alisis exploratorio de los datos tabulares (Proyecto~2, primera entrega).
+\item Revisi\'on bibliogr\'afica y selecci\'on de algoritmos.
+\item Preprocesamiento DICOM y auditor\'ia de metadatos (EDA de im\'agenes, secci\'on~\ref{sec:eda-dicom}).
+\item Entrenamiento y evaluaci\'on de dos modelos con las mismas particiones.
+\item Comparaci\'on estad\'istica, selecci\'on y desarrollo de la aplicaci\'on interactiva.
+\end{enumerate}
+
+\subsection{Datos y particiones}
+Se usan \texttt{train.csv} (2\,019 estudios; \texttt{patient\_overall} y C1--C7) y las im\'agenes DICOM de la competencia \citep{rsna2022kaggle}. El volumen del conjunto de im\'agenes (del orden de cientos de GB) llev\'o a procesar los estudios dentro de Kaggle Notebooks, sin descargarlos localmente.
+La muestra comprende los 2\,019 estudios, estratificados por \texttt{patient\_overall} (semilla 42), con particiones \emph{por estudio}: entrenamiento 1\,292 (615 positivos), validaci\'on 323 (154) y prueba 404 (192); en RSNA 2022 cada estudio corresponde a un paciente distinto, por lo que no hay pacientes compartidos entre particiones.
+
+\subsection{Preprocesamiento}
+\begin{table}[H]\centering\small
+\begin{tabular}{p{3cm}p{10.5cm}}\toprule
+Paso & Implementaci\'on \\\midrule
+Lectura & \texttt{pydicom}; decodificaci\'on JPEG Lossless con \texttt{pylibjpeg}/GDCM \\
+Intensidades & HU $=$ p\'ixel $\times$ \texttt{RescaleSlope} $+$ \texttt{RescaleIntercept}, le\'idos por archivo \\
+Fotometr\'ia & MONOCHROME1 invertido; MONOCHROME2 sin cambios \\
+Ventana & \'osea $L=400$, $W=1800$, normalizaci\'on lineal a $[0,1]$ \\
+Tama\~no & $224\times224$ (\texttt{INTER\_AREA}), sin remuestreo isotr\'opico \\
+Selecci\'on de cortes & 48 posiciones equiespaciadas entre el 5\,\% y el 95\,\% del rango de instancias; entrada 2.5D con vecinos a $\pm2$~mm \\
+Orden & por \texttt{ImagePositionPatient[2]} (z) ascendente, no por n\'umero de instancia \\\bottomrule
+\end{tabular}
+\caption{Pipeline de preprocesamiento (configuraci\'on v2, \texttt{artifacts/v2/config/preprocessing.json}).}
+\end{table}
+
+\subsection{Herramientas y recursos de c\'omputo}
+El entrenamiento se ejecut\'o en Kaggle Notebooks con GPU T4. Se usaron Python, \texttt{pydicom}, OpenCV, PyTorch \citep{paszke2019pytorch}, Streamlit y Plotly; las versiones exactas est\'an en \texttt{experimento\_dl/requirements.txt}.
+
+\subsection{Selecci\'on de algoritmos, arquitecturas y configuraci\'on de entrenamiento}
+\pendiente{Metodolog\'ia de entrenamiento (responsable GPU)}{Justificaci\'on de la selecci\'on de algoritmos, descripci\'on de los Modelos A (ResNet18\,+\,MIL) y B (ResNet18\,+\,BiGRU), hiperpar\'ametros, criterio de selecci\'on de \'epoca y umbral, y ajuste de par\'ametros. El borrador previo (\texttt{INFORME\_TECNICO.md}, \S6.5--6.7) corresponde a la configuraci\'on v1 (24 cortes, 160 estudios) y no debe copiarse sin actualizar a v2.}{Texto de la responsable GPU; configuraci\'on en \texttt{artifacts/v2/config/model\_*.json}.}

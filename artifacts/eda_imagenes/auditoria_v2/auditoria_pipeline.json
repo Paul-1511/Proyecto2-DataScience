@@ -1,0 +1,37 @@
+{
+  "fallos_preprocesamiento": 0,
+  "z_no_monotono": 1,
+  "z_direccion": {
+    "decreciente": 1821,
+    "creciente": 197,
+    "mixto": 1
+  },
+  "dz_cv_mediana": 0.064,
+  "z_anomalos": [
+    "20756",
+    "8362",
+    "8693"
+  ],
+  "z_direccion_vs_fractura": {
+    "0": {
+      "creciente": 77,
+      "decreciente": 981
+    },
+    "1": {
+      "creciente": 121,
+      "decreciente": 840
+    }
+  },
+  "z_direccion_chi2_p": 8.350661349885008e-05,
+  "tiempo_s": {
+    "mean": 2.52,
+    "50%": 2.19,
+    "max": 5.2
+  },
+  "tiempo_mediano_por_transfer_syntax": {
+    "Explicit VR Little Endian": 2.11,
+    "Implicit VR Little Endian": 2.0,
+    "JPEG 2000 Image Compression": 4.47,
+    "JPEG Lossless, Non-Hierarchical, First-Order Prediction (Process 14 [Selection Value 1])": 4.07
+  }
+}

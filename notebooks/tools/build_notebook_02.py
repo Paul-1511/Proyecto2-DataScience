@@ -40,6 +40,11 @@ from pathlib import Path
 warnings.filterwarnings("ignore")
 
 ON_KAGGLE = Path("/kaggle/input").exists()
+if ON_KAGGLE:   # decodificadores DICOM comprimidos (JPEG Lossless / JPEG 2000); requiere Internet activado en la sesión
+    try:
+        import gdcm, pydicom
+    except Exception:
+        subprocess.run([sys.executable, "-m", "pip", "-q", "install", "pydicom", "python-gdcm", "pylibjpeg", "pylibjpeg-libjpeg"])
 COMP = "rsna-2022-cervical-spine-fracture-detection"
 BRANCH, REPO_URL = "feature/eda-imagenes", "https://github.com/Paul-1511/Proyecto2-DataScience.git"
 
@@ -119,14 +124,26 @@ studies.to_csv(OUT / "metadata_studies.csv", index=False)
 (OUT / "quality_report.json").write_text(json.dumps(dict(meta=meta, n_estudios=len(studies), checks=checks, checks_omitidos=omit), indent=2, ensure_ascii=False))
 E.write_report(studies, checks, omit, meta, OUT)'''))
 
+C.append(md("""### 4b. Auditoría del pipeline (orden z, fallos y tiempos)
+Cruza los metadatos con `orden_z_auditoria.csv`, `preprocess_failures.csv` y `preprocess_times.csv` (generados por la responsable GPU en `artifacts/v2/results/`, solo lectura). Responde: ¿el orden por z es coherente con `InstanceNumber`?, ¿hubo fallos de lectura?, ¿cuánto tarda el preprocesamiento y de qué depende? Las cifras se calculan al ejecutar."""))
+C.append(code('''AUD_DIR = REPO / "artifacts" / "v2" / "results"
+if (AUD_DIR / "orden_z_auditoria.csv").exists():
+    aud, anom = E.auditoria_pipeline(studies, AUD_DIR, FIG)
+    (OUT / "auditoria_pipeline.json").write_text(json.dumps(aud, indent=2, ensure_ascii=False))
+    display(Image(str(FIG / "07_auditoria_pipeline.png")))
+    print(json.dumps(aud, indent=2, ensure_ascii=False))
+    if len(anom): display(anom)
+else:
+    aud = {}; print("SECCIÓN OMITIDA: no existe artifacts/v2/results/orden_z_auditoria.csv en el repositorio clonado.")'''))
+
 C.append(md("""## 5. Intensidades (HU) y antes/después del preprocesamiento
 Se lee el **corte central** de una submuestra: todos los estudios con `RescaleIntercept` ∉ {−1024, 0} (hasta 6) más estudios aleatorios
 (semilla 42) hasta completar 24. Se usan `to_hu`, `bone_window` y `_window_resize` de `s03_preprocess.py` (solo importadas). Los errores de lectura se registran, no se ocultan."""))
-C.append(code('''import pydicom, cv2
-if not HAS_DICOM:
+C.append(code('''if not HAS_DICOM:
     print("SECCIÓN OMITIDA: no hay píxeles DICOM en este entorno (ver Dependencias, punto 5).")
     inten = pd.DataFrame()
 else:
+    import pydicom, cv2
     from s03_preprocess import to_hu, bone_window, _window_resize
     rng = np.random.default_rng(42)
     atip = studies[~studies.intercept.isin([-1024.0, 0.0])].StudyInstanceUID.tolist()[:6]
