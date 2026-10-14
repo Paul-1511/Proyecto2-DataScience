@@ -28,9 +28,22 @@
 
 \begin{document}
 \maketitle
+
 \begin{abstract}
-\pendiente{Resumen}{El resumen se redacta al cierre, cuando existan los resultados finales de entrenamiento, la comparaci\'on de modelos y las conclusiones.}{Resultados de la responsable GPU y de la comparaci\'on (P3).}
+
+La detección de fracturas cervicales mediante tomografía computarizada constituye un problema relevante en el análisis de imágenes médicas debido a las posibles complicaciones neurológicas asociadas con estas lesiones y a la complejidad de su identificación. El presente trabajo tuvo como objetivo implementar y evaluar un sistema de clasificación automática capaz de estimar la presencia de al menos una fractura cervical por estudio, utilizando el conjunto de datos RSNA 2022 Cervical Spine Fracture Detection.
+
+Se desarrolló un \textit{pipeline} de preprocesamiento de imágenes DICOM que incluyó conversión a unidades Hounsfield, aplicación de una ventana ósea, normalización, redimensionamiento y ordenamiento anatómico de los cortes. Se procesaron 2,019 estudios, distribuidos en 1,292 para entrenamiento, 323 para validación y 404 para prueba. Se implementaron dos arquitecturas de aprendizaje profundo: ResNet18 con aprendizaje de múltiples instancias (MIL) y ResNet18 combinada con una unidad recurrente bidireccional (BiGRU). Ambos modelos utilizaron representaciones 2.5D de 48 posiciones tomográficas por estudio y fueron evaluados mediante métricas de clasificación y comparación estadística.
+
+En el conjunto de prueba, ResNet18 + MIL obtuvo un ROC-AUC de 0.638 y un F1-score de 0.465, mientras que ResNet18 + BiGRU alcanzó un ROC-AUC de 0.737 y un F1-score de 0.632. La diferencia de ROC-AUC favoreció a BiGRU y resultó estadísticamente significativa mediante la prueba de DeLong ($p < 0.001$). Adicionalmente, el análisis exploratorio identificó variaciones en los parámetros de adquisición DICOM, especialmente en el reescalado de intensidades, el espaciado de píxeles y el orden anatómico de los cortes.
+
+Se concluye que la incorporación de información secuencial mediante BiGRU produjo una mejora en la capacidad discriminativa respecto al modelo MIL evaluado. No obstante, el desempeño absoluto continúa siendo moderado y el sistema se limita a clasificación global por estudio, sin localizar las fracturas ni identificar las vértebras afectadas. Por tanto, los resultados constituyen una aproximación experimental reproducible que requiere optimización adicional y validación externa antes de considerar cualquier aplicación clínica.
+
+\medskip
+\noindent\textbf{Palabras clave:} fracturas cervicales, tomografía computarizada, DICOM, aprendizaje profundo, ResNet18, MIL, BiGRU, clasificación de imágenes médicas.
+
 \end{abstract}
+
 \tableofcontents
 \newpage
 
