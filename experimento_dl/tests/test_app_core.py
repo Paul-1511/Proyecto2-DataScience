@@ -291,3 +291,11 @@ def test_validation_script_detects_non_reproduction(fake_checkpoints, tmp_path):
     assert e.value.code == 1                                   # pesos aleatorios: no reproduce la evaluación
     s = json.loads((tmp_path / "out" / "validacion_inferencia.json").read_text())
     assert s["reproducibilidad"]["n"] == 2 and s["reproducibilidad"]["reproduce"] == 0
+
+
+def test_missing_modality_is_not_flagged():
+    d = fake_study(2)
+    for x in d:
+        del x.Modality
+    _, _, warns = core.read_dicoms([Upload(f"{i}.dcm", to_bytes(x)) for i, x in enumerate(d)])
+    assert not any("Modalidad" in w for w in warns)

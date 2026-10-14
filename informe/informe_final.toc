@@ -34,5 +34,6 @@
 \contentsline {paragraph}{Predicci\'on de nuevas entradas.}{14}{section*.26}%
 \contentsline {paragraph}{Comparaci\'on interactiva de modelos.}{15}{section*.27}%
 \contentsline {paragraph}{Pruebas.}{15}{section*.28}%
+\contentsline {paragraph}{Validaci\'on con los checkpoints reales.}{15}{section*.29}%
 \contentsline {section}{\numberline {6}Conclusiones}{19}{section.6}%
 \contentsline {section}{\numberline {A}Estado de integraci\'on del informe (uso interno; eliminar antes de entregar)}{22}{appendix.A}%

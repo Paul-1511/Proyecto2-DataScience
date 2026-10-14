@@ -160,11 +160,21 @@ PyTorch & Carga de los checkpoints en modo seguro (\texttt{weights\_only}) e inf
 
 \paragraph{Comparaci\'on interactiva de modelos.} El usuario elige conjuntos y m\'etricas; la aplicaci\'on presenta barras agrupadas, la diferencia B\,$-$\,A, las pruebas pareadas (DeLong, bootstrap y McNemar), las curvas ROC con el punto de operaci\'on, la distribuci\'on de probabilidades por clase y la dispersi\'on de las probabilidades de ambos modelos por estudio (figura~\ref{fig:app-comp}). Un control de umbral recalcula las m\'etricas sobre las predicciones de prueba, con intervalos de confianza bootstrap al 95\,\% \citep{efron1993bootstrap}; esta exploraci\'on es descriptiva, pues los umbrales oficiales se fijaron en validaci\'on. Todos los valores provienen de los artefactos reales del entrenamiento (\texttt{artifacts/v2/}); si falta alguno, se muestra PENDIENTE y no se generan valores sustitutos.
 
-\paragraph{Pruebas.} La aplicaci\'on se valid\'o con 25 pruebas autom\'aticas propias: consistencia de las m\'etricas con las predicciones, entradas inv\'alidas (sin archivos, no DICOM, vac\'ios, estudios mezclados), rechazo de checkpoints ausentes o alterados, forma de la entrada, flujo completo de predicci\'on y comparaci\'on en la interfaz, e inferencia por lotes. Las pruebas de interfaz usan checkpoints con pesos aleatorios \'unicamente para ejercitar el c\'odigo; con ellos, la verificaci\'on de reproducibilidad se\~nala correctamente que no coinciden con la evaluaci\'on. Adem\'as, se revisaron las ocho pesta\~nas en el navegador sin errores.
+\paragraph{Pruebas.} La aplicaci\'on se valid\'o con 25 pruebas autom\'aticas propias: consistencia de las m\'etricas con las predicciones, entradas inv\'alidas (sin archivos, no DICOM, vac\'ios, estudios mezclados), rechazo de checkpoints ausentes o alterados, forma de la entrada, flujo completo de predicci\'on y comparaci\'on en la interfaz, e inferencia por lotes. Algunas pruebas de interfaz usan checkpoints con pesos aleatorios \'unicamente para ejercitar el c\'odigo; con ellos, la verificaci\'on de reproducibilidad se\~nala correctamente que no coinciden con la evaluaci\'on. Adem\'as, se revisaron las ocho pesta\~nas en el navegador sin errores.
 
-Los checkpoints reales de ambos modelos se verificaron contra \texttt{artifacts/v2/MANIFEST.json} (tama\~no y SHA-256 id\'enticos), cargan en modo seguro con el umbral y la configuraci\'on de preprocesamiento publicados, y la interfaz de predicci\'on y comparaci\'on funciona con ellos sin errores. El control de calidad del entrenamiento (\texttt{qc\_report.json}) muestra que \texttt{inference.py}, ejecutado desde DICOM crudo sobre cinco estudios de prueba, reproduce las probabilidades de la evaluaci\'on con una diferencia m\'axima de $9.0\times10^{-5}$ (MIL) y $3.0\times10^{-5}$ (BiGRU), con las mismas clases predichas.
+\paragraph{Validaci\'on con los checkpoints reales.} Los checkpoints de ambos modelos se verificaron contra \texttt{artifacts/v2/MANIFEST.json} (tama\~no y SHA-256 id\'enticos) y se cargan en modo seguro con el umbral y la configuraci\'on de preprocesamiento publicados. Para comprobar que la aplicaci\'on reproduce el modelo evaluado, se descargaron desde Kaggle los DICOM completos de dos estudios de la partici\'on de \emph{prueba} (uno sin fractura y uno con fractura) y se procesaron con la aplicaci\'on en CPU, desde los archivos crudos. Las cuatro probabilidades coinciden con las registradas en la evaluaci\'on, con una diferencia m\'axima de $6.3\times10^{-4}$ (tolerancia $10^{-3}$; la evaluaci\'on se ejecut\'o en GPU con precisi\'on mixta), y las clases predichas son las mismas (cuadro~\ref{tab:app-valid}). El tiempo de inferencia, preprocesamiento incluido, fue de unos 0.9~s por estudio y modelo. Esta comprobaci\'on es t\'ecnica: confirma la fidelidad del despliegue, no constituye una nueva evaluaci\'on del desempe\~no.
 
-\pendiente{Reproducci\'on en la aplicaci\'on desde DICOM de RSNA (P1)}{Falta ejecutar la aplicaci\'on local sobre estudios DICOM de la partici\'on de prueba para reportar la reproducibilidad frente a la evaluaci\'on, el tiempo por estudio en CPU y el acuerdo A/B, y actualizar la figura~\ref{fig:app-pred}. Requiere descargar los estudios desde Kaggle.}{\texttt{docs/app/validacion\_inferencia.json}, generado por \texttt{experimento\_dl/tools/validar\_inferencia.py}; estudios exportados con \texttt{experimento\_dl/kaggle/exportar\_estudios\_prueba.py}.}
+\begin{table}[H]\centering\small
+\begin{tabular}{llrrrll}\toprule
+Estudio (UID) & Modelo & $p$ app & $p$ evaluaci\'on & $|\Delta|$ & Predicci\'on & Etiqueta real \\\midrule
+\multirow{2}{*}{\texttt{...3680043.8744}} & A (MIL) & 0.4910 & 0.4908 & $1.7\times10^{-4}$ & sin fractura & \multirow{2}{*}{sin fractura} \\
+ & B (BiGRU) & 0.1673 & 0.1674 & $2.8\times10^{-5}$ & sin fractura & \\\midrule
+\multirow{2}{*}{\texttt{...3680043.9926}} & A (MIL) & 0.5106 & 0.5099 & $6.3\times10^{-4}$ & sin fractura & \multirow{2}{*}{con fractura} \\
+ & B (BiGRU) & 0.8217 & 0.8219 & $1.8\times10^{-4}$ & fractura & \\\bottomrule
+\end{tabular}
+\caption{Reproducci\'on de la evaluaci\'on desde DICOM crudo en la aplicaci\'on (CPU). Umbrales de validaci\'on: 0.550 (A) y 0.548 (B). Fuente: \texttt{docs/app/validacion\_inferencia.\{csv,json\}}.}\label{tab:app-valid}
+\end{table}
+En el estudio con fractura, el Modelo~A queda por debajo de su umbral (falso negativo) y el Modelo~B lo clasifica correctamente; la aplicaci\'on se\~nala esa discrepancia (figura~\ref{fig:app-pred}). Es un caso ilustrativo y coherente con la mayor sensibilidad de B en prueba, no una evidencia adicional de su superioridad.
 
 \begin{figure}[H]\centering
 \includegraphics[width=.92\linewidth,height=.62\textheight,keepaspectratio]{app_01_datos_y_eda.png}
@@ -176,7 +186,7 @@ Los checkpoints reales de ambos modelos se verificaron contra \texttt{artifacts/
 \end{figure}
 \begin{figure}[H]\centering
 \includegraphics[width=.92\linewidth,height=.66\textheight,keepaspectratio]{app_04_prediccion.png}
-\caption{Aplicaci\'on, pesta\~na 4: selecci\'on de modelo (estado PENDIENTE sin checkpoints) y consulta de las predicciones de prueba ya calculadas en la evaluaci\'on.}\label{fig:app-pred}
+\caption{Aplicaci\'on, pesta\~na 4: predicci\'on real con ambos modelos sobre un estudio de prueba con fractura (\texttt{...3680043.9926}): medidores con umbral, discrepancia entre modelos, verificaci\'on de reproducibilidad, etiqueta real rotulada aparte, posici\'on en la distribuci\'on de prueba y probabilidades por posici\'on del Modelo~A.}\label{fig:app-pred}
 \end{figure}
 \begin{figure}[H]\centering
 \includegraphics[width=.92\linewidth,height=.68\textheight,keepaspectratio]{app_06_comparacion.png}

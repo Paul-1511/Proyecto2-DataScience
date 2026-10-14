@@ -44,7 +44,9 @@ def choose_uids(n):
 def build_notebook(uids):
     code = f'''import os, glob, shutil
 UIDS = {uids!r}
-cands = [p for p in glob.glob("/kaggle/input/**/train_images", recursive=True) if os.path.isdir(p)]
+# Búsqueda acotada (≤ 3 niveles): un glob recursivo recorrería cientos de miles de DICOM
+cands = [p for pat in ("/kaggle/input/*/train_images", "/kaggle/input/*/*/train_images",
+                       "/kaggle/input/*/*/*/train_images") for p in glob.glob(pat) if os.path.isdir(p)]
 print("Entradas:", os.listdir("/kaggle/input"), "· train_images:", cands)
 assert cands, "La competencia no está montada como entrada"
 base = cands[0]
