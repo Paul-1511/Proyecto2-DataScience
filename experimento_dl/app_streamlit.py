@@ -58,6 +58,12 @@ def ckpt_status_now(m):
     return ckpt_status(m, p.stat().st_mtime if p.exists() else None)
 
 
+@st.cache_data(show_spinner="Calculando IC95 % bootstrap…")
+def threshold_ci(m, thr):
+    pr = core.predictions(m)
+    return core.metrics_ci(pr.patient_overall.values, pr.prob.values, thr)
+
+
 @st.cache_resource(show_spinner="Cargando modelo…")
 def load_model(m, mtime):
     loaded, skipped = core.load_models([m])
@@ -243,7 +249,8 @@ Mismo preprocesamiento en entrenamiento, evaluación y en esta app (`s03_preproc
 
 # 3 · Visor DICOM --------------------------------------------------------------
 def study_selector(key):
-    """Selector de estudio (local o subido). Devuelve (datasets, errores, avisos) o None."""
+    """Selector de estudio (local o subido). Devuelve (clave, (datasets, errores, avisos)) o (None, None).
+    La clave identifica el estudio y es la misma en todas las pestañas (una sola lectura en caché)."""
     local = core.local_studies()
     src = st.radio("Fuente", ["Subir archivos .dcm", "Estudio local (experimento_dl/data/dicom/)"],
                    horizontal=True, key=f"{key}_src")
@@ -252,23 +259,24 @@ def study_selector(key):
             up = st.file_uploader("Todos los .dcm de UN estudio axial de TC", type=["dcm"],
                                   accept_multiple_files=True, key=f"{key}_up")
             if not up:
-                return None
-            payload = tuple((f.name, f.getvalue()) for f in up)
-            return read_study((key, tuple((f.name, f.size) for f in up)), payload)
+                return None, None
+            sk = ("subida", tuple((f.name, f.size) for f in up))
+            return sk, read_study(sk, tuple((f.name, f.getvalue()) for f in up))
         if not local:
             st.info("No hay estudios en `experimento_dl/data/dicom/<StudyInstanceUID>/*.dcm`. "
                     "Sube archivos o copia ahí un estudio descargado de Kaggle.")
-            return None
+            return None, None
         uid = st.selectbox("Estudio", local, key=f"{key}_uid")
-        return read_study((key, uid), tuple(str(p) for p in core.local_study_files(uid)))
+        sk = ("local", uid)
+        return sk, read_study(sk, tuple(str(p) for p in core.local_study_files(uid)))
     except core.InvalidInput as e:
         st.error(f"Entrada inválida: {e}")
-        return None
+        return None, None
 
 
 with tabs[2]:
     st.markdown("Explora un estudio DICOM real con las mismas funciones de preprocesamiento del pipeline.")
-    res = study_selector("viewer")
+    _, res = study_selector("viewer")
     if res:
         dsets, errors, warns = res
         if errors:
@@ -326,9 +334,72 @@ with tabs[2]:
                 st.error(f"No se pudo construir la entrada: {type(e).__name__}: {e}")
 
 # 4 · Predicción ---------------------------------------------------------------
+def prediction_card(m, r):
+    show(gauge(r["probability"], r["threshold"], core.NAMES[m], COLORS[m]), key=f"g_{m}")
+    lab = "FRACTURA (≥ umbral)" if r["prediction"] else "sin fractura (< umbral)"
+    st.markdown(f"**Predicción del modelo:** {lab}  \nUmbral (Youden en validación): {r['threshold']:.3f} · "
+                f"entrada {r['input_shape']} · {r['seconds']:.1f} s")
+    for w in r["warnings"]:
+        st.caption(f"⚠️ {w}")
+
+
+def comparison_panel(results, uid):
+    """Comparación de la inferencia real de A y/o B sobre el mismo estudio."""
+    table, summary = core.compare_results(results, uid)
+    if "acuerdo" in summary:
+        (st.success if summary["acuerdo"] else st.warning)(
+            f"{'Los dos modelos coinciden' if summary['acuerdo'] else 'Los modelos DISCREPAN'} · "
+            f"Δ probabilidad (B − A) = {summary['delta_prob']:+.3f}")
+    cols = {"modelo": "Modelo", "probabilidad": "p", "umbral": "Umbral", "prediccion": "Predicción",
+            "margen": "p − umbral", "percentil_prueba": "Percentil en prueba",
+            "percentil_negativos": "Percentil entre negativos", "percentil_positivos": "Percentil entre positivos",
+            "prob_evaluacion": "p en la evaluación", "delta_evaluacion": "|Δ| vs evaluación", "segundos": "s"}
+    st.dataframe(table[[c for c in cols if c in table]].rename(columns=cols).round(4), hide_index=True,
+                 width="stretch")
+    st.caption("Percentiles: posición de la probabilidad entre las 404 probabilidades de prueba del mismo modelo "
+               "(contexto de interpretación, no una probabilidad calibrada).")
+    ev = summary["evaluacion"]
+    if ev:
+        if ev["split"] == "train":
+            st.warning("Este estudio pertenece a la partición de **entrenamiento**: el modelo ya lo vio; "
+                       "su predicción no es una evaluación independiente.")
+        elif "reproduce_evaluacion" in table:
+            ok = bool(table.reproduce_evaluacion.all())
+            (st.success if ok else st.error)(
+                f"Estudio de la partición **{ev['split']}**. Verificación de reproducibilidad: "
+                f"{'la app reproduce' if ok else 'la app NO reproduce'} la probabilidad registrada en la "
+                f"evaluación (tolerancia {core.REPRO_TOL:g}).")
+        st.info(f"Etiqueta real del dataset (NO es una predicción): patient_overall = {ev['patient_overall']}")
+    if interactive and "Distribución de probabilidades" in visible:
+        fig = go.Figure()
+        for m, r in results.items():
+            pr = core.predictions(m)
+            if pr is None:
+                continue
+            for y, dash in ((0, "solid"), (1, "dot")):
+                fig.add_histogram(x=pr.prob[pr.patient_overall == y], nbinsx=30, opacity=.45,
+                                  name=f"{core.SHORT[m]} · prueba {'con' if y else 'sin'} fractura",
+                                  marker_color=COLORS[m], marker_pattern_shape="" if y == 0 else "/")
+            fig.add_vline(x=r["probability"], line_color=COLORS[m], line_width=3,
+                          annotation_text=f"{core.SHORT[m]}: {r['probability']:.3f}")
+        fig.update_layout(barmode="overlay", height=340, xaxis_title="probabilidad", yaxis_title="estudios",
+                          title="Este estudio frente a la distribución de probabilidades en prueba")
+        show(fig, key="pred_vs_test")
+    sp = results.get("mil", {}).get("slice_probabilities")
+    if sp and "Probabilidad por posición (MIL)" in visible:
+        show(px.bar(x=list(range(len(sp))), y=sp, labels={"x": "posición (orden z)", "y": "p"}, range_y=[0, 1],
+                    title="MIL: probabilidad por posición (interpretación, no localización)"), key="pred_sp")
+    tbl = core.results_table(results, uid or "desconocido")
+    c1, c2 = st.columns(2)
+    c1.download_button("Descargar resultados (CSV)", tbl.to_csv(index=False).encode(), "prediccion_app.csv",
+                       "text/csv")
+    c2.download_button("Descargar resultados (JSON)", tbl.to_json(orient="records", indent=2, force_ascii=False),
+                       "prediccion_app.json", "application/json")
+
+
 with tabs[3]:
-    st.subheader("Predicción sobre un estudio nuevo")
-    choice = st.radio("Modelo", [core.NAMES["mil"], core.NAMES["bigru"], "Ambos (comparar)"], index=1,
+    st.subheader("Predicción sobre estudios nuevos")
+    choice = st.radio("Modelo", [core.NAMES["mil"], core.NAMES["bigru"], "Ambos (comparar)"], index=2,
                       horizontal=True, help="Modelo B (BiGRU) es el recomendado por el equipo de entrenamiento.")
     which = [m for m in core.MODELS if core.NAMES[m] == choice] or list(core.MODELS)
     ready = [m for m in which if STATUS[m]["estado"] == "DISPONIBLE"]
@@ -338,43 +409,64 @@ with tabs[3]:
                        f"{'no encontrado' if STATUS[m]['estado'] == 'PENDIENTE' else 'no coincide con MANIFEST.json'}. "
                        "Lo produce el entrenamiento (Majo, Output del notebook de Kaggle). "
                        "No se muestran probabilidades simuladas.")
-    res = study_selector("pred")
-    if res and ready:
-        dsets, errors, warns = res
-        if errors:
-            st.warning(f"{len(errors)} archivo(s) descartados: " + "; ".join(errors[:5]))
-        for w in warns:
-            st.warning(w)
-        if st.button("Ejecutar predicción", type="primary"):
-            results = {}
-            for m in ready:
-                p = core.checkpoint_path(m)
-                try:
-                    clf = load_model(m, p.stat().st_mtime)
-                    with st.spinner(f"Infiriendo con {core.SHORT[m]}…"):
-                        results[m] = core.predict(dsets, {m: clf})[m]
-                except Exception as e:  # noqa: BLE001
-                    st.error(f"{core.NAMES[m]}: error de inferencia — {type(e).__name__}: {e}")
-            st.session_state["pred_results"] = results
-        results = st.session_state.get("pred_results", {})
-        results = {m: r for m, r in results.items() if m in ready}
-        if results:
-            for c, (m, r) in zip(st.columns(len(results)), results.items()):
-                with c:
-                    show(gauge(r["probability"], r["threshold"], core.NAMES[m], COLORS[m]), key=f"g_{m}")
-                    lab = "FRACTURA (≥ umbral)" if r["prediction"] else "sin fractura (< umbral)"
-                    st.markdown(f"**Predicción del modelo:** {lab}  \nUmbral (Youden en validación): "
-                                f"{r['threshold']:.3f} · entrada {r['input_shape']} · {r['seconds']:.1f} s")
-                    for w in r["warnings"]:
-                        st.caption(f"⚠️ {w}")
-            st.info(next(iter(results.values()))["disclaimer"])
-            sp = results.get("mil", {}).get("slice_probabilities")
-            if sp and "Probabilidad por posición (MIL)" in visible:
-                show(px.bar(x=list(range(len(sp))), y=sp, labels={"x": "posición (orden z)", "y": "p"},
-                            range_y=[0, 1], title="MIL: probabilidad por posición (interpretación, no localización)"))
-    elif res and not ready:
-        st.info("El estudio se leyó correctamente; la predicción se habilitará cuando existan los checkpoints.")
+    mode = st.radio("Modo", ["Un estudio", "Lote de estudios locales"], horizontal=True)
+    if mode == "Un estudio":
+        key, res = study_selector("pred")
+        if res:
+            dsets, errors, warns = res
+            if errors:
+                st.warning(f"{len(errors)} archivo(s) descartados: " + "; ".join(errors[:5]))
+            for w in warns:
+                st.warning(w)
+            uid = str(getattr(dsets[0], "StudyInstanceUID", "")) or None
+            if not ready:
+                st.info("El estudio se leyó correctamente; la predicción se habilitará cuando existan los checkpoints.")
+            elif st.button("Ejecutar predicción", type="primary"):
+                results = {}
+                for m in ready:
+                    try:
+                        clf = load_model(m, core.checkpoint_path(m).stat().st_mtime)
+                        with st.spinner(f"Infiriendo con {core.SHORT[m]}…"):
+                            results[m] = core.predict(dsets, {m: clf})[m]
+                    except Exception as e:  # noqa: BLE001
+                        st.error(f"{core.NAMES[m]}: error de inferencia — {type(e).__name__}: {e}")
+                st.session_state["pred"] = dict(key=key, results=results)
+            saved = st.session_state.get("pred", {})
+            # solo se muestran resultados del estudio y los modelos seleccionados actualmente
+            results = {m: r for m, r in saved.get("results", {}).items() if m in ready} \
+                if saved.get("key") == key else {}
+            if results:
+                for c, (m, r) in zip(st.columns(len(results)), results.items()):
+                    with c:
+                        prediction_card(m, r)
+                st.info(next(iter(results.values()))["disclaimer"])
+                st.subheader("Comparación de la inferencia")
+                comparison_panel(results, uid)
+    else:
+        local = core.local_studies()
+        if not local:
+            st.info("No hay estudios en `experimento_dl/data/dicom/<StudyInstanceUID>/*.dcm`.")
+        else:
+            sel = st.multiselect("Estudios locales", local, default=local[:10])
+            if not ready:
+                st.info("La inferencia por lotes se habilitará cuando existan los checkpoints.")
+            elif sel and st.button("Ejecutar lote", type="primary"):
+                clfs = {m: load_model(m, core.checkpoint_path(m).stat().st_mtime) for m in ready}
+                bar = st.progress(0.0)
+                df = core.predict_local_batch(sel, clfs, progress=lambda f, u: bar.progress(f, text=u))
+                st.session_state["batch"] = df
+            df = st.session_state.get("batch")
+            if df is not None and len(df):
+                st.dataframe(df.round(4), hide_index=True, width="stretch")
+                if "reproduce_evaluacion" in df:
+                    chk = df.dropna(subset=["reproduce_evaluacion"])
+                    if len(chk):
+                        st.caption(f"Reproducibilidad: {int(chk.reproduce_evaluacion.sum())}/{len(chk)} "
+                                   f"predicciones con |Δ| ≤ {core.REPRO_TOL:g} frente a la evaluación.")
+                st.download_button("Descargar lote (CSV)", df.to_csv(index=False).encode(), "prediccion_lote.csv",
+                                   "text/csv")
 
+with tabs[3]:
     st.divider()
     st.subheader("Predicciones guardadas del conjunto de prueba (n=404)")
     st.caption("Salidas reales de la evaluación en Kaggle (`test_predictions_*.csv`). Están disponibles "
@@ -503,8 +595,14 @@ with tabs[5]:
             thr = st.slider("Umbral", 0.0, 1.0, 0.5, 0.01)
             rows = [dict(modelo=core.SHORT[m], **core.metrics_at_threshold(p.patient_overall, p.prob, thr))
                     for m, p in (("mil", pa), ("bigru", pb))]
-            st.dataframe(pd.DataFrame(rows)[["modelo", "tp", "fp", "tn", "fn", "sensitivity", "specificity",
-                                              "precision", "f1", "accuracy"]].round(3), hide_index=True)
+            ci = {m: threshold_ci(m, thr) for m in core.MODELS}
+            for r, m in zip(rows, core.MODELS):
+                for k in ("sensitivity", "specificity"):
+                    r[f"IC95 {k}"] = "[{:.3f}, {:.3f}]".format(*ci[m][k])
+            st.dataframe(pd.DataFrame(rows)[["modelo", "tp", "fp", "tn", "fn", "sensitivity", "IC95 sensitivity",
+                                              "specificity", "IC95 specificity", "precision", "f1", "accuracy"]]
+                         .round(3), hide_index=True)
+            st.caption("IC95 % bootstrap (1 000 remuestreos) con `metrics_eval.py` (módulo de evaluación de P3).")
             if interactive:
                 c1, c2 = st.columns(2)
                 if "Curva ROC" in visible:

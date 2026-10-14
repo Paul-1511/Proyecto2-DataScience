@@ -23,14 +23,17 @@ Para habilitar la predicción, copiar `mil_final.pt` y `bigru_final.pt` (Output 
 | 1 · Datos y EDA | Indicadores de `train.csv`, clases, prevalencia por vértebra (todos / solo positivos), correlación y número de vértebras fracturadas, particiones v2, exploración de metadatos DICOM (`dicom_metadata.csv.gz`) por clase, transfer syntax y control de Rescale |
 | 2 · Preprocesamiento | Pasos del pipeline v2, `preprocessing.json` y figuras reales (entrada 2.5D, antes/después, montaje) |
 | 3 · Visor DICOM | Subida o estudio local; HU crudo vs ventana ósea, histograma HU, metadatos, comparación de cortes y **entrada real del modelo** `[48,3,224,224]` vía `inference.preprocess_study` |
-| 4 · Predicción | Selección **Modelo A, Modelo B o ambos**; medidores con umbral de validación, avisos y descargo; probabilidades por posición (MIL). Sin checkpoints → **PENDIENTE**. Explorador de predicciones guardadas de prueba (n=404) con filtros de acuerdo/desacuerdo |
+| 4 · Predicción | Selección **Modelo A, Modelo B o ambos**; modo **un estudio** o **lote de estudios locales**; medidores con umbral de validación, avisos y descargo. **Comparación de la inferencia**: acuerdo A/B y Δ de probabilidad, margen respecto al umbral, percentil del estudio en la distribución de prueba (global y por clase), histograma de prueba con el estudio marcado, probabilidades por posición (MIL), **verificación de reproducibilidad** (si el estudio está en val/test, |Δ| frente a la probabilidad registrada en la evaluación; aviso si está en entrenamiento) y descarga CSV/JSON. Sin checkpoints → **PENDIENTE**. Explorador de predicciones guardadas de prueba (n=404) con filtros de acuerdo/desacuerdo |
 | 5 · Métricas | Validación / prueba (umbral val) / prueba (0.5): tarjetas, matriz de confusión, ROC, curvas de entrenamiento |
-| 6 · Comparación | Barras por conjunto y métrica elegidos, tabla Δ (B − A), DeLong / bootstrap / McNemar, umbral interactivo (exploratorio), ROC con punto de operación, cajas por clase, dispersión A vs B |
+| 6 · Comparación | Barras por conjunto y métrica elegidos, tabla Δ (B − A), DeLong / bootstrap / McNemar, umbral interactivo (exploratorio) con **IC95 % bootstrap** de sensibilidad y especificidad (`metrics_eval.py`, P3), ROC con punto de operación, cajas por clase, dispersión A vs B |
 | 7 · Estado e integración | Disponibilidad de cada artefacto y checkpoint (SHA-256) |
 | 8 · Limitaciones | Alcance no clínico |
 
 Barra lateral: interruptor **gráficas interactivas / figuras estáticas PNG** y selector de **gráficas visibles**
 (mostrar u ocultar cada tipo de gráfica en todas las pestañas).
+
+Las métricas a un umbral y los intervalos bootstrap se calculan con `experimento_dl/metrics_eval.py`
+(módulo independiente de P3), sin duplicar implementación en la app.
 
 ## Formatos que consume la app (para P3 · Hansel)
 
@@ -63,23 +66,37 @@ Ninguna bloquea la app; quedan resueltas o documentadas en `app_core.py`:
 
 ## Pruebas funcionales (13-oct-2026, macOS, Python 3.12, CPU)
 
-`.venv/bin/python -m pytest experimento_dl/tests -q` → **19 passed**.
+`.venv/bin/python -m pytest experimento_dl/tests -q` → **51 passed, 2 skipped** (incluye las 26 pruebas de
+`metrics_eval` de P3; las 2 omitidas son la validación con checkpoints reales, PENDIENTE).
 
 | Prueba | Resultado |
 |---|---|
 | Configuración v2 activa (K=48, ±2 mm) y coherente con `preprocessing.json` | OK |
-| Métricas JSON ↔ `comparacion_modelos.csv`; matriz de confusión y AUC recalculadas desde las predicciones | OK (coinciden exactamente) |
+| Métricas JSON ↔ `comparacion_modelos.csv`; matriz de confusión y AUC recalculadas desde las predicciones (vía `metrics_eval`) | OK (coinciden exactamente) |
+| IC95 % bootstrap contienen la estimación puntual publicada | OK |
 | `test_slice_probs_mil.npz` (404 × 48) tras verificar hash | OK |
 | Checkpoint ausente → PENDIENTE; checkpoint con hash distinto → rechazado | OK |
 | Entradas inválidas: sin archivos, no DICOM, vacío, demasiados archivos, válidos + inválidos, estudios mezclados | OK (errores/avisos explícitos) |
 | Entrada del modelo `[48,3,224,224]` uint8, invariante al orden de archivos | OK |
-| Mecánica de inferencia MIL y BiGRU con pesos **aleatorios** en directorio temporal (no es un resultado) | OK |
-| Arranque de la app (8 pestañas, sin excepciones) y modo estático / gráficas ocultas (`AppTest`) | OK |
-| Navegador (Playwright): las 8 pestañas, subida de un DICOM de TC real (`CT_small.dcm`) y cálculo de la entrada | OK tras corregir un error (slider con un único corte) |
+| Búsqueda en particiones, percentiles en prueba, detección de no reproducibilidad | OK |
+| **Flujo completo en la interfaz** (`AppTest`): estudio local → "Ejecutar predicción" con ambos modelos → panel de comparación, etiqueta rotulada aparte | OK con pesos **aleatorios** (fixture temporal); la verificación marca correctamente "NO reproduce" |
+| Inferencia por lotes; un estudio inexistente se informa sin romper el lote | OK |
+| Script `tools/validar_inferencia.py` (salida en carpeta temporal) | OK; sin checkpoints termina con PENDIENTE (código 2) |
+| Arranque de la app y modo estático / gráficas ocultas; 8 pestañas en navegador sin excepciones | OK |
+| **Inferencia con checkpoints reales** (`tests/test_inferencia_real.py`) | **PENDIENTE** (omitida: no hay `.pt` ni estudios RSNA locales) |
 
-**Pendiente:** inferencia con los checkpoints reales y con un estudio completo de RSNA (no hay DICOM de la
-competencia localmente; la descarga por API produjo HTTP 429). Para probar: copiar los `.pt` y un estudio en
-`experimento_dl/data/dicom/<UID>/` y ejecutar la sección 5 del notebook o la pestaña 4.
+### Cómo cerrar la validación real (cuando lleguen los checkpoints)
+
+1. Copiar `mil_final.pt` y `bigru_final.pt` en `artifacts/v2/weights/`.
+2. Copiar 1–10 estudios de **val/test** (UID en `artifacts/v2/results/splits.csv`) en
+   `experimento_dl/data/dicom/<StudyInstanceUID>/*.dcm` (desde Kaggle Notebooks: *Output* → descargar).
+3. Ejecutar:
+   ```bash
+   .venv/bin/python -m pytest experimento_dl/tests/test_inferencia_real.py -v
+   .venv/bin/python experimento_dl/tools/validar_inferencia.py
+   ```
+   El script deja `docs/app/validacion_inferencia.{csv,json}` (reproducibilidad, tiempos, acuerdo A/B).
+4. Regenerar la captura de la pestaña 4 con `tools/capturas_app.py` y quitar el [PENDIENTE] del informe.
 
 ## Capturas
 

@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import nbformat as nbf
 md, code = nbf.v4.new_markdown_cell, nbf.v4.new_code_cell
 cells = [
@@ -110,14 +112,21 @@ if loaded:
                            "umbral": r["threshold"], "entrada": r["input_shape"], "segundos": round(r["seconds"], 2),
                            "avisos": "; ".join(r["warnings"])} for m, r in out.items()]))
     print(next(iter(out.values()))["disclaimer"])
+    # Comparación A vs B y verificación de reproducibilidad (si el estudio está en val/test)
+    uid = str(getattr(dsets[0], "StudyInstanceUID", ""))
+    table, summary = core.compare_results(out, uid)
+    display(table)
+    print({k: v for k, v in summary.items() if k != "evaluacion"}, "· evaluación:", summary["evaluacion"])
 else:
     print("\\nInferencia NO ejecutada: no hay checkpoints reales disponibles. No se muestran resultados simulados.")"""),
 md("""## 6 · Pruebas funcionales de la app
 
 `experimento_dl/tests/test_app_core.py` (pytest) cubre: configuración v2, carga y consistencia de métricas,
 estado PENDIENTE y rechazo de checkpoints con hash distinto, entradas inválidas, estudios mezclados,
-forma e invariancia al orden de la entrada, mecánica de inferencia (pesos **aleatorios** en un directorio
-temporal, no son resultados) y arranque completo de la app con `streamlit.testing.AppTest`."""),
+forma e invariancia al orden de la entrada, comparación A vs B y verificación de reproducibilidad, flujo
+completo de predicción en la interfaz, inferencia por lotes (pesos **aleatorios** en un directorio temporal:
+no son resultados) y arranque de la app con `streamlit.testing.AppTest`.
+`test_inferencia_real.py` se omite hasta que existan los checkpoints reales y estudios RSNA locales."""),
 code("""import subprocess
 r = subprocess.run([sys.executable, "-m", "pytest", str(REPO / "experimento_dl" / "tests"), "-q", "--color=no", "-p", "no:cacheprovider"],
                    capture_output=True, text=True, cwd=REPO)
@@ -132,4 +141,4 @@ md("""## Conclusiones
   si la sección 5 indica PENDIENTE, esa prueba sigue pendiente."""),
 ]
 nb = nbf.v4.new_notebook(cells=cells, metadata={"kernelspec": {"name": "python3", "display_name": "Python 3"}})
-nbf.write(nb, "notebooks/04_integracion_app.ipynb")
+nbf.write(nb, str(Path(__file__).resolve().parents[2] / "notebooks" / "04_integracion_app.ipynb"))

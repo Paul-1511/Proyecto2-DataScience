@@ -30,12 +30,14 @@ Archivo compartido. Cada responsable actualiza **solo su sección**. Estados: �
 | 2 | Selección Modelo A / B / ambos; estado PENDIENTE sin checkpoints; SHA-256 vs MANIFEST | ✅ 13-oct | pestaña 4 |
 | 3 | EDA y metadatos DICOM interactivos; visor DICOM conservado + entrada real 2.5D | ✅ 13-oct | pestañas 1–3 |
 | 4 | Comparación interactiva de métricas, pruebas pareadas, umbral exploratorio; controles para mostrar/ocultar gráficas | ✅ 13-oct | pestañas 5–6 |
-| 5 | Validación de entradas inválidas y errores de carga | ✅ 13-oct | `experimento_dl/tests/test_app_core.py` (19 passed) |
+| 5 | Validación de entradas inválidas y errores de carga | ✅ 13-oct | `experimento_dl/tests/test_app_core.py` |
 | 6 | Notebook de integración con salidas reales | ✅ 13-oct | `notebooks/04_integracion_app.ipynb` |
 | 7 | Capturas, documentación y sección del informe → Méndez | ✅ 13-oct | `docs/app/` |
 | 8 | Incompatibilidades del contrato → Majo; formatos de métricas → Hansel | ✅ 13-oct | `docs/app/APP_STREAMLIT.md` |
-| 9 | Inferencia con checkpoints reales y estudio RSNA completo | ⏳ | Requiere `mil_final.pt`, `bigru_final.pt` (Majo) y un estudio DICOM |
-| 10 | Pull request `feature/streamlit` → `main` | ⏳ | pendiente de autorización |
+| 9 | Comparación de la inferencia A/B en la app (acuerdo, percentiles en prueba, reproducibilidad vs evaluación, lotes, descarga CSV/JSON); IC95 % con `metrics_eval` (P3) | ✅ 13-oct | pestañas 4 y 6; 25 pruebas propias (`AppTest` del flujo completo) |
+| 10 | Validación automática con checkpoints reales | ✅ preparada | `tests/test_inferencia_real.py`, `tools/validar_inferencia.py` |
+| 11 | **Ejecución** de la inferencia con checkpoints reales y estudios RSNA de val/test | ⏳ | Requiere `mil_final.pt`, `bigru_final.pt` (Majo, tarea 14) y estudios DICOM |
+| 12 | Pull request `feature/streamlit` → `main` | ✅ 13-oct | PR #2 integrado; segunda iteración en PR nuevo |
 
 ## Informe científico (responsable del informe)
 

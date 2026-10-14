@@ -193,3 +193,101 @@ def test_app_toggles_static_mode_and_hidden_charts():
     assert not at.exception
     at.sidebar.multiselect[0].set_value([]).run()
     assert not at.exception
+
+
+# ----------------------------------------------------------------------------- comparación (lógica)
+def test_evaluation_lookup_and_percentiles():
+    pr = core.predictions("bigru")
+    uid = pr.StudyInstanceUID.iloc[0]
+    ev = core.evaluation_lookup(uid)
+    assert ev["split"] == "test" and set(ev["prob"]) == {"mil", "bigru"}
+    assert abs(ev["prob"]["bigru"] - pr.prob.iloc[0]) < 1e-9
+    assert core.evaluation_lookup("1.2.3.4") is None
+    pct = core.test_percentile("bigru", 1.01)
+    assert pct["global_"] == 100.0
+
+
+def test_metrics_ci_contains_point_estimate():
+    pr, mt = core.predictions("bigru"), core.metrics("bigru")["test_thr_val_youden"]
+    ci = core.metrics_ci(pr.patient_overall.values, pr.prob.values, mt["threshold"], n_resamples=300)
+    for k in ("sensitivity", "specificity", "roc_auc"):
+        assert ci[k][0] <= mt[k] <= ci[k][1]
+
+
+def test_compare_results_flags_non_reproduction():
+    uid = core.predictions("bigru").StudyInstanceUID.iloc[0]
+    ev = core.evaluation_lookup(uid)
+    fake = {m: dict(probability=ev["prob"][m], threshold=.5, prediction=int(ev["prob"][m] >= .5)) for m in core.MODELS}
+    table, summary = core.compare_results(fake, uid)
+    assert table.reproduce_evaluacion.all() and "acuerdo" in summary
+    fake["bigru"]["probability"] += 0.05
+    table, _ = core.compare_results(fake, uid)
+    assert not table.set_index("model").loc["bigru", "reproduce_evaluacion"]
+
+
+# ----------------------------------------------------------------------------- app con checkpoints
+@pytest.fixture
+def fake_checkpoints(tmp_path, monkeypatch):
+    """Checkpoints con pesos ALEATORIOS + MANIFEST propio de la prueba + un estudio local cuyo UID
+    pertenece a la partición de prueba. Solo verifica la interfaz; las salidas no son resultados."""
+    import json
+    import torch
+    import common
+    from s04_train_eval import build_model
+    weights, dicom = tmp_path / "weights", tmp_path / "dicom"
+    weights.mkdir()
+    files = []
+    for m in core.MODELS:
+        torch.manual_seed(0)
+        p = weights / f"{m}_final.pt"
+        torch.save(dict(state_dict=build_model(m, pretrained=False).state_dict(), model_name=m, threshold=0.5,
+                        preprocessing=common.preprocessing_config()), p)
+        files.append(dict(path=f"weights/{m}_final.pt", sha256=core.sha256(p)))
+    for rel in ("results/test_slice_probs_mil.npz",):
+        files.append(core._manifest_entry(rel))
+    (tmp_path / "MANIFEST.json").write_text(json.dumps(dict(files=files)))
+    uid = core.predictions("bigru").StudyInstanceUID.iloc[0]
+    (dicom / uid).mkdir(parents=True)
+    for i, d in enumerate(fake_study(50, uid)):
+        d.save_as(dicom / uid / f"{i + 1}.dcm", enforce_file_format=True)
+    monkeypatch.setattr(core, "WEIGHTS_DIR", weights)
+    monkeypatch.setattr(core, "MANIFEST", tmp_path / "MANIFEST.json")
+    monkeypatch.setattr(common, "DICOM_DIR", dicom)
+    return uid
+
+
+def test_app_prediction_and_comparison_flow(fake_checkpoints):
+    from streamlit.testing.v1 import AppTest
+    at = AppTest.from_file(str(ROOT / "app_streamlit.py"), default_timeout=300).run()
+    assert not at.exception
+    tab = at.tabs[3]
+    tab.radio[1].set_value("Un estudio").run()          # modo
+    at.tabs[3].radio[2].set_value("Estudio local (experimento_dl/data/dicom/)").run()
+    btn = [b for b in at.tabs[3].button if b.label == "Ejecutar predicción"]
+    assert btn, "el botón de predicción debe aparecer cuando hay checkpoints válidos"
+    btn[0].click().run()
+    assert not at.exception, [e.value for e in at.exception]
+    txt = " ".join(e.value for e in list(at.success) + list(at.warning) + list(at.error) + list(at.info))
+    assert "coinciden" in txt or "DISCREPAN" in txt                    # acuerdo A vs B
+    assert "NO reproduce" in txt                                       # pesos aleatorios ≠ evaluación
+    assert "patient_overall" in txt                                    # etiqueta real rotulada aparte
+    assert len(at.tabs[3].dataframe) >= 1
+
+
+def test_batch_inference(fake_checkpoints):
+    import inference
+    clfs = {m: inference.load_classifier(core.checkpoint_path(m), device="cpu") for m in core.MODELS}
+    df = core.predict_local_batch([fake_checkpoints, "no-existe"], clfs)
+    assert set(df.model.dropna()) == {"mil", "bigru"}
+    assert df.error.notna().sum() == 1                       # el estudio inexistente se informa, no rompe el lote
+
+
+def test_validation_script_detects_non_reproduction(fake_checkpoints, tmp_path):
+    import json
+    sys.path.insert(0, str(ROOT / "tools"))
+    import validar_inferencia
+    with pytest.raises(SystemExit) as e:
+        validar_inferencia.main(["--out", str(tmp_path / "out")])
+    assert e.value.code == 1                                   # pesos aleatorios: no reproduce la evaluación
+    s = json.loads((tmp_path / "out" / "validacion_inferencia.json").read_text())
+    assert s["reproducibilidad"]["n"] == 2 and s["reproducibilidad"]["reproduce"] == 0
