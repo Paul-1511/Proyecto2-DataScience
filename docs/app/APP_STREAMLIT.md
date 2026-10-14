@@ -62,12 +62,13 @@ Ninguna bloquea la app; quedan resueltas o documentadas en `app_core.py`:
 3. El docstring de `inference.py` usa `data/weights/...`; la ruta canónica es `artifacts/v2/weights/`.
 4. `common.py` crea directorios al importarse (`weights/`, `figures/`, `data/dicom/`): inocuo, pero es un efecto secundario.
 5. `requirements.txt` y los comandos usan rutas de Windows (`.venv/Scripts`) y `torch` CUDA 12.8; en macOS se usa `torch` de PyPI (CPU).
-6. **Pendiente**: entregar `mil_final.pt` y `bigru_final.pt`. Sin ellos la inferencia sobre estudios nuevos no puede validarse.
+6. Checkpoints entregados (13-oct) y verificados: tamaño y SHA-256 idénticos a `MANIFEST.json`.
+7. Los DICOM de RSNA 2022 no incluyen la etiqueta `Modality`; la app ya no lo trata como "modalidad distinta de CT".
 
 ## Pruebas funcionales (13-oct-2026, macOS, Python 3.12, CPU)
 
-`.venv/bin/python -m pytest experimento_dl/tests -q` → **51 passed, 2 skipped** (incluye las 26 pruebas de
-`metrics_eval` de P3; las 2 omitidas son la validación con checkpoints reales, PENDIENTE).
+`.venv/bin/python -m pytest experimento_dl/tests -q` → **54 passed** (incluye las 26 pruebas de `metrics_eval` de P3
+y las de inferencia con checkpoints reales).
 
 | Prueba | Resultado |
 |---|---|
@@ -83,20 +84,20 @@ Ninguna bloquea la app; quedan resueltas o documentadas en `app_core.py`:
 | Inferencia por lotes; un estudio inexistente se informa sin romper el lote | OK |
 | Script `tools/validar_inferencia.py` (salida en carpeta temporal) | OK; sin checkpoints termina con PENDIENTE (código 2) |
 | Arranque de la app y modo estático / gráficas ocultas; 8 pestañas en navegador sin excepciones | OK |
-| **Inferencia con checkpoints reales** (`tests/test_inferencia_real.py`) | **PENDIENTE** (omitida: no hay `.pt` ni estudios RSNA locales) |
+| **Inferencia con checkpoints reales** (`tests/test_inferencia_real.py`, `tools/validar_inferencia.py`) | **OK** — 2 estudios de prueba RSNA (`…8744` sin fractura, `…9926` con fractura) desde DICOM crudo en CPU: 4/4 probabilidades reproducen la evaluación, |Δ| máx. 6.3e-4 (tol. 1e-3), mismas clases; ~0.9 s por estudio y modelo. Evidencia: `docs/app/validacion_inferencia.{csv,json}`, captura `capturas/04_prediccion_real.png` |
 
-### Cómo cerrar la validación real (cuando lleguen los checkpoints)
+### Cómo repetir la validación real
 
 1. Copiar `mil_final.pt` y `bigru_final.pt` en `artifacts/v2/weights/`.
-2. Copiar 1–10 estudios de **val/test** (UID en `artifacts/v2/results/splits.csv`) en
-   `experimento_dl/data/dicom/<StudyInstanceUID>/*.dcm` (desde Kaggle Notebooks: *Output* → descargar).
+2. Obtener estudios de **val/test** (UID en `artifacts/v2/results/splits.csv`) en
+   `experimento_dl/data/dicom/<StudyInstanceUID>/*.dcm`, p. ej. con
+   `experimento_dl/kaggle/descargar_estudio_api.py <UID> …` (API de Kaggle, con pausas y reintentos).
 3. Ejecutar:
    ```bash
    .venv/bin/python -m pytest experimento_dl/tests/test_inferencia_real.py -v
    .venv/bin/python experimento_dl/tools/validar_inferencia.py
    ```
    El script deja `docs/app/validacion_inferencia.{csv,json}` (reproducibilidad, tiempos, acuerdo A/B).
-4. Regenerar la captura de la pestaña 4 con `tools/capturas_app.py` y quitar el [PENDIENTE] del informe.
 
 ## Capturas
 

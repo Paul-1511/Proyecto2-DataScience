@@ -49,9 +49,8 @@ seguro (`weights_only=True`).
 La aplicación se validó con 25 pruebas automáticas propias (carga y consistencia de métricas, manejo de
 entradas inválidas, estado de checkpoints, forma de la entrada, comparación de modelos, flujo completo de
 predicción en la interfaz e inferencia por lotes) y con una revisión en navegador de las ocho pestañas.
-**[PENDIENTE: completar con `docs/app/validacion_inferencia.json` (reproducibilidad frente a la evaluación,
-tiempo por estudio y acuerdo A/B) tras ejecutar `tools/validar_inferencia.py` con los checkpoints reales.
-No afirmar que la predicción sobre nuevas entradas fue probada de extremo a extremo hasta entonces.]**
+La inferencia real se validó con dos estudios de prueba descargados de Kaggle: las cuatro probabilidades
+reproducen la evaluación (|Δ| máximo 6.3e-4) con las mismas clases (texto final en `informe/secciones/05_resultados.tex`, §5.6).
 
 ### Figuras sugeridas
 

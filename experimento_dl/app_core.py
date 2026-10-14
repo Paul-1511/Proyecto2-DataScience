@@ -277,7 +277,8 @@ def read_dicoms(items, max_files=MAX_UPLOAD_FILES):
             errors.append(f"{name}: {type(e).__name__}: {str(e)[:80]}")
     if not dsets:
         raise InvalidInput("Ningún archivo es un DICOM con imagen legible. " + "; ".join(errors[:3]))
-    modalities = {str(getattr(d, "Modality", "?")) for d in dsets}
+    # Los DICOM de RSNA 2022 no incluyen Modality: solo se avisa si existe y no es CT
+    modalities = {str(d.Modality) for d in dsets if "Modality" in d}
     if modalities - {"CT"}:
         warnings.append(f"Modalidad distinta de CT: {sorted(modalities)}. Los modelos se entrenaron solo con TC.")
     uids = {str(getattr(d, "StudyInstanceUID", "?")) for d in dsets}

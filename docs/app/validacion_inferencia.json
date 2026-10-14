@@ -1,0 +1,23 @@
+{
+  "generated_utc": "2026-10-14T04:48:55+00:00",
+  "device": "cpu",
+  "platform": "macOS-26.5.2-arm64-arm-64bit",
+  "checkpoints": {
+    "mil": "d49e18c4effd476b53c8f026b0ffb38c2c1872c2ce6fd01007527091762915c9",
+    "bigru": "14b4c2ee511854eed28be3c56cb2beeb6cfaf12ab188340b4b7c86618f4deb9b"
+  },
+  "n_estudios": 2,
+  "n_errores": 0,
+  "reproducibilidad": {
+    "n": 4,
+    "reproduce": 4,
+    "max_delta": 0.0006323354484557564,
+    "tolerancia": 0.001
+  },
+  "segundos_por_estudio": {
+    "mil": 0.8754957914352417,
+    "bigru": 0.8543540239334106
+  },
+  "acuerdo_A_B": 0.5,
+  "nota": "Validación técnica de la app (reproducción de la evaluación); no es una nueva evaluación del modelo."
+}
