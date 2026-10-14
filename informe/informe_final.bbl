@@ -1,5 +1,10 @@
 \begin{thebibliography}{}
 
+\bibitem[Anderson and D'Alonzo, 1974]{anderson1974odontoid}
+Anderson, L.~D. and D'Alonzo, R.~T. (1974).
+\newblock Fractures of the odontoid process of the axis.
+\newblock {\em Journal of Bone and Joint Surgery. American Volume}, 56(8):1663--1674.
+
 \bibitem[Cho et~al., 2014]{cho2014gru}
 Cho, K., van Merri{\"e}nboer, B., Gulcehre, C., Bahdanau, D., Bougares, F., Schwenk, H., and Bengio, Y. (2014).
 \newblock Learning phrase representations using {RNN} encoder--decoder for statistical machine translation.
@@ -14,6 +19,11 @@ Deng, J., Dong, W., Socher, R., Li, L.-J., Li, K., and Fei-Fei, L. (2009).
 Efron, B. and Tibshirani, R.~J. (1993).
 \newblock {\em An Introduction to the Bootstrap}.
 \newblock Chapman \& Hall.
+
+\bibitem[Goldberg et~al., 2001]{goldberg2001distribution}
+Goldberg, W., Mueller, C., Panacek, E., Tigges, S., Hoffman, J.~R., and Mower, W.~R. (2001).
+\newblock Distribution and patterns of blunt traumatic cervical spine injury.
+\newblock {\em Annals of Emergency Medicine}, 38(1):17--21.
 
 \bibitem[Hanley and McNeil, 1982]{hanley1982auc}
 Hanley, J.~A. and McNeil, B.~J. (1982).
@@ -30,10 +40,25 @@ Hoffman, J.~R., Mower, W.~R., Wolfson, A.~B., Todd, K.~H., and Zucker, M.~I. (20
 \newblock Validity of a set of clinical criteria to rule out injury to the cervical spine in patients with blunt trauma.
 \newblock {\em New England Journal of Medicine}, 343(2):94--99.
 
+\bibitem[Holmes and Akkinepalli, 2005]{holmes2005ct}
+Holmes, J.~F. and Akkinepalli, R. (2005).
+\newblock Computed tomography versus plain radiography to screen for cervical spine injury: A meta-analysis.
+\newblock {\em Journal of Trauma}, 58(5):902--905.
+
 \bibitem[Ilse et~al., 2018]{ilse2018mil}
 Ilse, M., Tomczak, J., and Welling, M. (2018).
 \newblock Attention-based deep multiple instance learning.
 \newblock In {\em Proceedings of the 35th International Conference on Machine Learning}, pages 2127--2136. PMLR.
+
+\bibitem[Jefferson, 1920]{jefferson1920atlas}
+Jefferson, G. (1920).
+\newblock Fracture of the atlas vertebra: Report of four cases, and a review of those previously recorded.
+\newblock {\em British Journal of Surgery}, 7(27):407--422.
+
+\bibitem[Levine and Edwards, 1985]{levine1985hangman}
+Levine, A.~M. and Edwards, C.~C. (1985).
+\newblock The management of traumatic spondylolisthesis of the axis.
+\newblock {\em Journal of Bone and Joint Surgery. American Volume}, 67(2):217--226.
 
 \bibitem[Lin et~al., 2023]{lin2023rsna}
 Lin, H.~M., Colak, E., Richards, T., Kitamura, F.~C., Prevedello, L.~M., Talbott, J., Ball, R.~L., Gumeler, E., Yeom, K.~W., Hamghalam, M., Simpson, A., Strika, J., Bulja, D., Angkurawaranon, S., P{\'e}rez-Lara, A., G{\'o}mez-Alonso, M., Ortiz~Jim{\'e}nez, J., Peoples, J., Law, M., Dogan, H., Altinmakas, E., Youssef, A., Mahfouz, Y., Kalpathy-Cramer, J., and Flanders, A.~E. (2023).
@@ -53,6 +78,11 @@ Paszke, A., Gross, S., Massa, F., Lerer, A., Bradbury, J., Chanan, G., et~al. (2
 Stiell, I.~G., Wells, G.~A., Vandemheen, K.~L., Clement, C.~M., Lesiuk, H., De~Maio, V.~J., et~al. (2001).
 \newblock The {C}anadian {C}-spine rule for radiography in alert and stable trauma patients.
 \newblock {\em JAMA}, 286(15):1841--1848.
+
+\bibitem[Vaccaro et~al., 2016]{vaccaro2016aospine}
+Vaccaro, A.~R., Koerner, J.~D., Radcliff, K.~E., Oner, F.~C., Reinhold, M., Schnake, K.~J., et~al. (2016).
+\newblock {AOSpine} subaxial cervical spine injury classification system.
+\newblock {\em European Spine Journal}, 25(7):2173--2184.
 
 \bibitem[Youden, 1950]{youden1950index}
 Youden, W.~J. (1950).

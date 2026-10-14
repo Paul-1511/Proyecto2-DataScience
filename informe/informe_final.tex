@@ -6,11 +6,12 @@
 \usepackage{polyglossia}
 \setmainlanguage{spanish}
 \usepackage[margin=2.5cm]{geometry}
-\usepackage{graphicx,booktabs,float,caption,xcolor,enumitem,array}
+\usepackage{graphicx,booktabs,float,caption,xcolor,enumitem,array,multirow}
 \usepackage[most]{tcolorbox}
 \usepackage[authoryear,round]{natbib}
 \usepackage[hidelinks]{hyperref}
 \setlength{\parskip}{4pt}
+\setlength{\emergencystretch}{3em} % evita desbordes por nombres largos en \texttt
 \captionsetup{font=small,labelfont=bf}
 \graphicspath{{figs/}}
 \input{generated/eda_tablas.tex}
@@ -57,6 +58,7 @@ Se concluye que la incorporación de información secuencial mediante BiGRU prod
 \bibliographystyle{apalike}
 \bibliography{referencias}
 
-\appendix
-\input{secciones/A_estado_integracion}
+% Ap\'endice interno de seguimiento: excluido de la versi\'on de entrega.
+% \appendix
+% \input{secciones/A_estado_integracion}
 \end{document}

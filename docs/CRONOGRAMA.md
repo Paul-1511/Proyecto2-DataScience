@@ -37,7 +37,7 @@ Archivo compartido. Cada responsable actualiza **solo su sección**. Estados: �
 | 9 | Comparación de la inferencia A/B en la app (acuerdo, percentiles en prueba, reproducibilidad vs evaluación, lotes, descarga CSV/JSON); IC95 % con `metrics_eval` (P3) | ✅ 13-oct | pestañas 4 y 6; 25 pruebas propias (`AppTest` del flujo completo) |
 | 10 | Validación automática con checkpoints reales | ✅ preparada | `tests/test_inferencia_real.py`, `tools/validar_inferencia.py` |
 | 11 | Checkpoints reales recibidos (Majo) e instalados en `artifacts/v2/weights/` | ✅ 13-oct | SHA-256 y tamaño idénticos a `MANIFEST.json`; `results_v2.zip` idéntico a `artifacts/v2/results/`; carga segura, umbral y preprocesamiento coinciden; interfaz probada con ambos modelos |
-| 12 | Reproducción de la evaluación desde DICOM crudo en la app (estudios RSNA de val/test) | ⏳ | Falta copiar ≥1 estudio de prueba en `experimento_dl/data/dicom/<UID>/` y ejecutar `tools/validar_inferencia.py` |
+| 12 | Reproducción de la evaluación desde DICOM crudo en la app (estudios RSNA de prueba) | ✅ 13-oct | 2 estudios, 4/4 reproducen (|Δ| ≤ 6.3e-4); `docs/app/validacion_inferencia.{csv,json}`; informe §5.6 sin pendientes |
 | 13 | Pull request `feature/streamlit` → `main` | ✅ 13-oct | PR #2 integrado; segunda iteración en PR nuevo |
 
 ## Informe científico (responsable del informe)
