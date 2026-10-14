@@ -1,0 +1,55 @@
+\section{Conclusiones}
+
+El experimento complet\'o exitosamente el pipeline de clasificaci\'on de fracturas cervicales en TC desde el preprocesamiento DICOM hasta la evaluaci\'on comparativa de modelos, utilizando los 2019 estudios completos del dataset RSNA 2022 y entrenamiento en GPU Tesla T4 mediante Kaggle Notebooks.
+
+\subsection*{Cumplimiento de objetivos}
+
+\begin{enumerate}[nosep]
+\item \textbf{Construir muestra estratificada sin fuga:} Se procesaron 2019 estudios con particiones disjuntas por \texttt{StudyInstanceUID} (1292 entrenamiento, 323 validaci\'on, 404 prueba), estratificadas por \texttt{patient\_overall} con semilla 42. Las verificaciones independientes confirman que no hay fuga de datos entre particiones.
+
+\item \textbf{Implementar preprocesamiento DICOM reproducible:} El pipeline convierte valores de p\'ixel a unidades Hounsfield usando \texttt{RescaleSlope}/\texttt{RescaleIntercept} por archivo, aplica ventana \'osea (nivel 400, ancho 1800 HU), redimensiona a $224\times224$ y ordena por \texttt{ImagePositionPatient[2]}. La auditor\'ia de 96\,912 cortes centrales documenta la variabilidad de metadatos (m\'ultiples protocolos de reescalado, grosores de 0.49--1.0~mm, espaciado $z$ de 0.31--2.63~mm).
+
+\item \textbf{Entrenar y evaluar dos arquitecturas:} ResNet18 + MIL (agregaci\'on top-3) y ResNet18 + BiGRU (secuencia ordenada por $z$) fueron entrenados con los mismos hiperpar\'ametros, evaluados con m\'etricas apropiadas (sensibilidad, especificidad, precisi\'on, F1, exactitud, ROC-AUC) e intervalos de confianza del 95\% mediante bootstrap.
+
+\item \textbf{Seleccionar modelo con incertidumbre cuantificada:} BiGRU fue seleccionado como modelo recomendado con base en AUC superior (0.737 vs 0.638, $\Delta = +0.099$, prueba de DeLong $p < 0.001$) y mejor equilibrio sensibilidad/especificidad. El bootstrap pareado confirma que en el 100\% de los remuestreos BiGRU supera a MIL.
+
+\item \textbf{Desarrollar aplicaci\'on con inferencia:} La aplicaci\'on Streamlit permite cargar estudios DICOM, aplicar el mismo preprocesamiento que en entrenamiento y obtener predicciones con ambos modelos o compararlos interactivamente.
+\end{enumerate}
+
+\subsection*{Hallazgos principales}
+
+\begin{enumerate}[nosep]
+\item \textbf{BiGRU supera estad\'isticamente a MIL} ($\Delta$AUC = +0.099, $p < 0.001$ seg\'un prueba de DeLong). El bootstrap pareado confirma que en el 100\% de los remuestreos BiGRU tuvo mejor AUC, con IC95\% de la diferencia [+0.048, +0.147] que no incluye el cero.
+
+\item \textbf{BiGRU ofrece mejor sensibilidad} (0.641 vs 0.365), detectando 53 fracturas reales m\'as que MIL (123 vs 70 TP). Esto es cl\'inicamente relevante: en \emph{screening} m\'edico, los falsos negativos son m\'as costosos que los falsos positivos.
+
+\item \textbf{Ambos modelos tienen desempe\~no moderado.} El mejor AUC alcanzado (0.737) est\'a lejos del umbral de utilidad cl\'inica ($>$0.90). La especificidad de BiGRU (0.651) genera 74 falsos positivos, lo que limitar\'ia su uso como herramienta aut\'onoma.
+
+\item \textbf{El modelado secuencial captura contexto anat\'omico.} BiGRU procesa los 48 cortes ordenados por $z$, permitiendo que la red aprenda relaciones espaciales entre v\'ertebras adyacentes. MIL trata cada corte independientemente y solo promedia los 3 logits m\'as altos, perdiendo informaci\'on contextual.
+\end{enumerate}
+
+\subsection*{Limitaciones cr\'iticas}
+
+\begin{itemize}[nosep]
+\item \textbf{Una sola partici\'on y semilla:} Los resultados pueden no generalizar a otras divisiones de datos. Se requiere validaci\'on cruzada $k$-fold para estimar varianza.
+\item \textbf{Muestreo de 48 cortes} de estudios con 69--1082 cortes totales: muchas fracturas pueden no estar en los cortes seleccionados, introduciendo ruido de etiqueta.
+\item \textbf{Clasificador global:} No localiza la fractura ni identifica la v\'ertebra afectada.
+\item \textbf{Sin validaci\'on cl\'inica ni externa:} Las m\'etricas no son comparables con las de la competencia (que usa m\'etrica ponderada por v\'ertebra en test oculto).
+\item \textbf{Prevalencia del 47.5\%} en el conjunto de prueba es artificialmente alta comparada con la poblaci\'on cl\'inica real ($\sim$5--10\% en pacientes de trauma), lo que infla m\'etricas como precisi\'on.
+\end{itemize}
+
+\subsection*{Recomendaciones}
+
+\begin{enumerate}[nosep]
+\item No desplegar en producci\'on cl\'inica sin validaci\'on prospectiva con radi\'ologos y datos de instituciones independientes.
+\item Incrementar el muestreo de cortes (ej. 96 o 128 posiciones) para reducir el riesgo de no muestrear la fractura.
+\item Implementar validaci\'on cruzada 5-fold para obtener estimaciones m\'as robustas del desempe\~no y su varianza.
+\item Explorar arquitecturas 3D (ej. 3D ResNet) que procesen el volumen completo sin necesidad de muestreo de cortes.
+\item Ajustar el umbral de decisi\'on seg\'un el costo cl\'inico de falsos positivos vs falsos negativos, en consulta con radi\'ologos.
+\end{enumerate}
+
+\subsection*{Conclusiones del EDA de im\'agenes (P2)}
+La heterogeneidad de los metadatos DICOM es real y medible: reescalado at\'ipico en \cifNInterceptAtipPct\,\% de los estudios, tama\~nos de p\'ixel entre 0.19 y 0.713~mm, sentido de $z$ variable y compresi\'on distinta entre estudios. Las decisiones del \emph{pipeline} (HU por archivo, orden por $z$, ventana \'osea) responden a esa heterogeneidad. Quedan abiertas dos verificaciones que requieren p\'ixeles: la plausibilidad de las HU en los estudios con reescalado at\'ipico y el an\'alisis de intensidades por grupo de adquisici\'on (ver el recuadro de pendientes en la secci\'on~\ref{sec:eda-dicom}).
+
+\subsection*{Limitaciones generales}
+Una sola partici\'on y una sola semilla; 48 posiciones por estudio de cientos de cortes (la fractura puede no estar muestreada); clasificador global que no localiza la fractura; sin remuestreo isotr\'opico; sin validaci\'on cl\'inica ni externa, por lo que las m\'etricas no son comparables con las de la competencia.

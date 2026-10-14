@@ -1,0 +1,140 @@
+\section{Resultados y an\'alisis de resultados}
+
+\subsection{Caracter\'isticas del conjunto de datos original}
+El conjunto tabular contiene \cifNEstudios{} estudios en \texttt{train.csv}: \cifPos{} con fractura (\texttt{patient\_overall}\,=\,1; 47.6\,\%) y \cifNeg{} sin fractura. Solo 235 estudios (11.6\,\%) cuentan con \emph{bounding boxes} (7\,217 anotaciones), todas en estudios positivos (primera entrega del Proyecto~2). Las im\'agenes son estudios de TC en formato DICOM con entre \cifNCortesMin{} y \cifNCortesMax{} cortes por estudio (mediana \cifNCortesMed{}).
+
+\begin{figure}[H]\centering
+\includegraphics[width=.48\linewidth]{01_patient_overall.png}\hfill
+\includegraphics[width=.48\linewidth]{02_frac_por_vertebra.png}
+\caption{An\'alisis exploratorio tabular (primera entrega): distribuci\'on de la variable objetivo \texttt{patient\_overall} y frecuencia de fractura por v\'ertebra.}
+\end{figure}
+
+\subsection{Limpieza y preprocesamiento}
+En los CSV no hubo valores nulos ni filas duplicadas, \texttt{StudyInstanceUID} es \'unico y \texttt{patient\_overall} es consistente con la suma de C1--C7, por lo que no se aplicaron correcciones a las etiquetas. En las im\'agenes, la variabilidad de metadatos no se corrige en los archivos sino en el \emph{pipeline} (secci\'on~\ref{sec:eda-dicom}): HU calculadas con el \texttt{RescaleSlope}/\texttt{RescaleIntercept} de cada archivo, ordenamiento por posici\'on $z$ y redimensionado a $224\times224$.
+
+\subsection{An\'alisis exploratorio de las im\'agenes DICOM}\label{sec:eda-dicom}
+\paragraph{Fuente y tama\~no de muestra.} El an\'alisis usa la auditor\'ia del \emph{pipeline} (\cifFuente): \cifNEstudios{} estudios y \cifCortesLeidos{} cortes (los 48 centrales de cada estudio). El n\'umero de cortes por estudio es el total de archivos del estudio; el resto de metadatos proviene \'unicamente de esos 48 cortes. El notebook \texttt{notebooks/02\_eda\_imagenes.ipynb} y el script \texttt{scripts/eda\_metadatos\_dicom.py} permiten repetir el an\'alisis leyendo las cabeceras de \emph{todos} los cortes de una muestra estratificada (semilla 42) directamente en Kaggle.
+
+\paragraph{Estad\'istica descriptiva.}
+\begin{table}[H]\centering\small\tablaDesc
+\caption{Estad\'istica descriptiva por estudio (\cifNEstudios{} estudios).}
+\end{table}
+El grosor de corte toma pocos valores discretos (mediana 0.625~mm, m\'aximo 1~mm, en l\'inea con el criterio de inclusi\'on del conjunto de datos de grosor $\le 1$~mm; \citealp{lin2023rsna}), mientras que el tama\~no de p\'ixel var\'ia entre 0.19 y 0.713~mm; el n\'umero de cortes cubre un rango de m\'as de un orden de magnitud. Tras redimensionar a $224\times224$, el tama\~no f\'isico del p\'ixel resultante var\'ia entre estudios, pues no se remuestrea de forma isotr\'opica.
+
+\begin{figure}[H]\centering
+\includegraphics[width=\linewidth]{01_distribuciones_adquisicion.png}
+\caption{Distribuciones de cortes por estudio, SliceThickness, PixelSpacing y espaciado $z$ medido.}
+\end{figure}
+\begin{figure}[H]\centering
+\includegraphics[width=\linewidth]{02_boxplots_comparacion.png}
+\caption{Comparaci\'on de par\'ametros de adquisici\'on seg\'un \texttt{patient\_overall} (descriptiva; sin prueba de hip\'otesis).}
+\end{figure}
+\begin{figure}[H]\centering
+\includegraphics[width=\linewidth]{03_protocolos_y_resolucion.png}
+\caption{Protocolos de reescalado, sintaxis de transferencia y resoluci\'on de matriz.}
+\end{figure}
+
+\paragraph{Valores at\'ipicos y metadatos inconsistentes.}
+\begin{table}[H]\centering\small\tablaChecks
+\caption{Comprobaciones de calidad sobre los metadatos. Los umbrales de at\'ipicos usan IQR$\times$1.5.}
+\end{table}
+Los hallazgos relevantes para el preprocesamiento son: (i) \cifNInterceptAtip{} estudios (\cifNInterceptAtipPct\,\%) con \texttt{RescaleIntercept} distinto de $-1024$ y $0$: 141 con intercept $-10240$ y \texttt{RescaleSlope} $=10$, y 3 con intercept $-8192$; (ii) \cifNNoQuinientos{} estudios que no son $512\times512$; (iii) ning\'un estudio con dimensiones, grosor o reescalado variables \emph{dentro} del estudio, ni fotometr\'ia distinta de MONOCHROME2; (iv) \cifNOutPixel{} estudios con \texttt{PixelSpacing} at\'ipico y \cifNOutCortes{} con n\'umero de cortes at\'ipico. Que las HU resultantes de los estudios con reescalado at\'ipico sean plausibles se comprueba con p\'ixeles reales y no con metadatos (v\'ease m\'as abajo).
+
+\paragraph{Orden de los cortes y auditor\'ia del \emph{pipeline}.}
+El sentido de $z$ respecto al n\'umero de instancia no es constante: \cifZDecr{} estudios son decrecientes, \cifZCrec{} crecientes y \cifZMixto{} mixto; \cifZNoMono{} estudio no es mon\'otono. Los estudios con espaciado $z$ irregular o no mon\'otono son \cifZAnomalos{} (identificados por los \'ultimos d\'igitos de su UID). Esto justifica ordenar por \texttt{ImagePositionPatient[2]} y no por n\'umero de instancia. El sentido creciente es m\'as frecuente en estudios positivos (\cifPosCrecPct\,\% frente a \cifNegCrecPct\,\% en negativos; $\chi^2$, $p=\cifChiP$); es una asociaci\'on descriptiva que podr\'ia reflejar diferencias de protocolo o instituci\'on, que los metadatos disponibles no permiten confirmar.
+El preprocesamiento de los \cifNEstudios{} estudios termin\'o con \cifFallosPrep{} fallos; el tiempo por estudio fue de \cifTMedia{}~s en promedio (mediana \cifTMediana{}~s, m\'aximo \cifTMax{}~s) y los estudios comprimidos con JPEG Lossless tardaron aproximadamente el doble que los no comprimidos (mediana 4.07~s frente a 2.11~s con Explicit VR Little Endian).
+
+\begin{figure}[H]\centering
+\includegraphics[width=\linewidth]{04_consistencia_z.png}
+\caption{Consistencia del eje $z$ entre estudios.}
+\end{figure}
+\begin{figure}[H]\centering
+\includegraphics[width=\linewidth]{07_auditoria_pipeline.png}
+\caption{Auditor\'ia del \emph{pipeline}: irregularidad del espaciado $z$, sentido de $z$ y tiempo de preprocesamiento por sintaxis de transferencia.}
+\end{figure}
+
+\paragraph{Ejemplos reales antes y despu\'es del preprocesamiento.}
+Las figuras siguientes provienen del \emph{pipeline} de entrenamiento (\texttt{artifacts/v2/results/figures/}) y muestran el corte en HU crudo, el histograma con la ventana \'osea y el resultado final.
+\begin{figure}[H]\centering
+\includegraphics[width=\linewidth]{preproc_antes_despues_y1_21806.png}\\[3pt]
+\includegraphics[width=\linewidth]{preproc_antes_despues_y0_10639.png}
+\caption{Antes y despu\'es del preprocesamiento en un estudio positivo (arriba) y uno negativo (abajo).}
+\end{figure}
+\pendiente{Intensidades (HU) por grupo de reescalado y diferencias de adquisici\'on}{Histogramas de HU del corte central de una submuestra, con todos los estudios de reescalado at\'ipico y estudios aleatorios, y la comparaci\'on antes/despu\'es sobre ellos (secci\'on~5 del notebook 02).}{Ejecuci\'on de \texttt{notebooks/02\_eda\_imagenes.ipynb} en Kaggle con la competencia como entrada (produce \texttt{intensidades\_corte\_central.csv} y las figuras 05 y 06).}
+
+\paragraph{Limitaciones del EDA de im\'agenes.}
+\begin{itemize}[nosep]
+\item Solo se dispone de las cabeceras de 48 cortes centrales por estudio; no se pueden detectar huecos en $z$ ni cabeceras at\'ipicas fuera de esos cortes.
+\item El espaciado $z$ medido es la distancia entre dos cortes consecutivos \emph{muestreados}, no una mediana del estudio. Por ello la comparaci\'on grosor\,\,vs.\,\,espaciado $z$ (\cifNGrosorSpacing{} estudios, \cifNGrosorSpacingPct\,\%) no es concluyente y se excluye de la tabla de calidad hasta confirmarla con cabeceras completas.
+\item Las comprobaciones sobre cabeceras no sustituyen una revisi\'on cl\'inica de la calidad de imagen ni miden artefactos (metal, movimiento).
+\item La comparaci\'on por \texttt{patient\_overall} es descriptiva, sin control de confusores de protocolo.
+\end{itemize}
+
+\subsection{Ajuste de par\'ametros}
+El procedimiento experimental distinguió entre los hiperparámetros definidos previamente al entrenamiento y las decisiones realizadas a partir del desempeño observado en el conjunto de validación. No se implementó una búsqueda sistemática de hiperparámetros mediante métodos como \textit{grid search}, \textit{random search} u optimización bayesiana. En su lugar, se utilizó una configuración inicial fija y comparable para ambas arquitecturas, seleccionando posteriormente la mejor época y el umbral operativo de clasificación mediante los resultados de validación.
+
+Los hiperparámetros compartidos, entre ellos las tasas de aprendizaje, el tamaño de lote, el decaimiento de pesos, la probabilidad de \textit{dropout}, la configuración del preprocesamiento y los aumentos de datos, permanecieron constantes durante la comparación. Las diferencias arquitectónicas se limitaron principalmente al mecanismo de agregación: el promedio de los tres logits más altos en MIL y una GRU bidireccional de 128 unidades por dirección en BiGRU. El peso de la clase positiva, aproximadamente 1.1008, se calculó directamente a partir de la distribución de las etiquetas del conjunto de entrenamiento y no fue seleccionado mediante optimización experimental.
+
+La primera decisión basada en validación fue la selección de la época óptima. Al finalizar cada época se calculó el ROC-AUC sobre los 323 estudios de validación y se conservó el \textit{checkpoint} correspondiente cuando este indicador mejoraba. Se aplicó detención temprana después de cuatro épocas consecutivas sin incremento del ROC-AUC, con el propósito de limitar el sobreajuste y evitar entrenamiento adicional sin mejoras observadas.
+
+En ResNet18 + MIL, el entrenamiento finalizó después de 10 épocas y el mejor \textit{checkpoint} correspondió a la época 6, con un ROC-AUC de validación de 0.6870. En ResNet18 + BiGRU, el entrenamiento finalizó después de 9 épocas y el mejor \textit{checkpoint} se obtuvo en la época 5, con un ROC-AUC de validación de 0.7255. Los historiales muestran que la pérdida de entrenamiento continuó disminuyendo mientras la pérdida de validación aumentaba en las épocas posteriores, lo cual constituye una señal de sobreajuste. Por tanto, la selección del \textit{checkpoint} permitió conservar los estados con mejor capacidad discriminativa observada en validación, en lugar de utilizar los parámetros de la última época.
+
+La segunda decisión fue la determinación del umbral de clasificación. Una vez recuperado el mejor \textit{checkpoint} de cada modelo, se calculó la curva ROC sobre el conjunto de validación y se seleccionó el umbral que maximizaba el índice de Youden, definido como la suma de sensibilidad y especificidad menos uno. Este procedimiento produjo un umbral de 0.54952 para MIL y 0.54813 para BiGRU. Ambos umbrales se mantuvieron sin modificaciones durante la evaluación sobre los 404 estudios de prueba, evitando utilizar las etiquetas de prueba para ajustar la regla de decisión.
+
+La elección del umbral afecta directamente las métricas dependientes de una clasificación binaria, como sensibilidad, especificidad, precisión, F1-score y exactitud. En cambio, el ROC-AUC evalúa la capacidad discriminativa considerando múltiples umbrales y no cambia por seleccionar un punto de operación específico. Adicionalmente, se calcularon resultados utilizando un umbral de referencia de 0.5, exclusivamente con fines comparativos.
+
+La ausencia de una búsqueda exhaustiva de hiperparámetros constituye una limitación metodológica del experimento, ya que no permite asegurar que las configuraciones seleccionadas sean óptimas para cada arquitectura. Asimismo, los historiales de entrenamiento muestran variabilidad en el ROC-AUC de validación, particularmente en MIL, cuyo valor máximo de 0.687 disminuyó a aproximadamente 0.638 en el conjunto de prueba. Estos resultados sugieren que la selección de parámetros y la estimación de generalización podrían beneficiarse de validación cruzada, experimentos con múltiples semillas y una búsqueda controlada de configuraciones en investigaciones posteriores.
+
+Finalmente, la ampliación del diseño inicial desde una muestra piloto de 160 estudios y 24 cortes hacia el procesamiento de 2,019 estudios con 48 posiciones 2.5D constituyó una decisión metodológica previa a los entrenamientos definitivos, no un ajuste seleccionado mediante comparación de métricas. Por tanto, no se atribuyen mejoras cuantitativas a dicho cambio, puesto que no se dispone de resultados experimentales equivalentes para la configuración piloto.
+
+
+\subsection{Comparaci\'on de algoritmos}
+
+\subsubsection*{Pruebas estad\'isticas pareadas}
+
+La comparaci\'on entre ResNet18 + MIL y ResNet18 + BiGRU se realiz\'o sobre el mismo conjunto de prueba ($n = 404$ estudios) utilizando pruebas estad\'isticas pareadas para determinar si las diferencias en rendimiento son significativas.
+
+\begin{table}[H]\centering
+\caption{Pruebas estad\'isticas pareadas entre modelos ($n = 404$).}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Prueba} & \textbf{Resultado} & \textbf{Interpretaci\'on} \\
+\midrule
+DeLong (1988) & $\Delta$AUC = +0.099, $z = 4.09$, $p = 4.3\times10^{-5}$ & Diferencia altamente significativa \\
+Bootstrap pareado (2000 remuestreos) & IC95\% $\Delta$AUC: [+0.048, +0.147]; 0\% de remuestreos $\le 0$ & BiGRU consistentemente superior \\
+McNemar exacto (umbral val) & 66 vs 48 aciertos exclusivos, $p = 0.11$ & Direcci\'on favorable a BiGRU, no significativo en predicciones binarias \\
+Correlaci\'on Spearman & $\rho = 0.60$ & Acuerdo moderado entre probabilidades \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+En el conjunto de validaci\'on ($n = 323$), la direcci\'on de la diferencia es la misma pero no alcanza significaci\'on estad\'istica (DeLong $p = 0.115$; bootstrap IC95\% $[-0.010, +0.086]$).
+
+\subsubsection*{Selecci\'on del modelo: ResNet18 + BiGRU}
+
+El criterio de selecci\'on, fijado antes del entrenamiento, fue el ROC-AUC de prueba y el equilibrio entre sensibilidad y especificidad. La selecci\'on de ResNet18 + BiGRU como modelo recomendado se justifica en cinco aspectos:
+
+\begin{enumerate}[nosep]
+\item \textbf{AUC superior y estad\'isticamente significativo:} 0.737 vs 0.638 (DeLong $p < 0.001$).
+\item \textbf{Mejor sensibilidad:} 0.641 vs 0.365; detecta 53 fracturas reales m\'as que MIL (123 vs 70 TP).
+\item \textbf{Mejor F1-score:} 0.632 vs 0.465; balance m\'as equilibrado entre precisi\'on y sensibilidad.
+\item \textbf{Estabilidad entre validaci\'on y prueba:} AUC estable (0.725 $\to$ 0.737), mientras que MIL cay\'o (0.687 $\to$ 0.638).
+\item \textbf{Inferencia m\'as r\'apida:} 23.8 vs 28.0 ms/estudio.
+\end{enumerate}
+
+Es importante notar que la prueba de McNemar no alcanza significaci\'on en predicciones binarias ($p = 0.11$), lo que indica que la diferencia es m\'as clara en probabilidades continuas (evaluadas por DeLong) que en clasificaciones binarias con un umbral fijo. Con los umbrales seleccionados en validaci\'on, MIL opera con baja sensibilidad (0.365) y BiGRU con un punto operativo m\'as equilibrado (sensibilidad 0.641, especificidad 0.651).
+
+\begin{figure}[H]\centering
+\includegraphics[width=.48\linewidth]{roc_comparison.png}\hfill
+\includegraphics[width=.48\linewidth]{confusion_mil.png}
+\caption{Curvas ROC comparativas (izquierda) y matriz de confusi\'on de MIL (derecha) en el conjunto de prueba.}
+\end{figure}
+
+\begin{figure}[H]\centering
+\includegraphics[width=.48\linewidth]{confusion_bigru.png}\hfill
+\includegraphics[width=.48\linewidth]{probability_distributions.png}
+\caption{Matriz de confusi\'on de BiGRU (izquierda) y distribuci\'on de probabilidades predichas por clase real (derecha). La l\'inea vertical indica el umbral seleccionado en validaci\'on.}
+\end{figure}
+
+\subsection{Aplicaci\'on desarrollada}
+\pendiente{Aplicaci\'on Streamlit (P1)}{Descripci\'on de la aplicaci\'on, capturas de pantalla y justificaci\'on de las tecnolog\'ias elegidas.}{Capturas y documentaci\'on de P1 (Cabrera): \texttt{docs/app/capturas/} y \texttt{docs/app/SECCION\_INFORME\_APP.md} (rama \texttt{main}).}
