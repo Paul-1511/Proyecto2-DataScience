@@ -1,0 +1,8 @@
+\section{Conclusiones}
+\pendiente{Conclusiones (P3)}{C\'omo se cumplieron cada uno de los objetivos de la secci\'on~2 y discusi\'on de la efectividad de los algoritmos. Se redactan solo a partir de los resultados reales de la comparaci\'on.}{Redacci\'on de P3 (Hansel) a partir de \texttt{artifacts/v2/results/}.}
+
+\subsection*{Conclusiones del EDA de im\'agenes (P2)}
+La heterogeneidad de los metadatos DICOM es real y medible: reescalado at\'ipico en \cifNInterceptAtipPct\,\% de los estudios, tama\~nos de p\'ixel entre 0.19 y 0.713~mm, sentido de $z$ variable y compresi\'on distinta entre estudios. Las decisiones del \emph{pipeline} (HU por archivo, orden por $z$, ventana \'osea) responden a esa heterogeneidad. Quedan abiertas dos verificaciones que requieren p\'ixeles: la plausibilidad de las HU en los estudios con reescalado at\'ipico y el an\'alisis de intensidades por grupo de adquisici\'on (ver el recuadro de pendientes en la secci\'on~\ref{sec:eda-dicom}).
+
+\subsection*{Limitaciones generales}
+Una sola partici\'on y una sola semilla; 48 posiciones por estudio de cientos de cortes (la fractura puede no estar muestreada); clasificador global que no localiza la fractura; sin remuestreo isotr\'opico; sin validaci\'on cl\'inica ni externa, por lo que las m\'etricas no son comparables con las de la competencia.

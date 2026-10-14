@@ -205,6 +205,57 @@ def fig_consistencia(s, out):
     fig.tight_layout(); fig.savefig(out / "04_consistencia_z.png", dpi=150, bbox_inches="tight"); plt.close(fig)
 
 
+# --------------------------------------------------------------------------- auditoría del pipeline
+def auditoria_pipeline(s, results_dir, out):
+    """Cruza los metadatos por estudio con la auditoría del pipeline (solo lectura de CSV, sin píxeles):
+    orden_z_auditoria.csv, preprocess_times.csv y preprocess_failures.csv. Devuelve (dict de cifras, DataFrame
+    de estudios con orden z anómalo) y escribe out/07_auditoria_pipeline.png. Si falta un CSV, se omite ese panel."""
+    results_dir = Path(results_dir)
+    res = {}
+    fz, tm, fl = (results_dir / n for n in ("orden_z_auditoria.csv", "preprocess_times.csv", "preprocess_failures.csv"))
+    z = pd.read_csv(fz) if fz.exists() else None
+    t = pd.read_csv(tm) if tm.exists() else None
+    if fl.exists():
+        res["fallos_preprocesamiento"] = int(len(pd.read_csv(fl)))
+    lab = s[[c for c in ("StudyInstanceUID", "patient_overall", "transfer_syntax") if c in s]]
+    anom = pd.DataFrame()
+    if z is not None:
+        res["z_no_monotono"] = int((~z.z_monotonic_vs_instance).sum())
+        res["z_direccion"] = z.z_direction_vs_instance.value_counts().to_dict()
+        res["dz_cv_mediana"] = round(float(z.dz_cv.median()), 3)
+        anom = z[(~z.z_monotonic_vs_instance) | (z.z_direction_vs_instance == "mixto") | (z.dz_cv > 0.25)]
+        res["z_anomalos"] = [u.split(".")[-1] for u in anom.StudyInstanceUID]
+        if "patient_overall" in lab:
+            zz = z.merge(lab, on="StudyInstanceUID")
+            ct = pd.crosstab(zz.z_direction_vs_instance.replace({"mixto": "creciente"}), zz.patient_overall)
+            res["z_direccion_vs_fractura"] = {str(k): {str(a): int(b) for a, b in v.items()} for k, v in ct.to_dict().items()}
+            try:
+                from scipy.stats import chi2_contingency
+                res["z_direccion_chi2_p"] = float(chi2_contingency(ct)[1])
+            except Exception:
+                pass
+    tt = None
+    if t is not None:
+        res["tiempo_s"] = {k: round(float(v), 2) for k, v in t.seconds.describe()[["mean", "50%", "max"]].items()}
+        if "transfer_syntax" in lab:
+            tt = t.merge(lab, on="StudyInstanceUID")
+            res["tiempo_mediano_por_transfer_syntax"] = tt.groupby("transfer_syntax").seconds.median().round(2).to_dict()
+    n = (2 if z is not None else 0) + (1 if tt is not None else 0)
+    if n:
+        fig, ax = plt.subplots(1, n, figsize=(5.2 * n, 4)); ax = np.atleast_1d(ax); k = 0
+        if z is not None:
+            z.dz_cv.clip(upper=0.5).plot.hist(bins=50, ax=ax[k], color="#4C72B0"); ax[k].axvline(0.25, color="r", ls="--", lw=1)
+            ax[k].set(title="Irregularidad del espaciado z (dz_cv, recortado a 0.5)", xlabel="dz_cv"); k += 1
+            d = z.z_direction_vs_instance.value_counts(); ax[k].bar(d.index, d.values, color="#55A868")
+            ax[k].set(title="Sentido de z respecto a InstanceNumber", ylabel="estudios"); k += 1
+        if tt is not None:
+            g = [(a, d.seconds.values) for a, d in tt.groupby("transfer_syntax")]
+            ax[k].boxplot([v for _, v in g], showfliers=False); ax[k].set_xticklabels([a.split(" (")[0][:22] for a, _ in g])
+            ax[k].set(title="Tiempo de preprocesamiento por estudio (s)", ylabel="s"); ax[k].tick_params(axis="x", labelsize=7, rotation=20)
+        fig.tight_layout(); fig.savefig(Path(out) / "07_auditoria_pipeline.png", dpi=150, bbox_inches="tight"); plt.close(fig)
+    return res, anom
+
+
 # --------------------------------------------------------------------------- informe
 def write_report(s, checks, omit, meta, out):
     d = s[["n_slices", "thickness", "pixel_mm", "spacing_z"]].describe().round(3)
@@ -226,6 +277,7 @@ def main():
     g.add_argument("--dicom-dir"); g.add_argument("--from-audit")
     ap.add_argument("--train-csv", default=str(REPO / "train.csv"))
     ap.add_argument("--n-studies", type=int, default=300, help="solo con --dicom-dir; 0 = todos")
+    ap.add_argument("--pipeline-results", default=None, help="carpeta con orden_z_auditoria.csv, preprocess_times.csv y preprocess_failures.csv (opcional)")
     ap.add_argument("--out", default=str(REPO / "artifacts" / "eda_imagenes"))
     a = ap.parse_args()
     out = Path(a.out); (out / "figures").mkdir(parents=True, exist_ok=True)
@@ -251,12 +303,15 @@ def main():
                                "n_slices proviene de n_files_study. En esta fuente spacing_z es la distancia entre dos cortes "
                                "consecutivos centrales (sample_25d), no una mediana del estudio: la comprobación "
                                "grosor-vs-espaciado z es orientativa y debe confirmarse con --dicom-dir.")
-    s.to_csv(out / "metadata_studies.csv", index=False)
+    s.merge(labels, on="StudyInstanceUID", how="left").to_csv(out / "metadata_studies.csv", index=False)  # igual que el notebook: incluye patient_overall
     checks = quality_checks(s)
     (out / "quality_report.json").write_text(json.dumps(dict(meta=meta, n_estudios=len(s), checks=checks,
                                                               checks_omitidos=omit), indent=2, ensure_ascii=False))
     fig_distribuciones(s, out / "figures"); fig_boxplots(s, labels, out / "figures")
     fig_protocolos(s, out / "figures"); fig_consistencia(s, out / "figures")
+    if a.pipeline_results:
+        aud, _ = auditoria_pipeline(s.merge(labels, on="StudyInstanceUID", how="left"), a.pipeline_results, out / "figures")
+        (out / "auditoria_pipeline.json").write_text(json.dumps(aud, indent=2, ensure_ascii=False))
     write_report(s, checks, omit, meta, out)
     print(f"OK -> {out}  ({len(s)} estudios)")
 

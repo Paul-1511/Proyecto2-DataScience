@@ -1,0 +1,49 @@
+% Informe final — Proyecto 2 (CC3084 Data Science, UVG). Compilar con XeLaTeX:
+%   xelatex informe_final && bibtex informe_final && xelatex informe_final && xelatex informe_final
+% Cifras del EDA de imágenes: python tools/gen_tablas_eda.py  (genera generated/*.tex)
+\documentclass[11pt,a4paper]{article}
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setmainlanguage{spanish}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx,booktabs,float,caption,xcolor,enumitem,array}
+\usepackage[most]{tcolorbox}
+\usepackage[authoryear,round]{natbib}
+\usepackage[hidelinks]{hyperref}
+\setlength{\parskip}{4pt}
+\captionsetup{font=small,labelfont=bf}
+\graphicspath{{figs/}}
+\input{generated/eda_tablas.tex}
+\input{generated/eda_cifras.tex}
+
+% Marcador de contenido que depende de otra persona del equipo. NO se rellena con texto inventado.
+\newtcolorbox{pendientebox}[2][]{colback=yellow!12,colframe=orange!75!black,fonttitle=\bfseries,
+  title={PENDIENTE --- #2},breakable,#1}
+\newcommand{\pendiente}[3]{\begin{pendientebox}{#1}#2\par\smallskip\textit{Fuente esperada:} #3\end{pendientebox}}
+
+\title{Clasificación global de fracturas cervicales en tomografía computarizada\\
+       a partir de una muestra de RSNA 2022}
+\author{Pablo Andrés Cabrera (231156) \and Hansel André López (19026) \and Pablo José Méndez (23975) \and María José Yee (231193)}
+\date{Universidad del Valle de Guatemala --- CC3084 Data Science\\Guatemala, octubre de 2026}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+\pendiente{Resumen}{El resumen se redacta al cierre, cuando existan los resultados finales de entrenamiento, la comparaci\'on de modelos y las conclusiones.}{Resultados de la responsable GPU y de la comparaci\'on (P3).}
+\end{abstract}
+\tableofcontents
+\newpage
+
+\input{secciones/01_introduccion}
+\input{secciones/02_objetivos}
+\input{secciones/03_marco_teorico}
+\input{secciones/04_metodologia}
+\input{secciones/05_resultados}
+\input{secciones/06_conclusiones}
+
+\bibliographystyle{apalike}
+\bibliography{referencias}
+
+\appendix
+\input{secciones/A_estado_integracion}
+\end{document}

@@ -1,0 +1,21 @@
+\section{Marco te\'orico}
+\subsection{Tomograf\'ia computarizada, DICOM y unidades Hounsfield}
+Los estudios se distribuyen en formato DICOM: cada corte axial es un archivo cuya cabecera incluye par\'ametros de adquisici\'on (\texttt{SliceThickness}, \texttt{PixelSpacing}, \texttt{Rows}/\texttt{Columns}, \texttt{RescaleSlope}/\texttt{RescaleIntercept}, \texttt{ImagePositionPatient}, sintaxis de transferencia, etc.). Los valores de p\'ixel se convierten a unidades Hounsfield (HU) con
+\[
+\mathrm{HU} = \text{valor}\times\texttt{RescaleSlope}+\texttt{RescaleIntercept}.
+\]
+El aire ronda $-1000$~HU, el agua 0~HU y el hueso cortical supera varios cientos de HU. El \emph{windowing} recorta el intervalo $[L-W/2,\,L+W/2]$ para maximizar el contraste del tejido de inter\'es; aqu\'i se usa una ventana \'osea $L=400$, $W=1800$ (rango $[-500,1300]$~HU).
+
+\subsection{Procesamiento de im\'agenes m\'edicas}
+La heterogeneidad entre instituciones (grosor de corte, tama\~no de p\'ixel, protocolo de reescalado, orden de los cortes) obliga a estandarizar la entrada antes de cualquier modelo. Las decisiones de estandarizaci\'on de este trabajo y su justificaci\'on emp\'irica se discuten en la secci\'on~\ref{sec:eda-dicom}.
+
+\subsection{An\'alisis de las im\'agenes desde el punto de vista m\'edico}
+\pendiente{Anatom\'ia cervical y fracturas C1--C7}{Descripci\'on de las siete v\'ertebras cervicales, mecanismos y patrones de fractura y signos radiol\'ogicos relevantes en TC, con referencias indexadas.}{Documento de revisi\'on bibliogr\'afica del equipo (\texttt{revision\_bibliografica\_fracturas\_cervicales.docx}); no se incluye en el repositorio, por lo que su contenido debe integrarse con la fuente original.}
+
+\subsection{Algoritmos de aprendizaje profundo}
+\textbf{Redes residuales.} ResNet \citep{he2016resnet} introduce conexiones residuales que facilitan entrenar redes profundas; una ResNet18 preentrenada en ImageNet \citep{deng2009imagenet} es un extractor de caracter\'isticas ligero.
+\textbf{Aprendizaje de m\'ultiples instancias (MIL).} Con etiqueta solo a nivel de ``bolsa'' (estudio) y no de ``instancia'' (corte), MIL agrega puntuaciones de instancias en una puntuaci\'on de bolsa \citep{ilse2018mil}; un estudio positivo puede tener la mayor\'ia de cortes sin fractura visible, por lo que conviene agregar con los $k$ logits m\'as altos.
+\textbf{Modelos secuenciales.} Una GRU \citep{cho2014gru} bidireccional procesa la secuencia de \emph{embeddings} de cortes ordenados por $z$ en ambos sentidos, pudiendo capturar contexto anat\'omico entre cortes vecinos.
+
+\subsection{Evaluaci\'on}
+El ROC-AUC resume la discriminaci\'on independiente del umbral \citep{hanley1982auc}; el umbral operativo se fija con el \'indice de Youden $J=\text{sensibilidad}+\text{especificidad}-1$ \citep{youden1950index} en validaci\'on, y la incertidumbre del AUC se estima con \emph{bootstrap} percentil \citep{efron1993bootstrap}.
