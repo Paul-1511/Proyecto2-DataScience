@@ -1,0 +1,13 @@
+\section{Objetivos}
+% Actualizado respecto a INFORME_TECNICO.md (v1: 160 estudios, 24 cortes) a la configuración v2 verificada en
+% artifacts/v2/config/preprocessing.json y artifacts/v2/results/splits_summary.csv. Pendiente de visto bueno del equipo.
+\subsection{Objetivo general}
+Implementar y evaluar, sobre estudios no vistos, un \emph{pipeline} reproducible de preprocesamiento DICOM y clasificaci\'on global de fracturas cervicales en TC, y caracterizar la calidad y heterogeneidad de las im\'agenes que lo alimentan.
+\subsection{Objetivos espec\'ificos}
+\begin{enumerate}[nosep]
+\item Construir una muestra estratificada de 2\,019 estudios con particiones por estudio sin fuga (entrenamiento 1\,292, validaci\'on 323, prueba 404).
+\item Implementar el preprocesamiento DICOM (HU, ventana \'osea, normalizaci\'on, $224\times224$, orden por \texttt{ImagePositionPatient}) y auditar la variabilidad de metadatos y su calidad.
+\item Entrenar y evaluar ResNet18\,+\,MIL y ResNet18\,+\,BiGRU con las mismas particiones, reportando sensibilidad, especificidad, precisi\'on, F1, exactitud y ROC-AUC con IC~95\,\%.
+\item Seleccionar un modelo con base en resultados de validaci\'on y prueba, explicitando la incertidumbre.
+\item Desarrollar una aplicaci\'on Streamlit que use el mismo preprocesamiento para inferencia.
+\end{enumerate}

@@ -1,0 +1,7 @@
+\section{Introducci\'on}
+Las fracturas de la columna cervical son lesiones potencialmente graves: un diagn\'ostico tard\'io puede asociarse a deterioro neurol\'ogico. En pacientes adultos con trauma, la tomograf\'ia computarizada (TC) es la modalidad de imagen de referencia para su evaluaci\'on, y la decisi\'on de solicitarla suele apoyarse en reglas cl\'inicas como NEXUS \citep{hoffman2000nexus} y la Canadian C-Spine Rule \citep{stiell2001ccr}. La lectura de cientos de cortes por estudio es demandante y motiv\'o la competencia \textbf{RSNA 2022 Cervical Spine Fracture Detection} \citep{rsna2022kaggle}, cuyo conjunto de datos describen \citet{lin2023rsna}.
+
+Este informe contin\'ua el an\'alisis exploratorio del Proyecto~2 (datos tabulares \texttt{train.csv} y \texttt{train\_bounding\_boxes.csv}) y lo extiende con un experimento de aprendizaje profundo reproducible sobre las im\'agenes DICOM, ejecutado en Kaggle Notebooks por el tama\~no del conjunto de datos.
+
+\subsection{Problema cient\'ifico}
+¿Es posible construir, con recursos de c\'omputo acotados y una muestra reproducible de estudios de TC de RSNA 2022, un clasificador que estime \textbf{a nivel de estudio} la presencia de al menos una fractura cervical (\texttt{patient\_overall}), y aporta el modelado secuencial de los cortes (BiGRU) una mejora medible frente a una agregaci\'on MIL simple?

@@ -1,9 +1,9 @@
 {
   "meta": {
-    "fuente": "auditoría del pipeline (dicom_metadata.csv.gz)",
+    "fuente": "auditoría del pipeline (artifacts/v2/results/dicom_metadata.csv.gz)",
     "cortes": "96912 (48 centrales por estudio)",
     "muestreo": "todos los estudios de la partición v2",
-    "limitacion": "Sin DICOM no se leen cabeceras de todos los cortes (ver Dependencias, punto 5)."
+    "limitacion": "Solo 48 cortes centrales por estudio: no detecta huecos en z ni cabeceras fuera de esos cortes; n_slices proviene de n_files_study. En esta fuente spacing_z es la distancia entre dos cortes consecutivos centrales (sample_25d), no una mediana del estudio: la comprobación grosor-vs-espaciado z es orientativa y debe confirmarse con --dicom-dir."
   },
   "n_estudios": 2019,
   "checks": {

@@ -1,0 +1,48 @@
+\section{Metodolog\'ia}
+\subsection{Pasos seguidos por el grupo}
+\begin{enumerate}[nosep]
+\item An\'alisis exploratorio de los datos tabulares (Proyecto~2, primera entrega).
+\item Revisi\'on bibliogr\'afica y selecci\'on de algoritmos.
+\item Preprocesamiento DICOM y auditor\'ia de metadatos (EDA de im\'agenes, secci\'on~\ref{sec:eda-dicom}).
+\item Entrenamiento y evaluaci\'on de dos modelos con las mismas particiones.
+\item Comparaci\'on estad\'istica, selecci\'on y desarrollo de la aplicaci\'on interactiva.
+\end{enumerate}
+
+\subsection{Datos y particiones}
+Se usan \texttt{train.csv} (2\,019 estudios; \texttt{patient\_overall} y C1--C7) y las im\'agenes DICOM de la competencia \citep{rsna2022kaggle}. El volumen del conjunto de im\'agenes (del orden de cientos de GB) llev\'o a procesar los estudios dentro de Kaggle Notebooks, sin descargarlos localmente.
+La muestra comprende los 2\,019 estudios, estratificados por \texttt{patient\_overall} (semilla 42), con particiones \emph{por estudio}: entrenamiento 1\,292 (615 positivos), validaci\'on 323 (154) y prueba 404 (192); en RSNA 2022 cada estudio corresponde a un paciente distinto, por lo que no hay pacientes compartidos entre particiones.
+
+\subsection{Preprocesamiento}
+\begin{table}[H]\centering\small
+\begin{tabular}{p{3cm}p{10.5cm}}\toprule
+Paso & Implementaci\'on \\\midrule
+Lectura & \texttt{pydicom}; decodificaci\'on JPEG Lossless con \texttt{pylibjpeg}/GDCM \\
+Intensidades & HU $=$ p\'ixel $\times$ \texttt{RescaleSlope} $+$ \texttt{RescaleIntercept}, le\'idos por archivo \\
+Fotometr\'ia & MONOCHROME1 invertido; MONOCHROME2 sin cambios \\
+Ventana & \'osea $L=400$, $W=1800$, normalizaci\'on lineal a $[0,1]$ \\
+Tama\~no & $224\times224$ (\texttt{INTER\_AREA}), sin remuestreo isotr\'opico \\
+Selecci\'on de cortes & 48 posiciones equiespaciadas entre el 5\,\% y el 95\,\% del rango de instancias; entrada 2.5D con vecinos a $\pm2$~mm \\
+Orden & por \texttt{ImagePositionPatient[2]} (z) ascendente, no por n\'umero de instancia \\\bottomrule
+\end{tabular}
+\caption{Pipeline de preprocesamiento (configuraci\'on v2, \texttt{artifacts/v2/config/preprocessing.json}).}
+\end{table}
+
+\subsection{Herramientas y recursos de c\'omputo}
+El entrenamiento se ejecut\'o en Kaggle Notebooks con GPU T4. Se usaron Python, \texttt{pydicom}, OpenCV, PyTorch \citep{paszke2019pytorch}, Streamlit y Plotly; las versiones exactas est\'an en \texttt{experimento\_dl/requirements.txt}.
+
+\subsection{Selecci\'on de algoritmos, arquitecturas y configuraci\'on de entrenamiento}
+Para abordar la clasificación global de fracturas cervicales se seleccionaron dos arquitecturas de aprendizaje profundo que comparten un extractor de características visuales, pero difieren en el mecanismo utilizado para integrar la información de los cortes tomográficos. Esta selección permite comparar una estrategia de agregación basada en aprendizaje de múltiples instancias (\textit{Multiple Instance Learning}, MIL) con un enfoque de modelado secuencial mediante una unidad recurrente cerrada bidireccional (\textit{Bidirectional Gated Recurrent Unit}, BiGRU). Ambos modelos fueron diseñados para estimar la probabilidad de presencia de al menos una fractura cervical por estudio, correspondiente a la etiqueta \texttt{patient\_overall}.
+
+En ambas arquitecturas se utilizó ResNet18 preentrenada sobre ImageNet como extractor de características. Se eliminó su capa de clasificación original para obtener una representación de 512 características por posición tomográfica. Esta elección permite aprovechar representaciones visuales previamente aprendidas y utilizar una arquitectura relativamente compacta frente a alternativas de mayor complejidad computacional. Los dos modelos recibieron entradas con dimensiones de $48 \times 3 \times 224 \times 224$ por estudio, correspondientes a 48 posiciones distribuidas entre el $5\,\%$ y el $95\,\%$ del rango de cortes, cada una representada mediante tres imágenes: el corte central y dos cortes vecinos situados aproximadamente a $\pm 2$ mm.
+
+El primer modelo, ResNet18 + MIL, aplica una capa de \textit{dropout} con probabilidad de 0.3 y una transformación lineal de 512 características a un logit para cada posición. La predicción global se obtiene calculando el promedio de los tres logits más altos del estudio. Esta estrategia permite que las regiones con mayor evidencia estimada de fractura tengan mayor influencia en la decisión global, sin exigir que todos los cortes de un estudio positivo contengan signos visibles de lesión. El modelo dispone de 11,177,025 parámetros entrenables.
+
+El segundo modelo, ResNet18 + BiGRU, utiliza las representaciones de 512 características extraídas por ResNet18 como una secuencia ordenada según la coordenada anatómica \texttt{ImagePositionPatient}. La GRU bidireccional incorpora 128 unidades ocultas por dirección, permitiendo procesar la secuencia en ambos sentidos. Posteriormente, se combinan las representaciones mediante operaciones de promedio y máximo, obteniendo un vector de 512 características que se introduce en una capa de \textit{dropout} de 0.3 y una capa lineal de clasificación. Esta arquitectura contiene 11,670,081 parámetros entrenables y permite incorporar información contextual entre posiciones tomográficas.
+
+Para asegurar una comparación experimental consistente, ambos modelos utilizaron las mismas particiones de datos: 1,292 estudios para entrenamiento, 323 para validación y 404 para prueba, con semilla aleatoria 42. También compartieron el preprocesamiento DICOM, consistente en conversión de intensidades a unidades Hounsfield, aplicación de una ventana ósea de nivel 400 y ancho 1800, normalización, redimensionamiento a $224 \times 224$ y ordenamiento anatómico de los cortes. Antes de introducir las imágenes en ResNet18, se aplicó la normalización correspondiente a ImageNet.
+
+El entrenamiento utilizó la función de pérdida binaria \texttt{BCEWithLogitsLoss}, con un peso para la clase positiva de aproximadamente 1.1008, calculado a partir de la relación entre los 677 estudios negativos y los 615 positivos del conjunto de entrenamiento. Se empleó el optimizador AdamW con regularización por decaimiento de pesos de 0.0001. La tasa de aprendizaje inicial fue de 0.0001 para ResNet18 y 0.001 para las capas de clasificación y agregación, utilizando un planificador \texttt{CosineAnnealingLR} con horizonte de 15 épocas.
+
+Se utilizó un tamaño de lote de cuatro estudios y acumulación de gradientes durante dos pasos, equivalente a ocho estudios por actualización de parámetros. Para optimizar el consumo de memoria se empleó precisión mixta automática de 16 bits y el formato \texttt{channels\_last}. Durante el entrenamiento se aplicaron aumentos de datos consistentes en inversión horizontal con probabilidad de 0.5 y desplazamientos de hasta 12 píxeles, manteniendo la misma transformación en todas las posiciones de un estudio.
+
+El número máximo de épocas se estableció en 15, con detención temprana basada en el ROC-AUC del conjunto de validación y una paciencia de cuatro épocas consecutivas sin mejora. El experimento se ejecutó en Kaggle Notebooks utilizando GPU NVIDIA Tesla T4. El tiempo efectivo de entrenamiento fue de aproximadamente 13.7 minutos para MIL y 12.4 minutos para BiGRU, sin incluir la preparación inicial de los datos. Las configuraciones, historiales y \textit{checkpoints} se conservaron como artefactos reproducibles del experimento.

@@ -1,6 +1,6 @@
 # Informe de calidad DICOM — RSNA 2022 (generado por `scripts/eda_metadatos_dicom.py`)
 
-- Fuente: **auditoría del pipeline (dicom_metadata.csv.gz)**
+- Fuente: **auditoría del pipeline (artifacts/v2/results/dicom_metadata.csv.gz)**
 - Estudios analizados: **2019** (semilla 42; todos los estudios de la partición v2)
 - Cortes leídos: 96912 (48 centrales por estudio)
 
@@ -37,5 +37,5 @@
 
 ## Limitaciones
 
-- Sin DICOM no se leen cabeceras de todos los cortes (ver Dependencias, punto 5).
+- Solo 48 cortes centrales por estudio: no detecta huecos en z ni cabeceras fuera de esos cortes; n_slices proviene de n_files_study. En esta fuente spacing_z es la distancia entre dos cortes consecutivos centrales (sample_25d), no una mediana del estudio: la comprobación grosor-vs-espaciado z es orientativa y debe confirmarse con --dicom-dir.
 - Comprobaciones omitidas por no existir la columna en la fuente: pixel_aniso, z_gap_ratio, z_dup, z_range_mm, manufacturer, kvp, kernel, non_axial.

@@ -1,0 +1,81 @@
+\begin{thebibliography}{}
+
+\bibitem[Cho et~al., 2014]{cho2014gru}
+Cho, K., van Merri{\"e}nboer, B., Gulcehre, C., Bahdanau, D., Bougares, F.,
+  Schwenk, H., and Bengio, Y. (2014).
+\newblock Learning phrase representations using {RNN} encoder--decoder for
+  statistical machine translation.
+\newblock In {\em Proceedings of the 2014 Conference on Empirical Methods in
+  Natural Language Processing ({EMNLP})}, pages 1724--1734.
+
+\bibitem[Deng et~al., 2009]{deng2009imagenet}
+Deng, J., Dong, W., Socher, R., Li, L.-J., Li, K., and Fei-Fei, L. (2009).
+\newblock {ImageNet}: A large-scale hierarchical image database.
+\newblock In {\em 2009 {IEEE} Conference on Computer Vision and Pattern
+  Recognition}, pages 248--255.
+
+\bibitem[Efron and Tibshirani, 1993]{efron1993bootstrap}
+Efron, B. and Tibshirani, R.~J. (1993).
+\newblock {\em An Introduction to the Bootstrap}.
+\newblock Chapman \& Hall.
+
+\bibitem[Hanley and McNeil, 1982]{hanley1982auc}
+Hanley, J.~A. and McNeil, B.~J. (1982).
+\newblock The meaning and use of the area under a receiver operating
+  characteristic ({ROC}) curve.
+\newblock {\em Radiology}, 143(1):29--36.
+
+\bibitem[He et~al., 2016]{he2016resnet}
+He, K., Zhang, X., Ren, S., and Sun, J. (2016).
+\newblock Deep residual learning for image recognition.
+\newblock In {\em Proceedings of the {IEEE} Conference on Computer Vision and
+  Pattern Recognition}, pages 770--778.
+
+\bibitem[Hoffman et~al., 2000]{hoffman2000nexus}
+Hoffman, J.~R., Mower, W.~R., Wolfson, A.~B., Todd, K.~H., and Zucker, M.~I.
+  (2000).
+\newblock Validity of a set of clinical criteria to rule out injury to the
+  cervical spine in patients with blunt trauma.
+\newblock {\em New England Journal of Medicine}, 343(2):94--99.
+
+\bibitem[Ilse et~al., 2018]{ilse2018mil}
+Ilse, M., Tomczak, J., and Welling, M. (2018).
+\newblock Attention-based deep multiple instance learning.
+\newblock In {\em Proceedings of the 35th International Conference on Machine
+  Learning}, pages 2127--2136. PMLR.
+
+\bibitem[Lin et~al., 2023]{lin2023rsna}
+Lin, H.~M., Colak, E., Richards, T., Kitamura, F.~C., Prevedello, L.~M.,
+  Talbott, J., Ball, R.~L., Gumeler, E., Yeom, K.~W., Hamghalam, M., Simpson,
+  A., Strika, J., Bulja, D., Angkurawaranon, S., P{\'e}rez-Lara, A.,
+  G{\'o}mez-Alonso, M., Ortiz~Jim{\'e}nez, J., Peoples, J., Law, M., Dogan, H.,
+  Altinmakas, E., Youssef, A., Mahfouz, Y., Kalpathy-Cramer, J., and Flanders,
+  A.~E. (2023).
+\newblock The {RSNA} cervical spine fracture {CT} dataset.
+\newblock {\em Radiology: Artificial Intelligence}, 5(5):e230034.
+
+\bibitem[Paszke et~al., 2019]{paszke2019pytorch}
+Paszke, A., Gross, S., Massa, F., Lerer, A., Bradbury, J., Chanan, G., et~al.
+  (2019).
+\newblock {PyTorch}: An imperative style, high-performance deep learning
+  library.
+\newblock In {\em Advances in Neural Information Processing Systems 32}, pages
+  8024--8035.
+
+\bibitem[{Radiological Society of North America}, 2022]{rsna2022kaggle}
+{Radiological Society of North America} (2022).
+\newblock {RSNA} 2022 cervical spine fracture detection [competencia].
+
+\bibitem[Stiell et~al., 2001]{stiell2001ccr}
+Stiell, I.~G., Wells, G.~A., Vandemheen, K.~L., Clement, C.~M., Lesiuk, H.,
+  De~Maio, V.~J., et~al. (2001).
+\newblock The {C}anadian {C}-spine rule for radiography in alert and stable
+  trauma patients.
+\newblock {\em JAMA}, 286(15):1841--1848.
+
+\bibitem[Youden, 1950]{youden1950index}
+Youden, W.~J. (1950).
+\newblock Index for rating diagnostic tests.
+\newblock {\em Cancer}, 3(1):32--35.
+
+\end{thebibliography}
