@@ -89,7 +89,52 @@ Finalmente, la ampliación del diseño inicial desde una muestra piloto de 160 e
 
 
 \subsection{Comparaci\'on de algoritmos}
-\pendiente{Comparaci\'on de modelos y selecci\'on (P3)}{Tabla comparativa de m\'etricas, pruebas estad\'isticas pareadas, tiempos y figuras est\'aticas (ROC, matrices de confusi\'on, distribuci\'on de probabilidades) con interpretaci\'on y modelo seleccionado.}{An\'alisis y redacci\'on de P3 (Hansel); datos en \texttt{artifacts/v2/results/} y \texttt{notebooks/03\_evaluacion.ipynb} (rama \texttt{main}).}
+
+\subsubsection*{Pruebas estad\'isticas pareadas}
+
+La comparaci\'on entre ResNet18 + MIL y ResNet18 + BiGRU se realiz\'o sobre el mismo conjunto de prueba ($n = 404$ estudios) utilizando pruebas estad\'isticas pareadas para determinar si las diferencias en rendimiento son significativas.
+
+\begin{table}[H]\centering
+\caption{Pruebas estad\'isticas pareadas entre modelos ($n = 404$).}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Prueba} & \textbf{Resultado} & \textbf{Interpretaci\'on} \\
+\midrule
+DeLong (1988) & $\Delta$AUC = +0.099, $z = 4.09$, $p = 4.3\times10^{-5}$ & Diferencia altamente significativa \\
+Bootstrap pareado (2000 remuestreos) & IC95\% $\Delta$AUC: [+0.048, +0.147]; 0\% de remuestreos $\le 0$ & BiGRU consistentemente superior \\
+McNemar exacto (umbral val) & 66 vs 48 aciertos exclusivos, $p = 0.11$ & Direcci\'on favorable a BiGRU, no significativo en predicciones binarias \\
+Correlaci\'on Spearman & $\rho = 0.60$ & Acuerdo moderado entre probabilidades \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+En el conjunto de validaci\'on ($n = 323$), la direcci\'on de la diferencia es la misma pero no alcanza significaci\'on estad\'istica (DeLong $p = 0.115$; bootstrap IC95\% $[-0.010, +0.086]$).
+
+\subsubsection*{Selecci\'on del modelo: ResNet18 + BiGRU}
+
+El criterio de selecci\'on, fijado antes del entrenamiento, fue el ROC-AUC de prueba y el equilibrio entre sensibilidad y especificidad. La selecci\'on de ResNet18 + BiGRU como modelo recomendado se justifica en cinco aspectos:
+
+\begin{enumerate}[nosep]
+\item \textbf{AUC superior y estad\'isticamente significativo:} 0.737 vs 0.638 (DeLong $p < 0.001$).
+\item \textbf{Mejor sensibilidad:} 0.641 vs 0.365; detecta 53 fracturas reales m\'as que MIL (123 vs 70 TP).
+\item \textbf{Mejor F1-score:} 0.632 vs 0.465; balance m\'as equilibrado entre precisi\'on y sensibilidad.
+\item \textbf{Estabilidad entre validaci\'on y prueba:} AUC estable (0.725 $\to$ 0.737), mientras que MIL cay\'o (0.687 $\to$ 0.638).
+\item \textbf{Inferencia m\'as r\'apida:} 23.8 vs 28.0 ms/estudio.
+\end{enumerate}
+
+Es importante notar que la prueba de McNemar no alcanza significaci\'on en predicciones binarias ($p = 0.11$), lo que indica que la diferencia es m\'as clara en probabilidades continuas (evaluadas por DeLong) que en clasificaciones binarias con un umbral fijo. Con los umbrales seleccionados en validaci\'on, MIL opera con baja sensibilidad (0.365) y BiGRU con un punto operativo m\'as equilibrado (sensibilidad 0.641, especificidad 0.651).
+
+\begin{figure}[H]\centering
+\includegraphics[width=.48\linewidth]{roc_comparison.png}\hfill
+\includegraphics[width=.48\linewidth]{confusion_mil.png}
+\caption{Curvas ROC comparativas (izquierda) y matriz de confusi\'on de MIL (derecha) en el conjunto de prueba.}
+\end{figure}
+
+\begin{figure}[H]\centering
+\includegraphics[width=.48\linewidth]{confusion_bigru.png}\hfill
+\includegraphics[width=.48\linewidth]{probability_distributions.png}
+\caption{Matriz de confusi\'on de BiGRU (izquierda) y distribuci\'on de probabilidades predichas por clase real (derecha). La l\'inea vertical indica el umbral seleccionado en validaci\'on.}
+\end{figure}
 
 \subsection{Aplicaci\'on desarrollada}
 \pendiente{Aplicaci\'on Streamlit (P1)}{Descripci\'on de la aplicaci\'on, capturas de pantalla y justificaci\'on de las tecnolog\'ias elegidas.}{Capturas y documentaci\'on de P1 (Cabrera): \texttt{docs/app/capturas/} y \texttt{docs/app/SECCION\_INFORME\_APP.md} (rama \texttt{main}).}
