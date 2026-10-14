@@ -9,3 +9,5 @@ __pycache__/
 /artifacts/**/weights/
 .claude/
 .pytest_cache/
+/Proyecto2_RSNA_Modelos/
+/informe_con_app.zip
