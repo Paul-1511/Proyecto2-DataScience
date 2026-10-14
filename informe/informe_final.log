@@ -1,8 +1,8 @@
-This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.8.2)  13 OCT 2026 22:51
+This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.8.2)  13 OCT 2026 23:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**informe_final
+**informe_final.tex
 (./informe_final.tex
 LaTeX2e <2026-06-01>
 L3 programming layer <2026-06-18>
@@ -644,26 +644,26 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 28
 ) (./generated/eda_tablas.tex) (./generated/eda_cifras.tex) (./informe_final.aux)
 \openout1 = `informe_final.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
 
 Package fontspec Info: 
 (fontspec)             Adjusting the maths setup (use [no-math] to avoid
@@ -671,56 +671,56 @@ Package fontspec Info:
 
 \symlegacymaths=\mathgroup4
 LaTeX Font Info:    Overwriting symbol font `legacymaths' in version `bold'
-(Font)                  OT1/cmr/m/n --> OT1/cmr/bx/n on input line 29.
-LaTeX Font Info:    Redeclaring math accent \acute on input line 29.
-LaTeX Font Info:    Redeclaring math accent \grave on input line 29.
-LaTeX Font Info:    Redeclaring math accent \ddot on input line 29.
-LaTeX Font Info:    Redeclaring math accent \tilde on input line 29.
-LaTeX Font Info:    Redeclaring math accent \bar on input line 29.
-LaTeX Font Info:    Redeclaring math accent \breve on input line 29.
-LaTeX Font Info:    Redeclaring math accent \check on input line 29.
-LaTeX Font Info:    Redeclaring math accent \hat on input line 29.
-LaTeX Font Info:    Redeclaring math accent \dot on input line 29.
-LaTeX Font Info:    Redeclaring math accent \mathring on input line 29.
-LaTeX Font Info:    Redeclaring math symbol \Gamma on input line 29.
-LaTeX Font Info:    Redeclaring math symbol \Delta on input line 29.
-LaTeX Font Info:    Redeclaring math symbol \Theta on input line 29.
-LaTeX Font Info:    Redeclaring math symbol \Lambda on input line 29.
-LaTeX Font Info:    Redeclaring math symbol \Xi on input line 29.
-LaTeX Font Info:    Redeclaring math symbol \Pi on input line 29.
-LaTeX Font Info:    Redeclaring math symbol \Sigma on input line 29.
-LaTeX Font Info:    Redeclaring math symbol \Upsilon on input line 29.
-LaTeX Font Info:    Redeclaring math symbol \Phi on input line 29.
-LaTeX Font Info:    Redeclaring math symbol \Psi on input line 29.
-LaTeX Font Info:    Redeclaring math symbol \Omega on input line 29.
-LaTeX Font Info:    Redeclaring math symbol \mathdollar on input line 29.
-LaTeX Font Info:    Redeclaring symbol font `operators' on input line 29.
+(Font)                  OT1/cmr/m/n --> OT1/cmr/bx/n on input line 30.
+LaTeX Font Info:    Redeclaring math accent \acute on input line 30.
+LaTeX Font Info:    Redeclaring math accent \grave on input line 30.
+LaTeX Font Info:    Redeclaring math accent \ddot on input line 30.
+LaTeX Font Info:    Redeclaring math accent \tilde on input line 30.
+LaTeX Font Info:    Redeclaring math accent \bar on input line 30.
+LaTeX Font Info:    Redeclaring math accent \breve on input line 30.
+LaTeX Font Info:    Redeclaring math accent \check on input line 30.
+LaTeX Font Info:    Redeclaring math accent \hat on input line 30.
+LaTeX Font Info:    Redeclaring math accent \dot on input line 30.
+LaTeX Font Info:    Redeclaring math accent \mathring on input line 30.
+LaTeX Font Info:    Redeclaring math symbol \Gamma on input line 30.
+LaTeX Font Info:    Redeclaring math symbol \Delta on input line 30.
+LaTeX Font Info:    Redeclaring math symbol \Theta on input line 30.
+LaTeX Font Info:    Redeclaring math symbol \Lambda on input line 30.
+LaTeX Font Info:    Redeclaring math symbol \Xi on input line 30.
+LaTeX Font Info:    Redeclaring math symbol \Pi on input line 30.
+LaTeX Font Info:    Redeclaring math symbol \Sigma on input line 30.
+LaTeX Font Info:    Redeclaring math symbol \Upsilon on input line 30.
+LaTeX Font Info:    Redeclaring math symbol \Phi on input line 30.
+LaTeX Font Info:    Redeclaring math symbol \Psi on input line 30.
+LaTeX Font Info:    Redeclaring math symbol \Omega on input line 30.
+LaTeX Font Info:    Redeclaring math symbol \mathdollar on input line 30.
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 30.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `normal' on input line 29.
+(Font)              `operators' in the math version `normal' on input line 30.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> TU/lmr/m/n on input line 29.
+(Font)                  OT1/cmr/m/n --> TU/lmr/m/n on input line 30.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `bold' on input line 29.
+(Font)              `operators' in the math version `bold' on input line 30.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> TU/lmr/m/n on input line 29.
+(Font)                  OT1/cmr/bx/n --> TU/lmr/m/n on input line 30.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  TU/lmr/m/n --> TU/lmr/m/n on input line 29.
+(Font)                  TU/lmr/m/n --> TU/lmr/m/n on input line 30.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> TU/lmr/m/it on input line 29.
+(Font)                  OT1/cmr/m/it --> TU/lmr/m/it on input line 30.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> TU/lmr/b/n on input line 29.
+(Font)                  OT1/cmr/bx/n --> TU/lmr/b/n on input line 30.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 29.
+(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 30.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> TU/lmtt/m/n on input line 29.
+(Font)                  OT1/cmtt/m/n --> TU/lmtt/m/n on input line 30.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  TU/lmr/m/n --> TU/lmr/b/n on input line 29.
+(Font)                  TU/lmr/m/n --> TU/lmr/b/n on input line 30.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> TU/lmr/b/it on input line 29.
+(Font)                  OT1/cmr/bx/it --> TU/lmr/b/it on input line 30.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> TU/lmss/b/n on input line 29.
+(Font)                  OT1/cmss/bx/n --> TU/lmss/b/n on input line 30.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> TU/lmtt/b/n on input line 29.
+(Font)                  OT1/cmtt/m/n --> TU/lmtt/b/n on input line 30.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
@@ -761,7 +761,7 @@ Package caption Info: hyperref package is loaded.
 Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
 \c@lstlisting=\count375
-Package hyperref Info: Link coloring OFF on input line 29.
+Package hyperref Info: Link coloring OFF on input line 30.
 (./informe_final.out) (./informe_final.out)
 \@outlinefile=\write4
 \openout4 = `informe_final.out'.
@@ -772,27 +772,12 @@ Package hyperref Info: Link coloring OFF on input line 29.
 \tf@toc=\write5
 \openout5 = `informe_final.toc'.
 
- [2] (./secciones/01_introduccion.tex) (./secciones/02_objetivos.tex) (./secciones/03_marco_teorico.tex [3]
-Underfull \hbox (badness 10000) in paragraph at lines 13--13
-[]\TU/lmr/m/it/10.95 Fuente esperada: \TU/lmr/m/n/10.95 Documento de revisión bibliográfica del equipo
+ [2] (./secciones/01_introduccion.tex) (./secciones/02_objetivos.tex) (./secciones/03_marco_teorico.tex [3] [4]) (./secciones/04_metodologia.tex
+Underfull \hbox (badness 10000) in paragraph at lines 27--27
+[]\TU/lmr/bx/n/10 Cuadro 1: |\TU/lmr/m/n/10 Pipeline de preprocesamiento (configuración v2, \TU/lmtt/m/n/10 artifacts/v2/config/
  []
 
-
-Underfull \hbox (badness 1803) in paragraph at lines 13--13
-\TU/lmr/m/n/10.95 (\TU/lmtt/m/n/10.95 revision_bibliografica_fracturas_cervicales.docx\TU/lmr/m/n/10.95 ); no se incluye en el re-
- []
-
-) (./secciones/04_metodologia.tex [4]
-Overfull \hbox (9.66754pt too wide) in paragraph at lines 27--27
-[]\TU/lmr/bx/n/10 Cuadro 1: |\TU/lmr/m/n/10 Pipeline de preprocesamiento (configuración v2, \TU/lmtt/m/n/10 artifacts/v2/config/preprocessing.json\TU/lmr/m/n/10 ).| 
- []
-
-[5]) (./secciones/05_resultados.tex
-Overfull \hbox (22.53996pt too wide) in paragraph at lines 4--5
-[]\TU/lmr/m/n/10.95 El conjunto tabular contiene 2019 estudios en \TU/lmtt/m/n/10.95 train.csv\TU/lmr/m/n/10.95 : 961 con fractura (\TU/lmtt/m/n/10.95 patient_overall\TU/lmr/m/n/10.95 =1;
- []
-
-[6]
+[5] [6]) (./secciones/05_resultados.tex
 File: figs/01_patient_overall.png Graphic file (type bmp)
 <figs/01_patient_overall.png>
 File: figs/02_frac_por_vertebra.png Graphic file (type bmp)
@@ -802,34 +787,29 @@ Underfull \hbox (badness 1107) in paragraph at lines 9--9
 []\TU/lmr/bx/n/10 Figura 1: |\TU/lmr/m/n/10 Análisis exploratorio tabular (primera entrega): distribución de la variable objetivo
  []
 
-
-Overfull \hbox (37.40085pt too wide) in paragraph at lines 13--14
-[]\TU/lmr/m/n/10.95 En los CSV no hubo valores nulos ni filas duplicadas, \TU/lmtt/m/n/10.95 StudyInstanceUID \TU/lmr/m/n/10.95 es único y \TU/lmtt/m/n/10.95 patient_overall
- []
-
 [7]
 File: figs/01_distribuciones_adquisicion.png Graphic file (type bmp)
 <figs/01_distribuciones_adquisicion.png>
 File: figs/02_boxplots_comparacion.png Graphic file (type bmp)
 <figs/02_boxplots_comparacion.png>
+ [8]
 File: figs/03_protocolos_y_resolucion.png Graphic file (type bmp)
 <figs/03_protocolos_y_resolucion.png>
- [8]
+ [9]
 File: figs/04_consistencia_z.png Graphic file (type bmp)
 <figs/04_consistencia_z.png>
 File: figs/07_auditoria_pipeline.png Graphic file (type bmp)
 <figs/07_auditoria_pipeline.png>
- [9]
 File: figs/preproc_antes_despues_y1_21806.png Graphic file (type bmp)
 <figs/preproc_antes_despues_y1_21806.png>
 File: figs/preproc_antes_despues_y0_10639.png Graphic file (type bmp)
 <figs/preproc_antes_despues_y0_10639.png>
- [10] [11]
-Overfull \hbox (359.8044pt too wide) in paragraph at lines 99--109
- [][] 
- []
-
-[12]
+ [10]
+File: figs/05_intensidades_hu.png Graphic file (type bmp)
+<figs/05_intensidades_hu.png>
+File: figs/06_antes_despues_preprocesamiento.png Graphic file (type bmp)
+<figs/06_antes_despues_preprocesamiento.png>
+ [11] [12] [13] [14] [15]
 File: figs/roc_comparison.png Graphic file (type bmp)
 <figs/roc_comparison.png>
 File: figs/confusion_mil.png Graphic file (type bmp)
@@ -838,52 +818,42 @@ File: figs/confusion_bigru.png Graphic file (type bmp)
 <figs/confusion_bigru.png>
 File: figs/probability_distributions.png Graphic file (type bmp)
 <figs/probability_distributions.png>
- [13]
-Underfull \hbox (badness 10000) in paragraph at lines 148--148
+
+Underfull \hbox (badness 10000) in paragraph at lines 170--170
 []|\TU/lmr/m/n/10 pydicom, pylibj-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 150--150
+Underfull \hbox (badness 10000) in paragraph at lines 172--172
 []|\TU/lmtt/m/n/10 inference.py \TU/lmr/m/n/10 y
  []
 
-[14]
+[16] [17]
 File: figs/app_01_datos_y_eda.png Graphic file (type bmp)
 <figs/app_01_datos_y_eda.png>
 File: figs/app_03_visor_dicom.png Graphic file (type bmp)
 <figs/app_03_visor_dicom.png>
- [15]
+ [18]
 File: figs/app_04_prediccion.png Graphic file (type bmp)
 <figs/app_04_prediccion.png>
- [16]
+ [19]
 File: figs/app_06_comparacion.png Graphic file (type bmp)
 <figs/app_06_comparacion.png>
- [17]) (./secciones/06_conclusiones.tex [18] [19] [20]) (./informe_final.bbl [21]) (./secciones/A_estado_integracion.tex
-Underfull \hbox (badness 1314) in paragraph at lines 7--8
-[]|\TU/lmr/m/n/10 Redactado con cifras v2 (verificar con
- []
-
-
-Underfull \hbox (badness 6047) in paragraph at lines 8--8
-[]|\TU/lmr/m/n/10 Metodología de entrena-
- []
-
-) [22] (./informe_final.aux)
+ [20]) (./secciones/06_conclusiones.tex [21] [22] [23]) (./informe_final.bbl [24]) [25] (./informe_final.aux)
  ***********
 LaTeX2e <2026-06-01>
 L3 programming layer <2026-06-18>
  ***********
 Package rerunfilecheck Info: File `informe_final.out' has not changed.
-(rerunfilecheck)             Checksum: F8FFF948C65420CEDF0E60B2262C69DA;5488.
+(rerunfilecheck)             Checksum: 71A567C6F435FE18DC332954087E430A;5029.
  ) 
 Here is how much of TeX's memory you used:
- 31773 strings out of 469782
- 695003 string characters out of 5466286
- 1174528 words of memory out of 5000000
- 60213 multiletter control sequences out of 15000+600000
+ 31716 strings out of 469782
+ 693947 string characters out of 5466286
+ 1175016 words of memory out of 5000000
+ 60157 multiletter control sequences out of 15000+600000
  632108 words of font info for 75 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 98i,15n,108p,1477b,989s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 98i,15n,108p,1484b,513s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on informe_final.pdf (22 pages).
+Output written on informe_final.pdf (25 pages).
