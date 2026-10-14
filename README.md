@@ -55,15 +55,20 @@ Proyecto2-DataScience/
 ├── docs/
 │   ├── CRONOGRAMA.md                  ← estado de tareas por integrante
 │   ├── ANALISIS_CUMPLIMIENTO.md       ← verificación vs rúbrica
-│   ├── INFORME_TECNICO.md (→ experimento_dl/)
+│   ├── EDA_IMAGENES.md                ← documentación del EDA DICOM
+│   ├── RESULTADOS_ENTRENAMIENTO.md    ← detalles del entrenamiento v2
+│   ├── INTEGRACION_STREAMLIT.md       ← contrato de integración con Streamlit
+│   ├── KAGGLE_NOTEBOOK.md             ← guía para ejecutar en Kaggle
+│   ├── ESTADO_PRESENTACION.md         ← estado de los componentes
 │   ├── Proyecto 2. Resultados. 2026.pdf
 │   ├── Proyecto 2. Análisis Exploratorio. 2026.pdf
 │   └── app/                           ← documentación de Streamlit
 ├── experimento_dl/
 │   ├── README.md                      ← documentación del módulo
+│   ├── INFORME_TECNICO.md             ← informe técnico completo
 │   ├── common.py                      ← configuración compartida
 │   ├── inference.py                   ← API de inferencia
-│   ├── metrics_eval.py                ← módulo de evaluación (P4)
+│   ├── metrics_eval.py                ← módulo de evaluación independiente
 │   ├── app_streamlit.py               ← aplicación Streamlit
 │   ├── app_core.py                    ← lógica de la app
 │   ├── requirements.txt
@@ -78,16 +83,29 @@ Proyecto2-DataScience/
 │   ├── kaggle/                        ← notebook y paquete para Kaggle
 │   └── tools/                         ← scripts auxiliares
 ├── notebooks/
-│   ├── 03_evaluacion.ipynb            ← evaluación independiente (P4)
-│   └── 04_integracion_app.ipynb       ← integración con Streamlit (P2)
+│   ├── 01_eda.ipynb                   ← análisis exploratorio tabular
+│   ├── 02_eda_imagenes.ipynb          ← EDA de imágenes DICOM
+│   ├── 03_evaluacion.ipynb            ← evaluación independiente
+│   └── 04_integracion_app.ipynb       ← integración con Streamlit
+├── informe/
+│   ├── informe_final.tex              ← informe LaTeX principal
+│   ├── informe_final.pdf              ← PDF compilado
+│   ├── referencias.bib                ← bibliografía en BibTeX
+│   ├── secciones/                     ← secciones del informe
+│   ├── figs/                          ← figuras del informe
+│   ├── generated/                     ← tablas y cifras generadas
+│   └── tools/                         ← scripts de compilación
+├── scripts/
+│   └── eda_metadatos_dicom.py         ← auditoría de metadatos DICOM
 ├── artifacts/
 │   ├── README.md                      ← guía de artefactos
+│   ├── eda_imagenes/                  ← resultados del EDA de imágenes
 │   └── v2/
 │       ├── MANIFEST.json              ← integridad (SHA-256)
 │       ├── config/                    ← hiperparámetros y preprocesamiento
 │       ├── results/                   ← métricas, predicciones, figuras
 │       └── weights/                   ← checkpoints (no versionados)
-└── imgs/                              ← figuras del EDA inicial
+└── imgs/                              ← figuras del EDA tabular inicial
 ```
 
 ---
@@ -167,10 +185,13 @@ Integridad: `artifacts/v2/MANIFEST.json` (SHA-256).
 ## Documentación
 
 - [Informe técnico](experimento_dl/INFORME_TECNICO.md)
+- [Informe LaTeX final](informe/informe_final.pdf)
+- [EDA de imágenes DICOM](docs/EDA_IMAGENES.md)
 - [Resultados de entrenamiento](docs/RESULTADOS_ENTRENAMIENTO.md)
 - [Guía de artefactos](artifacts/README.md)
 - [Cronograma](docs/CRONOGRAMA.md)
 - [Integración Streamlit](docs/INTEGRACION_STREAMLIT.md)
+- [Análisis de cumplimiento](docs/ANALISIS_CUMPLIMIENTO.md)
 
 ---
 
@@ -178,10 +199,14 @@ Integridad: `artifacts/v2/MANIFEST.json` (SHA-256).
 
 | Rama | Descripción |
 |------|-------------|
-| `main` | Versión estable integrada |
-| `feature/evaluacion` | Evaluación independiente (P4) |
-| `feature/entrenamiento` | Pipeline v2 y entrenamiento en Kaggle |
-| `feature/streamlit` | Aplicación Streamlit v2 |
+| `main` | Versión estable integrada (todas las ramas mergeadas) |
+
+Ramas históricas (ya integradas a main):
+- `feature/evaluacion` — Evaluación independiente (P3)
+- `feature/entrenamiento` — Pipeline v2 y entrenamiento en Kaggle
+- `feature/streamlit` — Aplicación Streamlit v2
+- `feature/eda-imagenes` — EDA de imágenes DICOM
+- `feature/informe-final` — Informe LaTeX final
 
 ---
 
