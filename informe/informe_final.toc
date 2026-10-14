@@ -28,6 +28,11 @@
 \contentsline {paragraph}{Limitaciones del EDA de im\'agenes.}{11}{section*.17}%
 \contentsline {subsection}{\numberline {5.4}Ajuste de par\'ametros}{11}{subsection.5.4}%
 \contentsline {subsection}{\numberline {5.5}Comparaci\'on de algoritmos}{12}{subsection.5.5}%
-\contentsline {subsection}{\numberline {5.6}Aplicaci\'on desarrollada}{12}{subsection.5.6}%
-\contentsline {section}{\numberline {6}Conclusiones}{12}{section.6}%
-\contentsline {section}{\numberline {A}Estado de integraci\'on del informe (uso interno; eliminar antes de entregar)}{14}{appendix.A}%
+\contentsline {subsection}{\numberline {5.6}Aplicaci\'on desarrollada}{13}{subsection.5.6}%
+\contentsline {paragraph}{Coherencia con el entrenamiento.}{14}{section*.24}%
+\contentsline {paragraph}{Funcionalidades.}{14}{section*.25}%
+\contentsline {paragraph}{Predicci\'on de nuevas entradas.}{14}{section*.26}%
+\contentsline {paragraph}{Comparaci\'on interactiva de modelos.}{15}{section*.27}%
+\contentsline {paragraph}{Pruebas.}{15}{section*.28}%
+\contentsline {section}{\numberline {6}Conclusiones}{19}{section.6}%
+\contentsline {section}{\numberline {A}Estado de integraci\'on del informe (uso interno; eliminar antes de entregar)}{22}{appendix.A}%

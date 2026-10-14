@@ -187,16 +187,52 @@ def artifact_status():
 
 # ----------------------------------------------------------------------------- métricas
 def metrics_at_threshold(y, p, thr):
-    """Matriz de confusión y métricas a un umbral dado, sobre predicciones reales guardadas."""
-    y = np.asarray(y).astype(int)
-    pred = (np.asarray(p) >= thr).astype(int)
-    tp = int(((pred == 1) & (y == 1)).sum()); fp = int(((pred == 1) & (y == 0)).sum())
-    tn = int(((pred == 0) & (y == 0)).sum()); fn = int(((pred == 0) & (y == 1)).sum())
-    div = lambda a, b: float(a / b) if b else float("nan")  # noqa: E731
-    sens, spec, prec = div(tp, tp + fn), div(tn, tn + fp), div(tp, tp + fp)
-    f1 = div(2 * prec * sens, prec + sens) if not np.isnan(prec) else float("nan")
-    return dict(threshold=float(thr), n=len(y), tp=tp, fp=fp, tn=tn, fn=fn, sensitivity=sens,
-                specificity=spec, precision=prec, f1=f1, accuracy=div(tp + tn, len(y)))
+    """Matriz de confusión y métricas a un umbral dado (módulo de evaluación de P3, metrics_eval)."""
+    import metrics_eval
+    return metrics_eval.metrics_complete(y, p, thr)
+
+
+_CI_FNS = {
+    "sensitivity": lambda y, p, t: ((p >= t) & (y == 1)).sum() / max((y == 1).sum(), 1),
+    "specificity": lambda y, p, t: ((p < t) & (y == 0)).sum() / max((y == 0).sum(), 1),
+}
+
+
+def metrics_ci(y, p, thr, n_resamples=1000):
+    """IC95 % bootstrap (metrics_eval) de sensibilidad, especificidad y AUC a un umbral."""
+    import metrics_eval
+    out = {k: metrics_eval.bootstrap_metric_ci(y, p, thr, fn, n_resamples=n_resamples)
+           for k, fn in _CI_FNS.items()}
+    out["roc_auc"] = metrics_eval.bootstrap_auc_ci(y, p, n_resamples=n_resamples)
+    return out
+
+
+def evaluation_lookup(uid):
+    """Si el estudio pertenece a las particiones v2, devuelve su partición, etiqueta y las
+    probabilidades registradas en la evaluación (val/test) de cada modelo. Sirve para verificar
+    que la inferencia de la app reproduce la evaluación; nunca se usa como predicción."""
+    sp = splits()
+    if sp is None or uid not in set(sp.StudyInstanceUID):
+        return None
+    row = sp.set_index("StudyInstanceUID").loc[uid]
+    out = dict(split=str(row.split), patient_overall=int(row.patient_overall), prob={})
+    if out["split"] in ("val", "test"):
+        for m in MODELS:
+            pr = predictions(m, out["split"])
+            if pr is not None and uid in set(pr.StudyInstanceUID):
+                out["prob"][m] = float(pr.set_index("StudyInstanceUID").loc[uid, "prob"])
+    return out
+
+
+def test_percentile(m, prob):
+    """Posición de una probabilidad dentro de las probabilidades de prueba del modelo m,
+    global y por clase real (contexto de interpretación, no calibración)."""
+    pr = predictions(m)
+    if pr is None:
+        return None
+    pct = lambda s: float((s < prob).mean() * 100)  # noqa: E731
+    return dict(global_=pct(pr.prob), negativos=pct(pr.prob[pr.patient_overall == 0]),
+                positivos=pct(pr.prob[pr.patient_overall == 1]))
 
 
 def roc_points(y, p):
@@ -326,3 +362,64 @@ def predict(dsets, classifiers):
         r["seconds"] = time.time() - t
         out[m] = r
     return out
+
+
+# Tolerancia para considerar que la app reproduce la evaluación (inference.py documenta |Δ| ≤ 1.2e-4
+# por fp16 en GPU; en CPU se usa fp32, de ahí un margen mayor).
+REPRO_TOL = 1e-3
+
+
+def compare_results(results, uid=None):
+    """Resumen comparativo de las predicciones de una o dos redes sobre el mismo estudio:
+    acuerdo, diferencia de probabilidades, percentiles en prueba y, si el estudio está en las
+    particiones, verificación de reproducibilidad contra la evaluación."""
+    ev = evaluation_lookup(uid) if uid else None
+    rows = []
+    for m, r in results.items():
+        row = dict(modelo=NAMES[m], model=m, probabilidad=r["probability"], umbral=r["threshold"],
+                   prediccion="fractura" if r["prediction"] else "sin fractura",
+                   margen=r["probability"] - r["threshold"], segundos=r.get("seconds"))
+        pct = test_percentile(m, r["probability"])
+        if pct:
+            row.update(percentil_prueba=pct["global_"], percentil_negativos=pct["negativos"],
+                       percentil_positivos=pct["positivos"])
+        if ev and m in ev["prob"]:
+            row.update(prob_evaluacion=ev["prob"][m], delta_evaluacion=abs(r["probability"] - ev["prob"][m]))
+            row["reproduce_evaluacion"] = row["delta_evaluacion"] <= REPRO_TOL
+        rows.append(row)
+    summary = dict(evaluacion=ev)
+    if len(results) == 2:
+        a, b = results["mil"], results["bigru"]
+        summary.update(acuerdo=a["prediction"] == b["prediction"],
+                       delta_prob=b["probability"] - a["probability"])
+    return pd.DataFrame(rows), summary
+
+
+def results_table(results, uid):
+    """Filas exportables (CSV/JSON) con el mismo formato que las predicciones del contrato."""
+    import datetime
+    ts = datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
+    return pd.DataFrame([dict(StudyInstanceUID=uid, model=m, prob=r["probability"], pred=r["prediction"],
+                              threshold=r["threshold"], n_files=r["n_files"], n_positions=r["n_positions"],
+                              warnings=" | ".join(r["warnings"]), checkpoint_sha256=(
+                                  checkpoint_status(m, verify_hash=False).get("sha256_esperado")),
+                              generated_utc=ts) for m, r in results.items()])
+
+
+def predict_local_batch(uids, classifiers, progress=None):
+    """Inferencia real sobre varios estudios locales. Devuelve una tabla larga
+    (estudio × modelo) con la probabilidad de evaluación cuando el estudio está en val/test."""
+    rows = []
+    for i, uid in enumerate(uids):
+        try:
+            dsets, errors, _ = read_dicoms(local_study_files(uid))
+            res = predict(dsets, classifiers)
+            df, _ = compare_results(res, uid)
+            df.insert(0, "StudyInstanceUID", uid)
+            df["archivos_descartados"] = len(errors)
+            rows.append(df)
+        except Exception as e:  # noqa: BLE001
+            rows.append(pd.DataFrame([dict(StudyInstanceUID=uid, error=f"{type(e).__name__}: {e}")]))
+        if progress:
+            progress((i + 1) / len(uids), uid)
+    return pd.concat(rows, ignore_index=True) if rows else pd.DataFrame()

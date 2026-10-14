@@ -136,5 +136,49 @@ Es importante notar que la prueba de McNemar no alcanza significaci\'on en predi
 \caption{Matriz de confusi\'on de BiGRU (izquierda) y distribuci\'on de probabilidades predichas por clase real (derecha). La l\'inea vertical indica el umbral seleccionado en validaci\'on.}
 \end{figure}
 
-\subsection{Aplicaci\'on desarrollada}
-\pendiente{Aplicaci\'on Streamlit (P1)}{Descripci\'on de la aplicaci\'on, capturas de pantalla y justificaci\'on de las tecnolog\'ias elegidas.}{Capturas y documentaci\'on de P1 (Cabrera): \texttt{docs/app/capturas/} y \texttt{docs/app/SECCION\_INFORME\_APP.md} (rama \texttt{main}).}
+\subsection{Aplicaci\'on desarrollada}\label{sec:app}
+Se desarroll\'o una aplicaci\'on web interactiva con Streamlit que integra la exploraci\'on de datos, el preprocesamiento, la predicci\'on sobre estudios nuevos y la comparaci\'on de los dos modelos entrenados (A: ResNet18\,+\,MIL; B: ResNet18\,+\,BiGRU). Se ejecuta con \texttt{streamlit run experimento\_dl/app\_streamlit.py}; su documentaci\'on est\'a en \texttt{docs/app/APP\_STREAMLIT.md} y la demostraci\'on de la integraci\'on en \texttt{notebooks/04\_integracion\_app.ipynb}.
+
+Las tecnolog\'ias elegidas y su justificaci\'on se resumen en el cuadro~\ref{tab:app-tec}.
+\begin{table}[H]\centering\small
+\begin{tabular}{p{3cm}p{10.5cm}}\toprule
+Componente & Justificaci\'on \\\midrule
+Streamlit & Interfaz web en Python puro, sin desarrollo \emph{front-end} separado; permite reutilizar directamente los m\'odulos del \emph{pipeline} y cachear modelos y lecturas DICOM. \\
+Plotly & Gr\'aficas interactivas (zoom, \emph{hover}, selecci\'on de series) para explorar m\'etricas y distribuciones; con un interruptor se sustituyen por las figuras est\'aticas PNG del entrenamiento. \\
+pydicom, pylibjpeg/GDCM & Lectura de los mismos DICOM que en entrenamiento, incluidos los comprimidos con JPEG Lossless. \\
+PyTorch & Carga de los checkpoints en modo seguro (\texttt{weights\_only}) e inferencia en CPU o GPU \citep{paszke2019pytorch}. \\
+\texttt{inference.py} y \texttt{metrics\_eval.py} & Preprocesamiento e inferencia del \emph{pipeline} de entrenamiento, y m\'etricas e intervalos bootstrap del m\'odulo de evaluaci\'on independiente; la aplicaci\'on no reimplementa ninguno de los dos. \\\bottomrule
+\end{tabular}
+\caption{Tecnolog\'ias de la aplicaci\'on y justificaci\'on de su elecci\'on.}\label{tab:app-tec}
+\end{table}
+
+\paragraph{Coherencia con el entrenamiento.} La aplicaci\'on no reimplementa el preprocesamiento ni las arquitecturas: usa \texttt{inference.py}, que reconstruye la configuraci\'on guardada con cada checkpoint (48 posiciones 2.5D, ventana \'osea $L=400$/$W=1800$, $224\times224$, orden por \texttt{ImagePositionPatient[2]}). En el notebook de integraci\'on se comprob\'o que el tensor que recibe el modelo en la aplicaci\'on coincide en forma ($48\times3\times224\times224$), tipo y par\'ametros con el de entrenamiento, y que no depende del orden en que se suban los archivos. Antes de cargar un checkpoint se verifica su huella SHA-256 frente a \texttt{artifacts/v2/MANIFEST.json}.
+
+\paragraph{Funcionalidades.} La aplicaci\'on se organiza en ocho pesta\~nas: (1) exploraci\'on de \texttt{train.csv} y de los metadatos DICOM (figura~\ref{fig:app-eda}); (2) pasos y ejemplos del preprocesamiento; (3) visor DICOM, que muestra cada corte en HU crudas y tras la ventana \'osea, su histograma, los metadatos y el tensor de entrada del modelo (figura~\ref{fig:app-visor}); (4) predicci\'on; (5) m\'etricas por modelo y conjunto; (6) comparaci\'on de modelos; (7) estado de los artefactos, y (8) limitaciones. Un panel lateral permite alternar entre gr\'aficas interactivas y est\'aticas, y mostrar u ocultar cada tipo de gr\'afica.
+
+\paragraph{Predicci\'on de nuevas entradas.} El usuario sube los archivos DICOM de un estudio, o selecciona uno o varios estudios locales, y elige el Modelo A, el B o ambos. Cada resultado muestra la probabilidad, la clase seg\'un el umbral fijado en validaci\'on (\'indice de Youden; \citealp{youden1950index}), los avisos de calidad de la entrada (archivos ilegibles, estudios mezclados, menos cortes que posiciones del modelo o ausencia de \texttt{RescaleSlope}) y un descargo expl\'icito: es una clasificaci\'on global por estudio, sin localizaci\'on y sin validaci\'on cl\'inica. Si se ejecutan ambos modelos, la aplicaci\'on indica si coinciden, la diferencia de probabilidades y el percentil de cada probabilidad en la distribuci\'on del conjunto de prueba, por clase real. Si el estudio pertenece a las particiones del experimento, compara la probabilidad obtenida con la registrada en la evaluaci\'on, lo que verifica que el despliegue reproduce el modelo evaluado; si pertenece a entrenamiento, advierte que no es una evaluaci\'on independiente. La etiqueta real, cuando se conoce, se muestra aparte y rotulada como tal. Mientras los checkpoints no est\'an disponibles, la pesta\~na muestra el estado PENDIENTE y no genera probabilidades (figura~\ref{fig:app-pred}); las predicciones del conjunto de prueba ya calculadas en la evaluaci\'on se pueden consultar estudio por estudio.
+
+\paragraph{Comparaci\'on interactiva de modelos.} El usuario elige conjuntos y m\'etricas; la aplicaci\'on presenta barras agrupadas, la diferencia B\,$-$\,A, las pruebas pareadas (DeLong, bootstrap y McNemar), las curvas ROC con el punto de operaci\'on, la distribuci\'on de probabilidades por clase y la dispersi\'on de las probabilidades de ambos modelos por estudio (figura~\ref{fig:app-comp}). Un control de umbral recalcula las m\'etricas sobre las predicciones de prueba, con intervalos de confianza bootstrap al 95\,\% \citep{efron1993bootstrap}; esta exploraci\'on es descriptiva, pues los umbrales oficiales se fijaron en validaci\'on. Todos los valores provienen de los artefactos reales del entrenamiento (\texttt{artifacts/v2/}); si falta alguno, se muestra PENDIENTE y no se generan valores sustitutos.
+
+\paragraph{Pruebas.} La aplicaci\'on se valid\'o con 25 pruebas autom\'aticas propias: consistencia de las m\'etricas con las predicciones, entradas inv\'alidas (sin archivos, no DICOM, vac\'ios, estudios mezclados), rechazo de checkpoints ausentes o alterados, forma de la entrada, flujo completo de predicci\'on y comparaci\'on en la interfaz, e inferencia por lotes. Las pruebas de interfaz usan checkpoints con pesos aleatorios \'unicamente para ejercitar el c\'odigo; con ellos, la verificaci\'on de reproducibilidad se\~nala correctamente que no coinciden con la evaluaci\'on. Adem\'as, se revisaron las ocho pesta\~nas en el navegador sin errores.
+
+Los checkpoints reales de ambos modelos se verificaron contra \texttt{artifacts/v2/MANIFEST.json} (tama\~no y SHA-256 id\'enticos), cargan en modo seguro con el umbral y la configuraci\'on de preprocesamiento publicados, y la interfaz de predicci\'on y comparaci\'on funciona con ellos sin errores. El control de calidad del entrenamiento (\texttt{qc\_report.json}) muestra que \texttt{inference.py}, ejecutado desde DICOM crudo sobre cinco estudios de prueba, reproduce las probabilidades de la evaluaci\'on con una diferencia m\'axima de $9.0\times10^{-5}$ (MIL) y $3.0\times10^{-5}$ (BiGRU), con las mismas clases predichas.
+
+\pendiente{Reproducci\'on en la aplicaci\'on desde DICOM de RSNA (P1)}{Falta ejecutar la aplicaci\'on local sobre estudios DICOM de la partici\'on de prueba para reportar la reproducibilidad frente a la evaluaci\'on, el tiempo por estudio en CPU y el acuerdo A/B, y actualizar la figura~\ref{fig:app-pred}. Requiere descargar los estudios desde Kaggle.}{\texttt{docs/app/validacion\_inferencia.json}, generado por \texttt{experimento\_dl/tools/validar\_inferencia.py}; estudios exportados con \texttt{experimento\_dl/kaggle/exportar\_estudios\_prueba.py}.}
+
+\begin{figure}[H]\centering
+\includegraphics[width=.92\linewidth,height=.62\textheight,keepaspectratio]{app_01_datos_y_eda.png}
+\caption{Aplicaci\'on, pesta\~na 1: exploraci\'on interactiva de \texttt{train.csv}, particiones y metadatos DICOM.}\label{fig:app-eda}
+\end{figure}
+\begin{figure}[H]\centering
+\includegraphics[width=.92\linewidth,height=.5\textheight,keepaspectratio]{app_03_visor_dicom.png}
+\caption{Aplicaci\'on, pesta\~na 3: visor DICOM con el corte en HU crudas, tras la ventana \'osea y su histograma (corte de TC de prueba de \texttt{pydicom}).}\label{fig:app-visor}
+\end{figure}
+\begin{figure}[H]\centering
+\includegraphics[width=.92\linewidth,height=.66\textheight,keepaspectratio]{app_04_prediccion.png}
+\caption{Aplicaci\'on, pesta\~na 4: selecci\'on de modelo (estado PENDIENTE sin checkpoints) y consulta de las predicciones de prueba ya calculadas en la evaluaci\'on.}\label{fig:app-pred}
+\end{figure}
+\begin{figure}[H]\centering
+\includegraphics[width=.92\linewidth,height=.68\textheight,keepaspectratio]{app_06_comparacion.png}
+\caption{Aplicaci\'on, pesta\~na 6: comparaci\'on interactiva de los modelos A y B en el conjunto de prueba.}\label{fig:app-comp}
+\end{figure}
